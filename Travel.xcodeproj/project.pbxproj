@@ -11,6 +11,16 @@
 		37BC41C12CD1911B007AA26B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC41C02CD1911B007AA26B /* ContentView.swift */; };
 		37BC41C32CD1911C007AA26B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37BC41C22CD1911C007AA26B /* Assets.xcassets */; };
 		37BC41C62CD1911C007AA26B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 37BC41C52CD1911C007AA26B /* Preview Assets.xcassets */; };
+		37BC41CD2CD19166007AA26B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37BC41CC2CD19166007AA26B /* GoogleService-Info.plist */; };
+		37BC41D02CD19183007AA26B /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 37BC41CF2CD19183007AA26B /* FirebaseCore */; };
+		37BC41D22CD19183007AA26B /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 37BC41D12CD19183007AA26B /* FirebaseFirestore */; };
+		37BC41D52CD191A1007AA26B /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC41D42CD191A1007AA26B /* Trip.swift */; };
+		37BC41D92CD192CE007AA26B /* TripRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC41D82CD192CE007AA26B /* TripRepository.swift */; };
+		37BC41DF2CD194E5007AA26B /* TripCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC41DE2CD194E5007AA26B /* TripCardView.swift */; };
+		37BC41E12CD19501007AA26B /* MyTripsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC41E02CD19501007AA26B /* MyTripsView.swift */; };
+		37BC41E32CD1A11F007AA26B /* NewTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC41E22CD1A11F007AA26B /* NewTripView.swift */; };
+		37BC41E52CD1A144007AA26B /* DateSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC41E42CD1A144007AA26B /* DateSelectionView.swift */; };
+		37BC41E72CD1BA5D007AA26B /* TripDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC41E62CD1BA5D007AA26B /* TripDetailsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +29,14 @@
 		37BC41C02CD1911B007AA26B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		37BC41C22CD1911C007AA26B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		37BC41C52CD1911C007AA26B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		37BC41CC2CD19166007AA26B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		37BC41D42CD191A1007AA26B /* Trip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		37BC41D82CD192CE007AA26B /* TripRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripRepository.swift; sourceTree = "<group>"; };
+		37BC41DE2CD194E5007AA26B /* TripCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripCardView.swift; sourceTree = "<group>"; };
+		37BC41E02CD19501007AA26B /* MyTripsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripsView.swift; sourceTree = "<group>"; };
+		37BC41E22CD1A11F007AA26B /* NewTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripView.swift; sourceTree = "<group>"; };
+		37BC41E42CD1A144007AA26B /* DateSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelectionView.swift; sourceTree = "<group>"; };
+		37BC41E62CD1BA5D007AA26B /* TripDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -26,6 +44,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37BC41D02CD19183007AA26B /* FirebaseCore in Frameworks */,
+				37BC41D22CD19183007AA26B /* FirebaseFirestore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -51,8 +71,11 @@
 		37BC41BD2CD1911B007AA26B /* Travel */ = {
 			isa = PBXGroup;
 			children = (
+				37BC41DA2CD19455007AA26B /* Views */,
+				37BC41D72CD192BB007AA26B /* DataRepository */,
+				37BC41D32CD19199007AA26B /* Models */,
+				37BC41CC2CD19166007AA26B /* GoogleService-Info.plist */,
 				37BC41BE2CD1911B007AA26B /* TravelApp.swift */,
-				37BC41C02CD1911B007AA26B /* ContentView.swift */,
 				37BC41C22CD1911C007AA26B /* Assets.xcassets */,
 				37BC41C42CD1911C007AA26B /* Preview Content */,
 			);
@@ -65,6 +88,35 @@
 				37BC41C52CD1911C007AA26B /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		37BC41D32CD19199007AA26B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				37BC41D42CD191A1007AA26B /* Trip.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		37BC41D72CD192BB007AA26B /* DataRepository */ = {
+			isa = PBXGroup;
+			children = (
+				37BC41D82CD192CE007AA26B /* TripRepository.swift */,
+			);
+			path = DataRepository;
+			sourceTree = "<group>";
+		};
+		37BC41DA2CD19455007AA26B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				37BC41C02CD1911B007AA26B /* ContentView.swift */,
+				37BC41DE2CD194E5007AA26B /* TripCardView.swift */,
+				37BC41E02CD19501007AA26B /* MyTripsView.swift */,
+				37BC41E22CD1A11F007AA26B /* NewTripView.swift */,
+				37BC41E42CD1A144007AA26B /* DateSelectionView.swift */,
+				37BC41E62CD1BA5D007AA26B /* TripDetailsView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +135,10 @@
 			dependencies = (
 			);
 			name = Travel;
+			packageProductDependencies = (
+				37BC41CF2CD19183007AA26B /* FirebaseCore */,
+				37BC41D12CD19183007AA26B /* FirebaseFirestore */,
+			);
 			productName = Travel;
 			productReference = 37BC41BB2CD1911B007AA26B /* Travel.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +167,9 @@
 				Base,
 			);
 			mainGroup = 37BC41B22CD1911B007AA26B;
+			packageReferences = (
+				37BC41CE2CD19183007AA26B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			productRefGroup = 37BC41BC2CD1911B007AA26B /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -127,6 +186,7 @@
 			files = (
 				37BC41C62CD1911C007AA26B /* Preview Assets.xcassets in Resources */,
 				37BC41C32CD1911C007AA26B /* Assets.xcassets in Resources */,
+				37BC41CD2CD19166007AA26B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,8 +197,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				37BC41E12CD19501007AA26B /* MyTripsView.swift in Sources */,
+				37BC41E52CD1A144007AA26B /* DateSelectionView.swift in Sources */,
+				37BC41E32CD1A11F007AA26B /* NewTripView.swift in Sources */,
+				37BC41D52CD191A1007AA26B /* Trip.swift in Sources */,
 				37BC41C12CD1911B007AA26B /* ContentView.swift in Sources */,
+				37BC41E72CD1BA5D007AA26B /* TripDetailsView.swift in Sources */,
+				37BC41D92CD192CE007AA26B /* TripRepository.swift in Sources */,
 				37BC41BF2CD1911B007AA26B /* TravelApp.swift in Sources */,
+				37BC41DF2CD194E5007AA26B /* TripCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -344,6 +411,30 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		37BC41CE2CD19183007AA26B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.4.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		37BC41CF2CD19183007AA26B /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37BC41CE2CD19183007AA26B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		37BC41D12CD19183007AA26B /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 37BC41CE2CD19183007AA26B /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 37BC41B32CD1911B007AA26B /* Project object */;
 }
