@@ -50,16 +50,7 @@ struct TripCardView: View {
 
 struct TripCardView_Previews: PreviewProvider {
   static var previews: some View {
-    TripCardView(trip: Trip(
-      id: "1",
-      tripName: "Miami",
-      startDate: "2024-03-05",
-      endDate: "2024-03-08",
-      photo: "",
-      color: "blue",
-			days: [Day](),
-			travelers: [SimpleUser]()
-    ))
+		TripCardView(trip: Trip.example)
     .previewLayout(.sizeThatFits)
   }
 }

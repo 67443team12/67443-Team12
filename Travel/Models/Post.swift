@@ -8,14 +8,14 @@
 import Foundation
 import SwiftUI
 
-class Post: Identifiable, Codable, Comparable {
+struct Post: Identifiable, Codable, Comparable {
 	var id: String
 	var title: String
 	var postTime: String
 	var content: String
 	var userId: String
 	var userName: String
-	var userphoto: String
+	var userPhoto: String
 	var ifBookmarked: Bool
 	
 	enum CodingKeys: String, CodingKey {
@@ -25,7 +25,7 @@ class Post: Identifiable, Codable, Comparable {
 		case content
 		case userId
 		case userName
-		case userphoto
+		case userPhoto
 		case ifBookmarked
 	}
 	
@@ -36,4 +36,16 @@ class Post: Identifiable, Codable, Comparable {
 	static func == (lhs: Post, rhs: Post) -> Bool {
 		lhs.id == rhs.id
 	}
+	
+	static let example = Post(
+		id: "35FNRV",
+		title: "Pittsburgh Adventures",
+		postTime: "2024-10-16T12:24:14.557Z",
+		content: "So nice to see Pittsburgh transformed into a city advocated for innovation and education! The visit to the Duquesne Incline was fantastic!",
+		userId: "Bob1241",
+		userName: "Bob",
+		userPhoto: "",
+		ifBookmarked: true
+	)
+	
 }

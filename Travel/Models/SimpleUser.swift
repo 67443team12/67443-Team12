@@ -26,4 +26,16 @@ struct SimpleUser: Codable, Identifiable, Comparable {
 	static func == (lhs: SimpleUser, rhs: SimpleUser) -> Bool {
 		lhs.id == rhs.id
 	}
+	
+	static let bob = SimpleUser(
+		id: "Bob1241",
+		name: "Bob",
+		photo: ""
+	)
+	
+	static let clara = SimpleUser(
+		id: "Clara999",
+		name: "Clara",
+		photo: ""
+	)
 }

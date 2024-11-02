@@ -36,4 +36,16 @@ struct Trip: Identifiable, Codable, Comparable {
 	static func == (lhs: Trip, rhs: Trip) -> Bool {
 		lhs.id == rhs.id
 	}
+	
+	static let example = Trip(
+		id: "1",
+		tripName: "Miami",
+		startDate: "2024-03-05",
+		endDate: "2024-03-08",
+		photo: "",
+		color: "blue",
+		days: [Day](),
+		travelers: [SimpleUser]()
+	)
+	
 }

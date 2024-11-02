@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-class Location: Identifiable, Codable, Comparable {
+struct Location: Identifiable, Codable, Comparable {
 	var id: String
 	var name: String
 	var latitude: Double

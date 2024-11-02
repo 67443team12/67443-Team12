@@ -12,7 +12,7 @@ struct User: Codable, Identifiable, Comparable {
 	var id: String
 	var name: String
 	var photo: String
-	var userPosts: [Post]
+	var userPosts: [SelfPost]
 	var Bookmarks: [Post]
 	var Trips: [String]
 	var Friends: [SimpleUser]
@@ -36,4 +36,15 @@ struct User: Codable, Identifiable, Comparable {
 	static func == (lhs: User, rhs: User) -> Bool {
 		lhs.id == rhs.id
 	}
+	
+	static let example = User(
+		id: "Alice215",
+		name: "Alice",
+		photo: "",
+		userPosts: [SelfPost.example],
+		Bookmarks: [Post.example],
+		Trips: ["269C753NIQ"],
+		Friends: [SimpleUser.bob],
+		Requests: [SimpleUser.clara]
+	)
 }
