@@ -56,7 +56,9 @@ struct TripCardView_Previews: PreviewProvider {
       startDate: "2024-03-05",
       endDate: "2024-03-08",
       photo: "",
-      color: "blue"
+      color: "blue",
+			days: [Day](),
+			travelers: [SimpleUser]()
     ))
     .previewLayout(.sizeThatFits)
   }

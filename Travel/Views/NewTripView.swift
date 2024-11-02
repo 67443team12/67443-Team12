@@ -62,7 +62,10 @@ struct NewTripView: View {
             startDate: formatDate(date: startDate),
             endDate: formatDate(date: endDate),
             photo: "", // Placeholder
-            color: "blue" // Placeholder color
+            color: "blue", // Placeholder color
+						days: generateDays(from: startDate, to: endDate),
+						// for travelers can initially include the mock user that we would declare as the user of the current session
+						travelers: [SimpleUser]()
           )
           
           // Save the new trip to the repository
@@ -82,8 +85,26 @@ struct NewTripView: View {
   private func formatDate(date: Date) -> String {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd"
-    return formatter.string(from: date)
+		// setting timezone to UTC otherwise the dates would be wrong when we are in Eastern Time
+		formatter.timeZone = TimeZone(abbreviation: "UTC")
+		return formatter.string(from: date)
   }
+	
+	private func generateDays(from start: Date, to end: Date) -> [Day] {
+		var days: [Day] = []
+		let normStart = Calendar.current.startOfDay(for: start)
+		let normEnd = Calendar.current.startOfDay(for: end)
+		let oneDay: TimeInterval = 24 * 60 * 60
+		var current = normStart
+		
+		while current <= normEnd {
+			days.append(Day(id: UUID(), date: formatDate(date: current), events: [Event]()))
+				// Move to the next day
+			current = current.addingTimeInterval(oneDay)
+		}
+		
+		return days
+	}
 }
 
 struct NewTripView_Previews: PreviewProvider {

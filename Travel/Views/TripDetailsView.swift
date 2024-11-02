@@ -135,8 +135,8 @@ struct TripDetailsView: View {
   }
 }
 
-struct TripDetailsView_Previews: PreviewProvider {
-  static var previews: some View {
-    TripDetailsView(trip: Trip(id: "1", tripName: "New York", startDate: "2024-10-14", endDate: "2024-10-16", photo: "", color: "red"))
-  }
-}
+//struct TripDetailsView_Previews: PreviewProvider {
+//  static var previews: some View {
+//    TripDetailsView(trip: Trip(id: "1", tripName: "New York", startDate: "2024-10-14", endDate: "2024-10-16", photo: "", color: "red"))
+//  }
+//}
