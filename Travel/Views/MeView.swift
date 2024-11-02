@@ -36,7 +36,7 @@ struct MeView: View {
 					// edit profile action not yet implemented
 					Button(action: {}) {
 						Image(systemName: "ellipsis.circle")
-							.font(.largeTitle)
+							.font(.title)
 							.padding(.trailing, 20)
 							.padding(.bottom, 25)
 					}
