@@ -9,29 +9,27 @@ import SwiftUI
 
 struct ContentView: View {
   var body: some View {
-    VStack {
-      TabView {
-        MyTripsView()
-          .tabItem {
-            Label("Trips", systemImage: "calendar")
-          }
+		TabView {
+			MyTripsView()
+				.tabItem {
+					Label("Trips", systemImage: "calendar")
+				}
 
-        Text("Posts View") // Placeholder for the Posts view
-          .tabItem {
-            Label("Posts", systemImage: "square.and.pencil")
-          }
+			Text("Posts View") // Placeholder for the Posts view
+				.tabItem {
+					Label("Posts", systemImage: "square.and.pencil")
+				}
 
-        Text("Friends View") // Placeholder for the Friends view
-          .tabItem {
-            Label("Friends", systemImage: "person.2")
-          }
+			Text("Friends View") // Placeholder for the Friends view
+				.tabItem {
+					Label("Friends", systemImage: "person.2")
+				}
 
-        MeView()
-          .tabItem {
-            Label("Me", systemImage: "person.circle")
-          }
-      }
-    }
+			MeView()
+				.tabItem {
+					Label("Me", systemImage: "person.circle")
+				}
+		}
   }
 }
 

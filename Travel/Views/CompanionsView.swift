@@ -16,6 +16,8 @@ struct CompanionsView: View {
 				Text(person.name)
 			}
 		}
+		.navigationTitle("Companions")
+		.navigationBarTitleDisplayMode(.inline)
 	}
 }
 
