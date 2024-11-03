@@ -45,7 +45,7 @@ struct Trip: Identifiable, Codable, Comparable {
 		photo: "",
 		color: "blue",
 		days: [Day](),
-		travelers: [SimpleUser]()
+		travelers: [SimpleUser.bob]
 	)
 	
 }

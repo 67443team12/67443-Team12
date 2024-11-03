@@ -15,10 +15,26 @@ struct TripDetailsView: View {
 
   var body: some View {
     VStack {
-      Text(trip.tripName)
-        .font(.largeTitle)
-        .fontWeight(.bold)
-        .padding(.top, 15)
+			HStack() {
+				Text(trip.tripName)
+					.font(.largeTitle)
+					.fontWeight(.bold)
+					.padding(.top, 15)
+					.frame(maxWidth: .infinity, alignment: .center)
+			}
+			// Use overlay for the companion button to ensure the trip name is at the center
+			.overlay(
+				Button(
+					action: {},
+					label: {
+						Image(systemName: "person.2")
+							.font(.title)
+							.fontWeight(.bold)
+							.padding(.trailing)
+							.padding(.top, 15)
+					})
+				.frame(maxWidth: .infinity, alignment: .trailing)
+			)
       
       if !days.isEmpty {
         HStack {
@@ -135,8 +151,8 @@ struct TripDetailsView: View {
   }
 }
 
-//struct TripDetailsView_Previews: PreviewProvider {
-//  static var previews: some View {
-//    TripDetailsView(trip: Trip(id: "1", tripName: "New York", startDate: "2024-10-14", endDate: "2024-10-16", photo: "", color: "red"))
-//  }
-//}
+struct TripDetailsView_Previews: PreviewProvider {
+  static var previews: some View {
+		TripDetailsView(trip: Trip.example)
+  }
+}
