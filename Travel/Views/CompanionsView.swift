@@ -11,10 +11,31 @@ struct CompanionsView: View {
 	var people: [SimpleUser]
 	
 	var body: some View {
-		List {
-			ForEach(people) { person in
-				Text(person.name)
+		VStack {
+			VStack {
+				ForEach(people) { person in
+					CompanionRowView(person: person)
+				}
 			}
+			.padding(.vertical)
+			NavigationLink(destination: SelectFriendsView()) {
+				ZStack {
+					Rectangle()
+						.fill(Color("LightPurple"))
+						.frame(height: 70)
+					HStack() {
+						Text("Invite More Friends")
+							.padding(.leading, 30)
+							.fontWeight(.semibold)
+						Spacer()
+						Image(systemName: "arrow.right")
+							.fontWeight(.semibold)
+							.padding(.trailing, 30)
+					}
+					.foregroundStyle(.black)
+				}
+			}
+			Spacer()
 		}
 		.navigationTitle("Companions")
 		.navigationBarTitleDisplayMode(.inline)
@@ -22,5 +43,5 @@ struct CompanionsView: View {
 }
 
 #Preview {
-	CompanionsView(people: [SimpleUser.bob])
+	CompanionsView(people: [SimpleUser.bob, SimpleUser.clara])
 }
