@@ -8,10 +8,12 @@
 import SwiftUI
 
 struct NewTripView: View {
+	@ObservedObject var tripListViewModel = TripListViewModel()
+	
   @State private var tripName: String = ""
   @State private var showDatePicker = false
   @Environment(\.presentationMode) var presentationMode
-  @ObservedObject var tripRepository: TripRepository
+//  @ObservedObject var tripRepository: TripRepository
 
   var body: some View {
     NavigationView {
@@ -69,8 +71,8 @@ struct NewTripView: View {
           )
           
           // Save the new trip to the repository
-          tripRepository.trips.append(newTrip)
-          tripRepository.addTrip(newTrip)
+//          tripRepository.trips.append(newTrip)
+					tripListViewModel.add(newTrip)
           
           // Dismiss both the date picker and the new trip view
           showDatePicker = false
@@ -109,6 +111,6 @@ struct NewTripView: View {
 
 struct NewTripView_Previews: PreviewProvider {
   static var previews: some View {
-    NewTripView(tripRepository: TripRepository())
+    NewTripView()
   }
 }

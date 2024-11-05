@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -73,6 +73,10 @@
 		98DF07442CD807CB00694B97 /* SelectFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFriendsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		98DF079F2CD9A59200694B97 /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		37BC41B82CD1911B007AA26B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -105,6 +109,7 @@
 		37BC41BD2CD1911B007AA26B /* Travel */ = {
 			isa = PBXGroup;
 			children = (
+				98DF079F2CD9A59200694B97 /* ViewModels */,
 				37BC41DA2CD19455007AA26B /* Views */,
 				37BC41D72CD192BB007AA26B /* DataRepository */,
 				37BC41D32CD19199007AA26B /* Models */,
@@ -184,6 +189,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				98DF079F2CD9A59200694B97 /* ViewModels */,
 			);
 			name = Travel;
 			packageProductDependencies = (
