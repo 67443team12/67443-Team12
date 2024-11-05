@@ -8,10 +8,13 @@
 import SwiftUI
 
 struct MyTripsView: View {
-  @ObservedObject var tripRepository = TripRepository()
+	@ObservedObject var tripListViewModel = TripListViewModel()
+//  @ObservedObject var tripRepository = TripRepository()
   @State private var showNewTripView = false
 
   var body: some View {
+		let tripViewModels = tripListViewModel.tripViewModels.sorted(by: {$0.trip > $1.trip})
+		
     NavigationView {
       VStack {
         HStack {
@@ -32,9 +35,9 @@ struct MyTripsView: View {
         }
         
         ScrollView {
-          ForEach(tripRepository.trips) { trip in
-            NavigationLink(destination: TripDetailsView(trip: trip)) {
-              TripCardView(trip: trip)
+					ForEach(tripViewModels) { tVM in
+						NavigationLink(destination: TripDetailsView(trip: tVM.trip)) {
+							TripCardView(trip: tVM.trip)
                 .padding(.bottom, 10)
                 .padding(.top, 10)
             }
@@ -47,9 +50,6 @@ struct MyTripsView: View {
         NewTripView()
           .presentationDetents([.fraction(0.97)])
           .presentationDragIndicator(.visible)
-      }
-      .onAppear {
-        tripRepository.get()
       }
     }
   }

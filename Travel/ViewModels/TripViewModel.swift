@@ -10,7 +10,6 @@ import Combine
 
 class TripViewModel: ObservableObject, Identifiable {
 	private let tripRepository = TripRepository()
-	
 	@Published var trip: Trip
 	private var cancellables: Set<AnyCancellable> = []
 	var id = ""
