@@ -41,10 +41,14 @@ struct Trip: Identifiable, Codable, Comparable {
 		id: "1",
 		tripName: "Miami",
 		startDate: "2024-03-05",
-		endDate: "2024-03-08",
+		endDate: "2024-03-07",
 		photo: "",
 		color: "blue",
-		days: [Day](),
+		days: [
+			Day(id: UUID(), date: "2024-03-05", events: [Event]()),
+			Day(id: UUID(), date: "2024-03-06", events: [Event]()),
+			Day(id: UUID(), date: "2024-03-07", events: [Event]())
+		],
 		travelers: [SimpleUser.clara]
 	)
 	

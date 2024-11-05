@@ -41,7 +41,7 @@ class TripRepository: ObservableObject {
     // Function to add a new trip to Firestore
     do {
 			let newTrip = trip
-      _ = try store.collection(path).addDocument(from: newTrip)
+      _ = try store.collection(path).document(newTrip.id).setData(from: newTrip)
     } catch {
       print("Error adding trip: \(error.localizedDescription)")
     }

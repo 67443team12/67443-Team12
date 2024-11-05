@@ -65,9 +65,9 @@ struct NewTripView: View {
             endDate: formatDate(date: endDate),
             photo: "", // Placeholder
             color: "blue", // Placeholder color
-						days: generateDays(from: startDate, to: endDate),
+						days: generateDays(startDate: startDate, endDate: endDate),
 						// for travelers can initially include the mock user that we would declare as the user of the current session
-						travelers: [SimpleUser]()
+						travelers: [SimpleUser.alice]
           )
           
           // Save the new trip to the repository
@@ -92,22 +92,33 @@ struct NewTripView: View {
 		return formatter.string(from: date)
   }
 	
-	private func generateDays(from start: Date, to end: Date) -> [Day] {
+	private func generateDays(startDate: Date, endDate: Date) -> [Day] {
 		var days: [Day] = []
-		let normStart = Calendar.current.startOfDay(for: start)
-		let normEnd = Calendar.current.startOfDay(for: end)
-		let oneDay: TimeInterval = 24 * 60 * 60
-		var current = normStart
+		var currentDate = startDate
+		let calendar = Calendar.current
 		
-		while current <= normEnd {
-			days.append(Day(id: UUID(), date: formatDate(date: current), events: [Event]()))
-				// Move to the next day
-			current = current.addingTimeInterval(oneDay)
+		if calendar.isDate(startDate, inSameDayAs: endDate) {
+			let dateString = formatDate(date: currentDate)
+			let id = UUID()
+			let day = Day(id: id, date: dateString, events: [])
+			days.append(day)
+			print("here\n")
+			return days
+		}
+		
+		while currentDate <= endDate.addingTimeInterval(86400) {
+			let dateString = formatDate(date: currentDate)
+			let id = UUID()
+			let day = Day(id: id, date: dateString, events: [])
+			days.append(day)
+			
+			currentDate = currentDate.addingTimeInterval(86400)
 		}
 		
 		return days
 	}
 }
+
 
 struct NewTripView_Previews: PreviewProvider {
   static var previews: some View {
