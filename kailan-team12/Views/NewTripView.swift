@@ -63,7 +63,7 @@ struct NewTripView: View {
             endDate: formatDate(date: endDate),
             photo: "", // Placeholder
             color: "blue", // Placeholder color
-            days: []
+            days: generateDays(startDate: startDate, endDate: endDate)
           )
           
           // Save the new trip to the repository
@@ -84,6 +84,33 @@ struct NewTripView: View {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd"
     return formatter.string(from: date)
+  }
+  
+  
+  private func generateDays(startDate: Date, endDate: Date) -> [Day] {
+    var days: [Day] = []
+    var currentDate = startDate
+    let calendar = Calendar.current
+    
+    if calendar.isDate(startDate, inSameDayAs: endDate) {
+      let dateString = formatDate(date: currentDate)
+      let id = UUID().uuidString
+      let day = Day(id: id, date: dateString, events: [])
+      days.append(day)
+      print("here\n")
+      return days
+    }
+    
+    while currentDate <= endDate.addingTimeInterval(86400) {
+      let dateString = formatDate(date: currentDate)
+      let id = UUID().uuidString
+      let day = Day(id: id, date: dateString, events: [])
+      days.append(day)
+      
+      currentDate = currentDate.addingTimeInterval(86400)
+    }
+    
+    return days
   }
 }
 
