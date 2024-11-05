@@ -29,6 +29,8 @@ struct CompanionRowView: View {
 		}
 		.padding(.horizontal, 30)
 	}
+	
+	
 }
 
 #Preview {

@@ -14,8 +14,6 @@ class TripViewModel: ObservableObject, Identifiable {
 	private var cancellables: Set<AnyCancellable> = []
 	var id = ""
 	
-	@Published var days: [Day] = []
-	
 	init(trip: Trip) {
 		self.trip = trip
 		$trip
@@ -23,5 +21,4 @@ class TripViewModel: ObservableObject, Identifiable {
 			.assign(to: \.id, on: self)
 			.store(in: &cancellables)
 	}
-	
 }

@@ -8,24 +8,23 @@
 import SwiftUI
 
 struct TripDetailsView: View {
-  var trip: Trip
-  @State private var days: [String] = []
+	@ObservedObject var tVM: TripViewModel
   @State private var searchText: String = ""
 	@State private var currentIndex = 0
-	@State private var selectedIndex = 0
 
 	var body: some View {
 		VStack {
 			// MARK: Name and companions row
 			HStack() {
-				Text(trip.tripName)
+				Text(tVM.trip.tripName)
 					.font(.largeTitle)
 					.fontWeight(.bold)
 					.frame(maxWidth: .infinity, alignment: .center)
 			}
 			// Use overlay for the companion link to ensure the trip name is at the center
 			.overlay(
-				NavigationLink(destination: CompanionsView(people: trip.travelers))
+				NavigationLink(
+					destination: CompanionsView(tripViewModel: tVM))
 				{
 					Image(systemName: "person.3")
 						.font(.title)
@@ -36,7 +35,7 @@ struct TripDetailsView: View {
 			)
 			
 			// MARK: Day View
-			if !trip.days.isEmpty {
+			if !tVM.trip.days.isEmpty {
 				HStack {
 					Button(action: {
 						if currentIndex > 0 {
@@ -49,7 +48,7 @@ struct TripDetailsView: View {
 					
 					Spacer()
 					
-					Text("Day \(currentIndex + 1): \(trip.days[currentIndex].date)")
+					Text("Day \(currentIndex + 1): \(tVM.trip.days[currentIndex].date)")
 						.font(.headline)
 						.padding()
 						.background(Color(.systemGray5))
@@ -58,19 +57,19 @@ struct TripDetailsView: View {
 					Spacer()
 					
 					Button(action: {
-						if currentIndex < trip.days.count - 1 {
+						if currentIndex < tVM.trip.days.count - 1 {
 							currentIndex += 1
 						}
 					}) {
 						Image(systemName: "arrow.forward")
 					}
-					.disabled(currentIndex == trip.days.count - 1)
+					.disabled(currentIndex == tVM.trip.days.count - 1)
 				}
 				.padding(.horizontal)
 				.padding(.bottom, 10)
 				
 				// One day view for each day object
-				DayView(day: trip.days[currentIndex], searchText: $searchText)
+				DayView(day: tVM.trip.days[currentIndex], searchText: $searchText)
 					.frame(maxWidth: .infinity, maxHeight: .infinity)
 					.transition(.slide)
 			} else {
@@ -87,6 +86,6 @@ struct TripDetailsView: View {
 
 struct TripDetailsView_Previews: PreviewProvider {
   static var previews: some View {
-		TripDetailsView(trip: Trip.example)
+		TripDetailsView(tVM: TripViewModel(trip: Trip.example))
   }
 }

@@ -46,5 +46,27 @@ class TripRepository: ObservableObject {
       print("Error adding trip: \(error.localizedDescription)")
     }
   }
+	
+	func updateTravelers(trip: Trip, travelers: [SimpleUser]) {
+		guard !trip.id.isEmpty else { return }  // Check that the trip id is valid
+
+		let travelerData = travelers.map { traveler in
+			[
+				"userId": traveler.id,
+				"name": traveler.name,
+				"photo": traveler.photo
+			]
+		}
+		
+		store.collection(path).document(trip.id).updateData([
+			"travelers": travelerData  // Storing travelers as a list of dictionaries
+		]) { error in
+			if let error = error {
+				print("Error updating travelers: \(error)")
+			} else {
+				print("Travelers list successfully updated.")
+			}
+		}
+	}
 }
 

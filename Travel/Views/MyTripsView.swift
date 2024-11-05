@@ -36,7 +36,7 @@ struct MyTripsView: View {
         
         ScrollView {
 					ForEach(tripViewModels) { tVM in
-						NavigationLink(destination: TripDetailsView(trip: tVM.trip)) {
+						NavigationLink(destination: TripDetailsView(tVM: tVM)) {
 							TripCardView(trip: tVM.trip)
                 .padding(.bottom, 10)
                 .padding(.top, 10)
