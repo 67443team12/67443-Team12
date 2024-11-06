@@ -9,7 +9,11 @@ import SwiftUI
 
 struct ItineraryView: View {
   var day: Day
+  var tripId: String
+  var dayId: String
+  @ObservedObject var tripRepository: TripRepository
   let hourHeight: CGFloat = 50 // Height representing one hour
+  
 
   var body: some View {
     VStack(alignment: .leading) {
@@ -40,9 +44,14 @@ struct ItineraryView: View {
                           
                           // If the event starts in the current hour
                           if startHour == hour {
-                            EventRow(event: event)
-                              .frame(height: calculateEventHeight(event: event))
-                              .offset(x: 60, y: calculateDiff(event: event) + calculateEventOffset(event: event, hourHeight: hourHeight))
+                            NavigationLink(
+                              destination: EditEventView(tripRepository: tripRepository, tripId: tripId, dayId: dayId, event: event)
+                            ) {
+                              EventRow(event: event)
+                                .frame(height: calculateEventHeight(event: event))
+                                .offset(x: 60, y: calculateDiff(event: event) + calculateEventOffset(event: event, hourHeight: hourHeight))
+                            }
+                            .buttonStyle(PlainButtonStyle()) // Prevents default navigation link style
                           }
                         }
                       }
@@ -148,6 +157,6 @@ extension Event {
 
 struct ItineraryView_Previews: PreviewProvider {
   static var previews: some View {
-    ItineraryView(day: Day.example1)
+    ItineraryView(day: Day.example1, tripId: "exampleTripId", dayId: "exampleDayId", tripRepository: TripRepository())
   }
 }

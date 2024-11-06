@@ -28,6 +28,19 @@ struct Event: Identifiable, Comparable, Codable {
 		case startTime
 		case endTime
 	}
+  
+  func toDictionary() -> [String: Any] {
+    return [
+        "id": id.uuidString,
+        "locationId": locationId,
+        "locationName": locationName,
+        "latitude": latitude,
+        "longitude": longitude,
+        "address": address,
+        "startTime": startTime,
+        "endTime": endTime
+    ]
+  }
 	
 	static func < (lhs: Event, rhs: Event) -> Bool {
 		lhs.startTime < rhs.startTime
