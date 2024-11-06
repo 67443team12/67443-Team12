@@ -47,6 +47,7 @@ struct AddEventView: View {
           .labelsHidden()
       }
       .padding(.bottom, 20)
+      
       if eventName != "" {
       Button("Add Event to Trip") {
         let newEvent = Event(

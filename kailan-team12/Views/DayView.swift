@@ -48,18 +48,19 @@ struct DayView: View {
           .cornerRadius(10)
         
         // Itinerary section
-        Text("Itinerary")
-          .font(.title2)
-          .fontWeight(.semibold)
-          .padding(.leading, 20)
-          .frame(maxWidth: .infinity, alignment: .leading)
+//        Text("Itinerary")
+//          .font(.title2)
+//          .fontWeight(.semibold)
+//          .padding(.leading, 20)
+//          .frame(maxWidth: .infinity, alignment: .leading)
         
         //          Text("event count: \(day.events.count)")
 //        Text(printEvents(events: day.events))
         
-        ForEach(sortEventsByStartTime(events: day.events), id: \.id) { event in
-                        Text(eventToString(event: event))
-                    }
+//        ForEach(sortEventsByStartTime(events: day.events), id: \.id) { event in
+//                        Text(eventToString(event: event))
+//                    }
+        ItineraryView(day: day, trip: trip, tripRepository: tripRepository, dayNumber: dayNumber)
         
         // Add to Itinerary section
         Text("Add to Itinerary")
@@ -218,15 +219,15 @@ struct DayView: View {
     return "\(event.title): \(event.startTime) -- \(event.endTime)"
   }
   
-  func sortEventsByStartTime(events: [Event]) -> [Event] {
-      return events.sorted { (event1, event2) -> Bool in
-          // Unwrap the startTime as Date for comparison
-          guard let date1 = event1.startTimeAsDate(), let date2 = event2.startTimeAsDate() else {
-              return false
-          }
-          return date1 < date2 // Sort by ascending startTime
-      }
-  }
+//  func sortEventsByStartTime(events: [Event]) -> [Event] {
+//      return events.sorted { (event1, event2) -> Bool in
+//          // Unwrap the startTime as Date for comparison
+//          guard let date1 = event1.startTimeAsDate(), let date2 = event2.startTimeAsDate() else {
+//              return false
+//          }
+//          return date1 < date2 // Sort by ascending startTime
+//      }
+//  }
   
 
 

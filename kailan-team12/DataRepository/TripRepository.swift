@@ -70,7 +70,6 @@ class TripRepository: ObservableObject {
                                     print("Error updating document: \(error.localizedDescription)")
                                 } else {
                                     print("Event successfully added to Firestore.")
-                                  self.trips.insert(trip, at: 0)
                                 }
                             }
                     
@@ -84,6 +83,49 @@ class TripRepository: ObservableObject {
                 print("Error accessing trip document or document does not exist: \(error?.localizedDescription ?? "Unknown error")")
             }
         }
+  }
+  
+  
+  
+  
+  func editEventInTrip(trip: Trip, dayIndex: Int, eventId: String, updatedEvent: Event) {
+      let tripRef = store.collection("trips").document(trip.id)
+      
+      tripRef.getDocument { document, error in
+          if let document = document, document.exists {
+              // Access the 'days' array from the document data
+              if var days = document.data()?["days"] as? [[String: Any]] {
+                  if var events = days[dayIndex]["events"] as? [[String: Any]] {
+                      // Find the index of the event to be edited
+                      if let eventIndex = events.firstIndex(where: { $0["id"] as? String == eventId }) {
+                          // Convert the updated event to a dictionary
+                          let updatedEventData = updatedEvent.toDictionary()
+                          
+                          // Update the event at the specific index
+                          events[eventIndex] = updatedEventData
+                          days[dayIndex]["events"] = events
+                          
+                          // Update Firestore with the modified 'days' array
+                          tripRef.updateData(["days": days]) { error in
+                              if let error = error {
+                                  print("Error updating event in Firestore: \(error.localizedDescription)")
+                              } else {
+                                  print("Event successfully updated in Firestore.")
+                              }
+                          }
+                      } else {
+                          print("Event with ID \(eventId) not found in the specified day.")
+                      }
+                  } else {
+                      print("No 'events' array found for this day.")
+                  }
+              } else {
+                  print("The 'days' array does not exist in this trip document.")
+              }
+          } else {
+              print("Error accessing trip document or document does not exist: \(error?.localizedDescription ?? "Unknown error")")
+          }
+      }
   }
 }
 

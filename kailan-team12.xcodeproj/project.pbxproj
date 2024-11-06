@@ -29,6 +29,8 @@
 		6BB8AFE32CDAD189003183AF /* LocationHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB8AFE22CDAD189003183AF /* LocationHoursView.swift */; };
 		6BB8AFE52CDAD26D003183AF /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB8AFE42CDAD26D003183AF /* AddEventView.swift */; };
 		6BB8AFE72CDB226E003183AF /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB8AFE62CDB226E003183AF /* TestView.swift */; };
+		6BB8AFE92CDC0676003183AF /* ItineraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB8AFE82CDC0675003183AF /* ItineraryView.swift */; };
+		6BB8AFED2CDC0C94003183AF /* EventEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BB8AFEC2CDC0C94003183AF /* EventEditView.swift */; };
 		86E59386706B158335D6098E /* Pods_kailan_team12.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDBDF4D1D7F8785417799C8A /* Pods_kailan_team12.framework */; };
 /* End PBXBuildFile section */
 
@@ -57,6 +59,8 @@
 		6BB8AFE22CDAD189003183AF /* LocationHoursView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHoursView.swift; sourceTree = "<group>"; };
 		6BB8AFE42CDAD26D003183AF /* AddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
 		6BB8AFE62CDB226E003183AF /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
+		6BB8AFE82CDC0675003183AF /* ItineraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
+		6BB8AFEC2CDC0C94003183AF /* EventEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEditView.swift; sourceTree = "<group>"; };
 		70156AFA9840537541186168 /* Pods-kailan-team12.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kailan-team12.release.xcconfig"; path = "Target Support Files/Pods-kailan-team12/Pods-kailan-team12.release.xcconfig"; sourceTree = "<group>"; };
 		DDBDF4D1D7F8785417799C8A /* Pods_kailan_team12.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kailan_team12.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -128,6 +132,8 @@
 				6BB8AFE22CDAD189003183AF /* LocationHoursView.swift */,
 				6BB8AFE42CDAD26D003183AF /* AddEventView.swift */,
 				6BB8AFE62CDB226E003183AF /* TestView.swift */,
+				6BB8AFE82CDC0675003183AF /* ItineraryView.swift */,
+				6BB8AFEC2CDC0C94003183AF /* EventEditView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -293,10 +299,12 @@
 				6BB8AFCF2CD91BDF003183AF /* Trip.swift in Sources */,
 				6BB8AFE72CDB226E003183AF /* TestView.swift in Sources */,
 				6BB8AFBD2CD87B71003183AF /* TravelApp.swift in Sources */,
+				6BB8AFE92CDC0676003183AF /* ItineraryView.swift in Sources */,
 				6BB8AFE32CDAD189003183AF /* LocationHoursView.swift in Sources */,
 				6BB8AFDD2CD9CDB1003183AF /* DayView.swift in Sources */,
 				6BB8AFDF2CDAB212003183AF /* LocationDetailView.swift in Sources */,
 				6BB8AFE52CDAD26D003183AF /* AddEventView.swift in Sources */,
+				6BB8AFED2CDC0C94003183AF /* EventEditView.swift in Sources */,
 				6BB8AFC02CD9195F003183AF /* TripCardView.swift in Sources */,
 				6BB8AFD52CD9C542003183AF /* LocationRepository.swift in Sources */,
 				6BB8AFC22CD91971003183AF /* MyTripsView.swift in Sources */,
