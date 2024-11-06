@@ -58,7 +58,7 @@ struct NewTripView: View {
           // Create a new Trip object
           let newTrip = Trip(
             id: UUID().uuidString,
-            tripName: tripName,
+            name: tripName,
             startDate: formatDate(date: startDate),
             endDate: formatDate(date: endDate),
             photo: "", // Placeholder

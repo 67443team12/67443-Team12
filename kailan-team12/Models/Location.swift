@@ -17,6 +17,7 @@ struct Location: Identifiable, Codable, Hashable {
   var ratings: Double
   var duration: String
   var image: String
+  var address: String
   
   // hours
   var sunday: String
@@ -29,22 +30,23 @@ struct Location: Identifiable, Codable, Hashable {
   
   // To conform to Codable protocol
   enum CodingKeys: String, CodingKey {
-    case id = "locationId"
+    case id
     case longitude
     case latitude
-    case name = "locationName"
+    case name
     case description
     case ratings
-    case duration = "estimateDuration"
+    case duration
     case image
+    case address
     
-    case sunday = "Sunday"
-    case monday = "Monday"
-    case tuesday = "Tuesday"
-    case wednesday = "Wednesday"
-    case thursday = "Thursday"
-    case friday = "Friday"
-    case saturday = "Saturday"
+    case sunday
+    case monday
+    case tuesday
+    case wednesday
+    case thursday
+    case friday
+    case saturday
   }
   
   func hash(into hasher: inout Hasher) {

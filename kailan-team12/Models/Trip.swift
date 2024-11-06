@@ -9,7 +9,7 @@ import Foundation
 
 struct Trip: Identifiable, Codable {
   var id: String
-  var tripName: String
+  var name: String
   var startDate: String
   var endDate: String
   var photo: String
@@ -17,8 +17,8 @@ struct Trip: Identifiable, Codable {
   var days: [Day]
   
   enum CodingKeys: String, CodingKey {
-    case id = "tripId"
-    case tripName
+    case id
+    case name
     case startDate
     case endDate
     case photo

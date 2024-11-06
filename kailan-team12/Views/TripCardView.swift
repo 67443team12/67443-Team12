@@ -18,7 +18,7 @@ struct TripCardView: View {
         .cornerRadius(10)
 
       // Display trip name and dates
-      Text(trip.tripName)
+      Text(trip.name)
         .font(.headline)
         .padding([.top, .leading])
         .foregroundColor(.black)

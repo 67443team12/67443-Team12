@@ -53,11 +53,21 @@ struct AddEventView: View {
           id: UUID().uuidString,
           startTime: formatTime(date: startTime),
           endTime: formatTime(date: endTime),
-          rating: location.ratings,
+          ratings: location.ratings,
           latitude: location.latitude,
           longitude: location.longitude,
           image: location.image,
-          name: eventName
+          location: location.name,
+          title: eventName,
+          address: location.address,
+          
+          sunday: location.sunday,
+          monday: location.monday,
+          tuesday: location.tuesday,
+          wednesday: location.wednesday,
+          thursday: location.thursday,
+          friday: location.friday,
+          saturday: location.saturday
         )
         
         tripRepository.addEventToTrip(trip: trip, dayIndex: dayNumber - 1, event: newEvent)

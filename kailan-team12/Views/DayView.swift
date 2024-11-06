@@ -128,7 +128,7 @@ struct DayView: View {
                                   Circle()
                                       .fill(.green)
                                       .frame(width: 15, height: 15)
-                                  Text(event.name)
+                                  Text(event.title)
                                       .font(.caption)
                                       .foregroundColor(.black)
                   }
@@ -200,14 +200,14 @@ struct DayView: View {
   
   // for debugging
   private func getEventCoords(events: [Event]) -> [Event] {
-    let e = events.map {$0.name}
+    let e = events.map {$0.title}
 //    print(e.joined(separator: "\n"))
     return events
   }
   
   // for debugging
   private func printEvents(events: [Event]) -> String {
-    let eventNames = events.map { $0.name }
+    let eventNames = events.map { $0.title }
       
       // Join the location names with a newline character for readability
       return eventNames.joined(separator: "\n")
@@ -215,7 +215,7 @@ struct DayView: View {
   }
   
   private func eventToString(event: Event) -> String {
-    return "\(event.name): \(event.startTime) -- \(event.endTime)"
+    return "\(event.title): \(event.startTime) -- \(event.endTime)"
   }
   
   func sortEventsByStartTime(events: [Event]) -> [Event] {
