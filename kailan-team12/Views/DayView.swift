@@ -124,7 +124,6 @@ struct DayView: View {
           NavigationStack { // Use NavigationStack for navigation
             Map(coordinateRegion: $region, annotationItems: day.events) { event in
               MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(event.latitude), longitude: CLLocationDegrees(event.longitude))) {
-                NavigationLink(destination: TestView()) {
                   ZStack {
                                   Circle()
                                       .fill(.green)
@@ -133,7 +132,6 @@ struct DayView: View {
                                       .font(.caption)
                                       .foregroundColor(.black)
                   }
-                }
               }
               
               
