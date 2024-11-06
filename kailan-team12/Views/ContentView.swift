@@ -26,7 +26,7 @@ struct ContentView: View {
             Label("Friends", systemImage: "person.2")
           }
 
-        Text("Me View") // Placeholder for the Me view
+        MeView() // Placeholder for the Me view
           .tabItem {
             Label("Me", systemImage: "person.circle")
           }
