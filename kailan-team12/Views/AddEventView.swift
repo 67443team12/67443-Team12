@@ -59,6 +59,7 @@ struct AddEventView: View {
           image: location.image,
           location: location.name,
           title: eventName,
+          duration: location.duration,
           address: location.address,
           
           sunday: location.sunday,

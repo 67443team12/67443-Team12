@@ -61,6 +61,7 @@ struct Event: Identifiable, Codable, Hashable {
               "image": image,
               "location": location,
               "title": title,
+              "duration": duration,
               "address": address,
               
               "sunday": sunday,
