@@ -70,6 +70,7 @@ class TripRepository: ObservableObject {
                                     print("Error updating document: \(error.localizedDescription)")
                                 } else {
                                     print("Event successfully added to Firestore.")
+                                  self.trips.insert(trip, at: 0)
                                 }
                             }
                     

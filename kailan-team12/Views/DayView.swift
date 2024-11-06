@@ -50,6 +50,7 @@ struct DayView: View {
             .padding(.leading, 20)
             .frame(maxWidth: .infinity, alignment: .leading)
 
+          Text("event count: \(day.events.count)")
           
           // Add to Itinerary section
           Text("Add to Itinerary")

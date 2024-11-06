@@ -16,6 +16,7 @@ struct Location: Identifiable, Codable, Hashable {
   var description: String
   var ratings: Double
   var duration: String
+  var image: String
   
   // hours
   var sunday: String
@@ -34,6 +35,7 @@ struct Location: Identifiable, Codable, Hashable {
     case description
     case ratings
     case duration = "estimateDuration"
+    case image
     
     case sunday = "Sunday"
     case monday = "Monday"

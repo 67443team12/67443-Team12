@@ -11,9 +11,9 @@ struct Event: Identifiable, Codable {
   var id: String
   var startTime: String
   var endTime: String
-  var rating: Float
-  var latitude: Float
-  var longitude: Float
+  var rating: Double
+  var latitude: Double
+  var longitude: Double
   var image: String
   var name: String
   
