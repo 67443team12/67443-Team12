@@ -17,6 +17,8 @@ class LocationRepository: ObservableObject {
 
       // Published array to store fetched locations
       @Published var locations: [Location] = []
+      @Published var filteredLocations: [Location] = []
+      @Published var searchText: String = ""
 
       // Firestore listener to keep track of real-time updates
       private var cancellables = Set<AnyCancellable>()
@@ -49,8 +51,21 @@ class LocationRepository: ObservableObject {
                   self.locations = querySnapshot.documents.compactMap { document in
                       try? document.data(as: Location.self)
                   }
+//                self.filteredLocations = querySnapshot.documents.compactMap { document in
+//                    try? document.data(as: Location.self)
+//                }
               }
           }
+      }
+  
+  // Function to filter locations based on a search string
+      func search(searchText: String) {
+        if searchText == "" {
+          return
+        }
+        self.filteredLocations = self.locations.filter { location in
+          return location.name.lowercased().contains(searchText.lowercased())
+        }
       }
   }
     

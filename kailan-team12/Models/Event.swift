@@ -27,4 +27,18 @@ struct Event: Identifiable, Codable {
     case image
     case name = "locationName"
   }
+  
+  func toDictionary() -> [String: Any] {
+          return [
+              "id": id,
+              "startTime": startTime,
+              "endTime": endTime,
+              "rating": rating,
+              "latitude": latitude,
+              "longitude": longitude,
+              "image": image,
+              "name": name
+              // Include other fields if applicable
+          ]
+      }
 }
