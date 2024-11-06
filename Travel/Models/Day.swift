@@ -26,4 +26,9 @@ struct Day: Identifiable, Comparable, Codable {
 	static func == (lhs: Day, rhs: Day) -> Bool {
 		lhs.id == rhs.id
 	}
+  
+  static let example1 = Day(id: UUID(), date: "2024-03-05", events: [Event.example1, Event.example2, Event.example3])
+  static let example2 = Day(id: UUID(), date: "2024-03-06", events: [])
+  static let example3 = Day(id: UUID(), date: "2024-03-07", events: [])
+  static let example4 = Day(id: UUID(), date: "2024-03-08", events: [])
 }

@@ -9,7 +9,6 @@ import SwiftUI
 
 struct TripDetailsView: View {
   var trip: Trip
-  @State private var days: [String] = []
   @State private var selectedIndex = 0
   @State private var searchText: String = ""
 
@@ -36,7 +35,7 @@ struct TripDetailsView: View {
 				.frame(maxWidth: .infinity, alignment: .trailing)
 			)
 			// Switch date row
-			if !days.isEmpty {
+      if !trip.days.isEmpty {
 				HStack {
 					Button(action: {
 						if selectedIndex > 0 {
@@ -49,7 +48,7 @@ struct TripDetailsView: View {
 					
 					Spacer()
 					
-					Text("Day \(selectedIndex + 1): \(days[selectedIndex])")
+          Text("Day \(selectedIndex + 1): \(trip.days[selectedIndex].date)")
 						.font(.headline)
 						.padding()
 						.background(Color(.systemGray5))
@@ -58,13 +57,13 @@ struct TripDetailsView: View {
 					Spacer()
 					
 					Button(action: {
-						if selectedIndex < days.count - 1 {
+            if selectedIndex < trip.days.count - 1 {
 							selectedIndex += 1
 						}
 					}) {
 						Image(systemName: "arrow.forward")
 					}
-					.disabled(selectedIndex == days.count - 1)
+          .disabled(selectedIndex == trip.days.count - 1)
 				}
 				.padding(.horizontal)
 				.padding(.bottom, 10)
@@ -72,18 +71,7 @@ struct TripDetailsView: View {
 				// Main content needs to scroll
 				ScrollView {
 					// Itinerary section
-					Text("Itinerary")
-						.font(.title2)
-						.fontWeight(.semibold)
-						.padding(.leading, 20)
-						.frame(maxWidth: .infinity, alignment: .leading)
-					
-					Rectangle()
-						.fill(Color(.systemGray6))
-						.frame(height: 200)
-						.cornerRadius(10)
-						.padding(.horizontal, 20)
-						.padding(.bottom, 10)
+          ItineraryView(day: trip.days[selectedIndex])
 					
 					// Add to Itinerary section
 					Text("Add to Itinerary")
@@ -121,39 +109,8 @@ struct TripDetailsView: View {
 					.padding()
 			}
 		}
-		.onAppear {
-			loadDays()
-		}
-		// this will make the tab bar hidden forever even when return to my trips page
-//		.toolbar(.hidden, for: .tabBar)
 	}
 	
-
-  private func loadDays() {
-    days = generateDateList(from: trip.startDate, to: trip.endDate)
-  }
-
-  private func generateDateList(from startDate: String, to endDate: String) -> [String] {
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd"
-    guard let start = dateFormatter.date(from: startDate),
-          let end = dateFormatter.date(from: endDate) else {
-      return []
-    }
-    
-    var dates: [String] = []
-    var currentDate = start
-    
-    while currentDate <= end {
-      dates.append(dateFormatter.string(from: currentDate))
-      guard let nextDate = Calendar.current.date(byAdding: .day, value: 1, to: currentDate) else {
-        break
-      }
-      currentDate = nextDate
-    }
-    
-    return dates
-  }
 }
 
 struct TripDetailsView_Previews: PreviewProvider {

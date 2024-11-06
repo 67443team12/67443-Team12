@@ -36,4 +36,31 @@ struct Event: Identifiable, Comparable, Codable {
 	static func == (lhs: Event, rhs: Event) -> Bool {
 		lhs.id < rhs.id
 	}
+  
+  static let example1 = Event(id: UUID(),
+                              locationId: "1234A",
+                              locationName: "Bayfront Park",
+                              latitude: 25.77542312073535,
+                              longitude: -80.18616744670095,
+                              address: "301 Biscayne Blvd, Miami, FL 33132",
+                              startTime: "13:00:00",
+                              endTime: "14:00:00")
+  
+  static let example2 = Event(id: UUID(),
+                              locationId: "1234A",
+                              locationName: "Bayfront Park",
+                              latitude: 25.77542312073535,
+                              longitude: -80.18616744670095,
+                              address: "301 Biscayne Blvd, Miami, FL 33132",
+                              startTime: "15:00:00",
+                              endTime: "17:00:00")
+  
+  static let example3 = Event(id: UUID(),
+                              locationId: "1234A",
+                              locationName: "Bayfront Park",
+                              latitude: 25.77542312073535,
+                              longitude: -80.18616744670095,
+                              address: "301 Biscayne Blvd, Miami, FL 33132",
+                              startTime: "18:00:00",
+                              endTime: "21:00:00")
 }
