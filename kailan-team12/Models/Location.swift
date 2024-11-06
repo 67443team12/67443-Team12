@@ -9,7 +9,7 @@ import Foundation
 
 struct Location: Identifiable, Codable, Hashable {
   
-  var id = UUID()
+  var id: String
   var longitude: Double
   var latitude: Double
   var name: String
@@ -29,6 +29,7 @@ struct Location: Identifiable, Codable, Hashable {
   
   // To conform to Codable protocol
   enum CodingKeys: String, CodingKey {
+    case id = "locationId"
     case longitude
     case latitude
     case name = "locationName"

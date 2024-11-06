@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Event: Identifiable, Codable {
+struct Event: Identifiable, Codable, Hashable {
   var id: String
   var startTime: String
   var endTime: String
@@ -25,7 +25,7 @@ struct Event: Identifiable, Codable {
     case latitude
     case longitude
     case image
-    case name = "locationName"
+    case name
   }
   
   func toDictionary() -> [String: Any] {
@@ -40,5 +40,10 @@ struct Event: Identifiable, Codable {
               "name": name
               // Include other fields if applicable
           ]
-      }
+    }
+  
+  func hash(into hasher: inout Hasher) {
+      hasher.combine(id)
+
+  }
 }

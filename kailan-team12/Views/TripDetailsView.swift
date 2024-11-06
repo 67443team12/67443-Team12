@@ -59,7 +59,7 @@ struct TripDetailsView: View {
     }
     .animation(.easeInOut, value: currentIndex)
   }
-      }
+          }
   }
   
 

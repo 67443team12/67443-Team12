@@ -9,6 +9,10 @@ import SwiftUI
 import CoreLocation
 import MapKit
 
+
+
+
+
 struct DayView: View {
   let trip: Trip
   let day: Day
@@ -34,82 +38,120 @@ struct DayView: View {
         self.displayLocations()
       })
       
-        VStack {
-          Spacer()
-          // Title
-          Text("Day \(dayNumber): \(day.date)")
-            .font(.headline)
-            .padding()
-            .background(Color(.systemGray5))
-            .cornerRadius(10)
+      VStack {
+        Spacer()
+        // Title
+        Text("Day \(dayNumber): \(day.date)")
+          .font(.headline)
+          .padding()
+          .background(Color(.systemGray5))
+          .cornerRadius(10)
+        
+        // Itinerary section
+        Text("Itinerary")
+          .font(.title2)
+          .fontWeight(.semibold)
+          .padding(.leading, 20)
+          .frame(maxWidth: .infinity, alignment: .leading)
+        
+        //          Text("event count: \(day.events.count)")
+        Text(printEvents(events: day.events))
+        
+        // Add to Itinerary section
+        Text("Add to Itinerary")
+          .font(.title2)
+          .fontWeight(.semibold)
+          .padding(.leading, 20)
+          .frame(maxWidth: .infinity, alignment: .leading)
+        
+        TextField("Search for a place", text: binding)
+          .padding()
+          .background(Color(.systemGray5))
+          .cornerRadius(10)
+          .padding(.horizontal, 20)
+          .padding(.bottom, 10)
+        
+        // Map section
+        if searchText != "" {
+        Text("Search Results")
+          .font(.title2)
+          .fontWeight(.semibold)
+          .padding(.leading, 20)
+          .frame(maxWidth: .infinity, alignment: .leading)
+        
+        
+        NavigationStack { // Use NavigationStack for navigation
+          Map(coordinateRegion: $region, annotationItems: displayedLocations) { location in
+            MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(location.latitude), longitude: CLLocationDegrees(location.longitude))) {
+              NavigationLink(destination: LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)) {
+                ZStack {
+                  Circle()
+                    .fill(.blue)
+                    .frame(width: 15, height: 15)
+                  Text(location.name)
+                    .font(.caption)
+                    .foregroundColor(.black)
+                }
+              }
+            }
+            
+            
+            
+          }
+          .ignoresSafeArea()
+          .navigationDestination(for: Location.self) { location in // Check if location is selected
+            LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository) // Present DetailView with location
+          }
+        }
+        .frame(width: 350, height: 300) // Optional: Set map frame size
+        .clipShape(RoundedRectangle(cornerRadius: 20)) // Optional: Set map border style
+        .overlay(
+          RoundedRectangle(cornerRadius: 20)
+            .stroke(.gray, lineWidth: 1)
+        )
+      }
           
-          // Itinerary section
-          Text("Itinerary")
-            .font(.title2)
-            .fontWeight(.semibold)
-            .padding(.leading, 20)
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-          Text("event count: \(day.events.count)")
-          
-          // Add to Itinerary section
-          Text("Add to Itinerary")
-            .font(.title2)
-            .fontWeight(.semibold)
-            .padding(.leading, 20)
-            .frame(maxWidth: .infinity, alignment: .leading)
-
-          TextField("Search for a place", text: binding)
-            .padding()
-            .background(Color(.systemGray5))
-            .cornerRadius(10)
-            .padding(.horizontal, 20)
-            .padding(.bottom, 10)
-          
-          // Map section
           Text("Map")
             .font(.title2)
             .fontWeight(.semibold)
             .padding(.leading, 20)
             .frame(maxWidth: .infinity, alignment: .leading)
-          
-//          Map () {
-//            ForEach(displayedLocations) { location in
-//              Marker(location.name, coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(location.latitude), longitude: CLLocationDegrees(location.longitude)))
-//            }
-//          }
-//          .frame(width: 350, height: 300)
-//          .clipShape(RoundedRectangle(cornerRadius: 20))
-          
-          
-          // test
-          
-            NavigationStack { // Use NavigationStack for navigation
-              Map(coordinateRegion: $region, annotationItems: displayedLocations) { location in
-                MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(location.latitude), longitude: CLLocationDegrees(location.longitude))) {
-                  NavigationLink(destination: LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)) {
-                    ZStack {
-                                    Circle()
-                                        .fill(.blue)
-                                        .frame(width: 15, height: 15)
-                                    Text(location.name)
-                                        .font(.caption)
-                                        .foregroundColor(.black)
-                                }
+          NavigationStack { // Use NavigationStack for navigation
+            Map(coordinateRegion: $region, annotationItems: day.events) { event in
+              MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(event.latitude), longitude: CLLocationDegrees(event.longitude))) {
+                NavigationLink(destination: TestView()) {
+                  ZStack {
+                                  Circle()
+                                      .fill(.green)
+                                      .frame(width: 15, height: 15)
+                                  Text(event.name)
+                                      .font(.caption)
+                                      .foregroundColor(.black)
                   }
                 }
               }
-              .ignoresSafeArea()
-              .navigationDestination(for: Location.self) { location in // Check if location is selected
-                LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository) // Present DetailView with location
-              }
+              
+              
+              
             }
-            .frame(width: 350, height: 300) // Optional: Set map frame size
-            .clipShape(RoundedRectangle(cornerRadius: 20)) // Optional: Set map border style
-            .overlay(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(.gray, lineWidth: 1)
-            )
+            .ignoresSafeArea()
+            .navigationDestination(for: Location.self) { location in // Check if location is selected
+              LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository) // Present DetailView with location
+            }
+          }
+          .frame(width: 350, height: 300) // Optional: Set map frame size
+          .clipShape(RoundedRectangle(cornerRadius: 20)) // Optional: Set map border style
+          .overlay(
+              RoundedRectangle(cornerRadius: 20)
+                  .stroke(.gray, lineWidth: 1)
+          )
+          
+
+          
+          
+          
+          
+          
           
         
           // for debugging
@@ -151,4 +193,23 @@ struct DayView: View {
     }
 
   }
+  
+  private func getEventCoords(events: [Event]) -> [Event] {
+    let e = events.map {$0.name}
+//    print(e.joined(separator: "\n"))
+    return events
+  }
+  
+  // for debugging
+  private func printEvents(events: [Event]) -> String {
+    let eventNames = events.map { $0.name }
+      
+      // Join the location names with a newline character for readability
+      return eventNames.joined(separator: "\n")
+    
+  }
+  
+
+
+  
 }
