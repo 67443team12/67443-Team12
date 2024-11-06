@@ -9,6 +9,7 @@ import SwiftUI
 
 struct TripDetailsView: View {
   var trip: Trip
+  var tripRepository: TripRepository
   
   @State private var currentIndex = 0
   @ObservedObject var locationRepository = LocationRepository()
@@ -47,7 +48,7 @@ struct TripDetailsView: View {
           .disabled(currentIndex == trip.days.count - 1) // Disable button if on the last day
         }
         .padding()
-        DayView(trip: trip, day: trip.days[currentIndex], dayNumber: currentIndex + 1, locationRepository: locationRepository)
+        DayView(trip: trip, day: trip.days[currentIndex], dayNumber: currentIndex + 1, locationRepository: locationRepository, tripRepository: tripRepository)
           .frame(maxWidth: .infinity, maxHeight: .infinity)
           .transition(.slide)
         

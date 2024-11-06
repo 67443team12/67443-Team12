@@ -54,7 +54,7 @@ class TripRepository: ObservableObject {
                 if var days = document.data()?["days"] as? [[String: Any]] {
                     print("Days array:", days)
                     // You can now manipulate or inspect the 'days' array as needed
-                  var day = days[dayIndex]
+                  let day = days[dayIndex]
                   // access events
                   if let events = day["events"] as? [[String: Any]] {
                           print("Events array:", events)

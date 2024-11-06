@@ -14,6 +14,7 @@ struct DayView: View {
   let day: Day
   let dayNumber: Int
   let locationRepository: LocationRepository
+  let tripRepository: TripRepository
   @State var displayedLocations: [Location] = [Location]()
   @State var searchText: String = ""
   @State private var region = MKCoordinateRegion(
@@ -85,7 +86,7 @@ struct DayView: View {
             NavigationStack { // Use NavigationStack for navigation
               Map(coordinateRegion: $region, annotationItems: displayedLocations) { location in
                 MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(location.latitude), longitude: CLLocationDegrees(location.longitude))) {
-                  NavigationLink(destination: LocationDetailView(location: location, trip: trip)) {
+                  NavigationLink(destination: LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)) {
                     ZStack {
                                     Circle()
                                         .fill(.blue)
@@ -99,7 +100,7 @@ struct DayView: View {
               }
               .ignoresSafeArea()
               .navigationDestination(for: Location.self) { location in // Check if location is selected
-                LocationDetailView(location: location, trip: trip) // Present DetailView with location
+                LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository) // Present DetailView with location
               }
             }
             .frame(width: 350, height: 300) // Optional: Set map frame size

@@ -11,7 +11,8 @@ import SwiftUI
 struct LocationDetailView: View {
   let location: Location
   let trip: Trip
-//  let tripRepository: TripRepository
+  let dayNumber: Int
+  let tripRepository: TripRepository
 //  let dayIndex: Int
   
   var body: some View {
@@ -26,7 +27,7 @@ struct LocationDetailView: View {
                                 .foregroundColor(.yellow)
         Text(String(format: "%.1f", location.ratings))
         Spacer()
-        NavigationLink(destination: AddEventView(location: location, trip: trip)) {
+        NavigationLink(destination: AddEventView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)) {
                             Image(systemName: "plus")
                                 .font(.title2)
                                 .foregroundColor(.blue)
