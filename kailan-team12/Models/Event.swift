@@ -46,4 +46,10 @@ struct Event: Identifiable, Codable, Hashable {
       hasher.combine(id)
 
   }
+  
+  func startTimeAsDate() -> Date? {
+          let dateFormatter = DateFormatter()
+          dateFormatter.dateFormat = "h:mm a" // Matches "9:00 AM", "10:30 PM", etc.
+          return dateFormatter.date(from: startTime)
+      }
 }

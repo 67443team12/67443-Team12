@@ -55,7 +55,11 @@ struct DayView: View {
           .frame(maxWidth: .infinity, alignment: .leading)
         
         //          Text("event count: \(day.events.count)")
-        Text(printEvents(events: day.events))
+//        Text(printEvents(events: day.events))
+        
+        ForEach(sortEventsByStartTime(events: day.events), id: \.id) { event in
+                        Text(eventToString(event: event))
+                    }
         
         // Add to Itinerary section
         Text("Add to Itinerary")
@@ -194,6 +198,7 @@ struct DayView: View {
 
   }
   
+  // for debugging
   private func getEventCoords(events: [Event]) -> [Event] {
     let e = events.map {$0.name}
 //    print(e.joined(separator: "\n"))
@@ -207,6 +212,20 @@ struct DayView: View {
       // Join the location names with a newline character for readability
       return eventNames.joined(separator: "\n")
     
+  }
+  
+  private func eventToString(event: Event) -> String {
+    return "\(event.name): \(event.startTime) -- \(event.endTime)"
+  }
+  
+  func sortEventsByStartTime(events: [Event]) -> [Event] {
+      return events.sorted { (event1, event2) -> Bool in
+          // Unwrap the startTime as Date for comparison
+          guard let date1 = event1.startTimeAsDate(), let date2 = event2.startTimeAsDate() else {
+              return false
+          }
+          return date1 < date2 // Sort by ascending startTime
+      }
   }
   
 
