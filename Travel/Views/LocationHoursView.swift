@@ -31,23 +31,23 @@ struct LocationHoursView: View {
         Spacer()
       }
       .padding([.leading, .top], 20)
-      .padding(.bottom, 5)
+      .padding(.bottom, 2)
 
       // Title
       Text("Open Hours")
         .font(.title)
         .fontWeight(.bold)
-        .padding(.bottom, 10)
+        .padding(.bottom, 8)
 
       // Hours for each day, centered
       VStack(spacing: 6) {
-        Text("Monday: \(location.monday)")
-        Text("Tuesday: \(location.tuesday)")
-        Text("Wednesday: \(location.wednesday)")
-        Text("Thursday: \(location.thursday)")
-        Text("Friday: \(location.friday)")
-        Text("Saturday: \(location.saturday)")
-        Text("Sunday: \(location.sunday)")
+        Text("Monday: ").fontWeight(.bold) + Text(location.monday)
+        Text("Tuesday: ").fontWeight(.bold) + Text(location.tuesday)
+        Text("Wednesday: ").fontWeight(.bold) + Text(location.wednesday)
+        Text("Thursday: ").fontWeight(.bold) + Text(location.thursday)
+        Text("Friday: ").fontWeight(.bold) + Text(location.friday)
+        Text("Saturday: ").fontWeight(.bold) + Text(location.saturday)
+        Text("Sunday: ").fontWeight(.bold) + Text(location.sunday)
       }
       .multilineTextAlignment(.center) // Center-align text
       .padding(.horizontal, 20)

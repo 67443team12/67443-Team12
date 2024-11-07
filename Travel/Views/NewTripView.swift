@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct NewTripView: View {
+  @Binding var isPresented: Bool // Control dismissal of both views
   @State private var tripName: String = ""
   @State private var showDatePicker = false
 	@EnvironmentObject var aliceVM: MockUser
-  @Environment(\.presentationMode) var presentationMode
   @ObservedObject var tripRepository: TripRepository
 
   var body: some View {
@@ -41,9 +41,10 @@ struct NewTripView: View {
             Text("Next")
               .font(.headline)
               .frame(width: 100, height: 44)
-              .background(Color.blue)
+              .background(Color("AccentColor"))
               .foregroundColor(.white)
               .cornerRadius(20)
+              .padding(.vertical, 5)
           }
           .padding()
           .disabled(tripName.isEmpty)
@@ -52,31 +53,40 @@ struct NewTripView: View {
         Spacer()
       }
       .navigationBarItems(trailing: Button("Cancel") {
-        presentationMode.wrappedValue.dismiss()
+        isPresented = false // Dismiss to go back to MyTripsView
       })
       .sheet(isPresented: $showDatePicker) {
-        DateSelectionView(tripName: tripName, onSave: { startDate, endDate in
-          // Create a new Trip object
-          let newTrip = Trip(
-            id: UUID().uuidString,
-            name: tripName,
-            startDate: formatDate(date: startDate),
-            endDate: formatDate(date: endDate),
-            photo: "", // Placeholder
-            color: "red", // Placeholder color
-            days: generateDays(from: startDate, to: endDate),
-            travelers: [SimpleUser.alice]
-          )
-          
-          // Save the new trip to the repository
-          tripRepository.trips.append(newTrip)
-          tripRepository.addTrip(newTrip)
-					aliceVM.addTrip(tripID: newTrip.id)
-          
-          // Dismiss both the date picker and the new trip view
-          showDatePicker = false
-          presentationMode.wrappedValue.dismiss()
-        })
+        DateSelectionView(
+          tripName: tripName,
+          onSave: { startDate, endDate in
+            // Create a new Trip object with a random color
+            let randomColor = getRandomColorName()
+            let newTrip = Trip(
+              id: UUID().uuidString,
+              name: tripName,
+              startDate: formatDate(date: startDate),
+              endDate: formatDate(date: endDate),
+              photo: "", // Placeholder
+              color: randomColor,
+              days: generateDays(from: startDate, to: endDate),
+              travelers: [SimpleUser.alice]
+            )
+            
+            // Save the new trip to the repository
+            tripRepository.trips.append(newTrip)
+            tripRepository.addTrip(newTrip)
+            aliceVM.addTrip(tripID: newTrip.id)
+            
+            // Dismiss both the date picker and the new trip view
+            showDatePicker = false
+            isPresented = false
+          },
+          onCancel: {
+            // Handle the cancel action to go back to MyTripsView
+            showDatePicker = false
+            isPresented = false
+          }
+        )
         .presentationDetents([.fraction(0.97)])
         .presentationDragIndicator(.visible)
       }
@@ -104,11 +114,16 @@ struct NewTripView: View {
 
     return days
   }
+  
+  private func getRandomColorName() -> String {
+    let colors = ["yellow", "purple", "orange", "blue", "red", "green", "gray"]
+    return colors.randomElement() ?? "gray" // Fallback to gray if random selection fails
+  }
 }
 
 struct NewTripView_Previews: PreviewProvider {
   static var previews: some View {
-    NewTripView(tripRepository: TripRepository())
-			.environmentObject(MockUser(user: User.example))
+    NewTripView(isPresented: .constant(true), tripRepository: TripRepository())
+    .environmentObject(MockUser(user: User.example))
   }
 }
