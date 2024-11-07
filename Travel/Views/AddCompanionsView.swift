@@ -55,7 +55,7 @@ struct AddCompanionsView: View {
 							.fill(Color("AccentColor"))
 							.frame(height: 70)
 							.cornerRadius(10)
-						Text("Save")
+						Text("Add Companions")
 							.foregroundColor(.white)
 							.fontWeight(.bold)
 					}
