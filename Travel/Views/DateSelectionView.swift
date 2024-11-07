@@ -16,6 +16,7 @@ struct DateSelectionView: View {
   @Environment(\.presentationMode) var presentationMode
   
   var onSave: ((Date, Date) -> Void)?
+  var onCancel: (() -> Void)? // Closure for handling cancel action
 
   var body: some View {
     NavigationView {
@@ -85,13 +86,13 @@ struct DateSelectionView: View {
         HStack {
           Spacer().frame(width: 60)
           Button(action: {
-            presentationMode.wrappedValue.dismiss()
+            presentationMode.wrappedValue.dismiss() // Goes back to NewTripView
           }) {
             Text("Back")
               .font(.headline)
               .frame(width: 100, height: 44)
-              .background(Color.blue.opacity(0.2))
-              .foregroundColor(.blue)
+              .background(Color("LightPurple"))
+              .foregroundColor(Color("AccentColor"))
               .cornerRadius(20)
           }
           Spacer()
@@ -102,7 +103,7 @@ struct DateSelectionView: View {
             Text("Done")
               .font(.headline)
               .frame(width: 100, height: 44)
-              .background(Color.blue)
+              .background(Color("AccentColor"))
               .foregroundColor(.white)
               .cornerRadius(20)
           }
@@ -112,7 +113,7 @@ struct DateSelectionView: View {
         Spacer()
       }
       .navigationBarItems(trailing: Button("Cancel") {
-        presentationMode.wrappedValue.dismiss()
+        onCancel?() // Trigger the cancel action to go back to MyTripsView
       })
       .presentationDetents([.fraction(0.9)])
       .presentationDragIndicator(.visible)

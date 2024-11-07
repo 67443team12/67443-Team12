@@ -19,8 +19,9 @@ struct TripCardView: View {
 
       // Display trip name and dates
       Text(trip.name)
-        .font(.headline)
-        .padding([.top, .leading])
+        .font(.title3.bold())
+        .padding([.leading])
+        .padding(.top, 6)
         .foregroundColor(.black)
       
       Text("\(trip.startDate) - \(trip.endDate)")
