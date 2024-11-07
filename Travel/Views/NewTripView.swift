@@ -62,8 +62,8 @@ struct NewTripView: View {
             startDate: formatDate(date: startDate),
             endDate: formatDate(date: endDate),
             photo: "", // Placeholder
-            color: "blue", // Placeholder color
-						days: generateDays(from: startDate, to: endDate),
+            color: "red", // Placeholder color
+            days: generateDays(from: startDate, to: endDate),
             travelers: [SimpleUser.alice]
           )
           
@@ -84,25 +84,24 @@ struct NewTripView: View {
   private func formatDate(date: Date) -> String {
     let formatter = DateFormatter()
     formatter.dateFormat = "yyyy-MM-dd"
-		formatter.timeZone = TimeZone(abbreviation: "UTC")
-		return formatter.string(from: date)
+    formatter.timeZone = TimeZone(abbreviation: "ET")
+    return formatter.string(from: date)
   }
-	
-	private func generateDays(from start: Date, to end: Date) -> [Day] {
-		var days: [Day] = []
-		let normStart = Calendar.current.startOfDay(for: start)
-		let normEnd = Calendar.current.startOfDay(for: end)
-		let oneDay: TimeInterval = 24 * 60 * 60
-		var current = normStart
-		
-		while current <= normEnd {
-			days.append(Day(id: UUID().uuidString, date: formatDate(date: current), events: [Event]()))
-				// Move to the next day
-			current = current.addingTimeInterval(oneDay)
-		}
-		
-		return days
-	}
+  
+  private func generateDays(from start: Date, to end: Date) -> [Day] {
+    var days: [Day] = []
+    let calendar = Calendar.current
+    var currentDate = calendar.startOfDay(for: start)
+
+    while currentDate <= calendar.startOfDay(for: end) {
+      let day = Day(id: UUID().uuidString, date: formatDate(date: currentDate), events: [])
+      days.append(day)
+      // Move to the next day
+      currentDate = calendar.date(byAdding: .day, value: 1, to: currentDate) ?? currentDate.addingTimeInterval(24 * 60 * 60)
+    }
+
+    return days
+  }
 }
 
 struct NewTripView_Previews: PreviewProvider {

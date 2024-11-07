@@ -44,12 +44,27 @@ struct DayView: View {
         .padding(.leading, 20)
         .frame(maxWidth: .infinity, alignment: .leading)
 
-      TextField("Search for a place", text: binding)
-        .padding()
-        .background(Color(.systemGray5))
-        .cornerRadius(10)
-        .padding(.horizontal, 20)
-        .padding(.bottom, 10)
+      // Search bar with clear button inside the gray rectangle
+      HStack {
+        TextField("Search for a place", text: binding)
+          .padding(.leading, 10) // Extra padding for text
+          .padding(.vertical, 15)
+        
+        if !searchText.isEmpty {
+          Button(action: {
+            searchText = ""
+            displayLocations() // Update displayedLocations after clearing
+          }) {
+            Image(systemName: "xmark.circle.fill")
+              .foregroundColor(.gray)
+          }
+          .padding(.trailing, 10)
+        }
+      }
+      .background(Color(.systemGray5))
+      .cornerRadius(10)
+      .padding(.horizontal, 20)
+      .padding(.bottom, 10)
 
       // Map section
       if searchText != "" {
