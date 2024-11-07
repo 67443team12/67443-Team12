@@ -44,7 +44,7 @@ struct MyTripsView: View {
       }
       .navigationBarHidden(true)
       .sheet(isPresented: $showNewTripView) {
-        NewTripView(tripRepository: tripRepository)
+        NewTripView(isPresented: $showNewTripView, tripRepository: tripRepository)
           .presentationDetents([.fraction(0.97)])
           .presentationDragIndicator(.visible)
       }
