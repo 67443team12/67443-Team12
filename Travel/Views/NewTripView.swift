@@ -10,6 +10,7 @@ import SwiftUI
 struct NewTripView: View {
   @State private var tripName: String = ""
   @State private var showDatePicker = false
+	@EnvironmentObject var aliceVM: MockUser
   @Environment(\.presentationMode) var presentationMode
   @ObservedObject var tripRepository: TripRepository
 
@@ -70,6 +71,7 @@ struct NewTripView: View {
           // Save the new trip to the repository
           tripRepository.trips.append(newTrip)
           tripRepository.addTrip(newTrip)
+					aliceVM.addTrip(tripID: newTrip.id)
           
           // Dismiss both the date picker and the new trip view
           showDatePicker = false
@@ -107,5 +109,6 @@ struct NewTripView: View {
 struct NewTripView_Previews: PreviewProvider {
   static var previews: some View {
     NewTripView(tripRepository: TripRepository())
+			.environmentObject(MockUser(user: User.example))
   }
 }

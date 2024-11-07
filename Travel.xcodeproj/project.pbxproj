@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -85,6 +85,10 @@
 		98DF07442CD807CB00694B97 /* SelectFriendsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFriendsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		986E600D2CDD3C6C005B4F6E /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		37BC41B82CD1911B007AA26B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
@@ -117,6 +121,7 @@
 		37BC41BD2CD1911B007AA26B /* Travel */ = {
 			isa = PBXGroup;
 			children = (
+				986E600D2CDD3C6C005B4F6E /* ViewModels */,
 				37B588EC2CDBED2800C44206 /* GoogleService-Info.plist */,
 				37BC41DA2CD19455007AA26B /* Views */,
 				37BC41D72CD192BB007AA26B /* DataRepository */,
@@ -202,6 +207,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				986E600D2CDD3C6C005B4F6E /* ViewModels */,
 			);
 			name = Travel;
 			packageProductDependencies = (

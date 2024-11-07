@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct ContentView: View {
-  var body: some View {
+	var aliceVM = MockUser(user: User.example)
+	
+	var body: some View {
 		TabView {
 			MyTripsView()
 				.tabItem {
@@ -30,9 +32,10 @@ struct ContentView: View {
 					Label("Me", systemImage: "person.circle")
 				}
 		}
-  }
+		.environmentObject(aliceVM)
+	}
 }
 
 #Preview {
-  ContentView()
+	ContentView()
 }

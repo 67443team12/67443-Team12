@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MeView: View {
+	@EnvironmentObject var aliceVM: MockUser
+	
 	var body: some View {
 		NavigationView {
 			VStack(spacing: 40) {
@@ -26,10 +28,10 @@ struct MeView: View {
 						.frame(width: 100, height: 100)
 						.padding(.leading, 20)
 					VStack(alignment: .leading) {
-						Text(User.example.name)
+						Text(aliceVM.user.name)
 							.font(.largeTitle)
 							.fontWeight(.semibold)
-						Text("ID: \(User.example.id)")
+						Text("ID: \(aliceVM.user.id)")
 							.fontWeight(.semibold)
 					}
 						.padding(.leading, 20)
@@ -64,4 +66,5 @@ struct MeView: View {
 
 #Preview {
 	MeView()
+		.environmentObject(MockUser(user: User.example))
 }
