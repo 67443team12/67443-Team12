@@ -122,4 +122,27 @@ class TripRepository: ObservableObject {
       }
     }
   }
+	
+	func removeTraveler(trip: Trip, traveler: SimpleUser) {
+		// Create a reference to the specific trip document in Firestore
+		let tripRef = store.collection(path).document(trip.id)
+
+		// Remove the traveler from the local list
+		var updatedTravelers = trip.travelers
+		if let index = updatedTravelers.firstIndex(where: { $0.id == traveler.id }) {
+			updatedTravelers.remove(at: index)
+
+			// Update Firestore by setting the updated list of travelers
+			tripRef.updateData(["travelers": updatedTravelers.map { $0.toDictionary() }]) { error in
+				if let error = error {
+					print("Error updating travelers in Firestore: \(error.localizedDescription)")
+				} else {
+					print("Travelers updated successfully in Firestore.")
+				}
+			}
+		} else {
+			print("Traveler not found in the trip.")
+		}
+	}
+	
 }

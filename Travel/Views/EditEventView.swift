@@ -16,6 +16,8 @@ struct EditEventView: View {
   @State private var startTime: Date
   @State private var endTime: Date
   @State private var eventName: String
+	
+	@Environment(\.presentationMode) var presentationMode
 
   init(event: Event, trip: Trip, tripRepository: TripRepository, dayNumber: Int) {
     self.event = event
@@ -75,6 +77,8 @@ struct EditEventView: View {
           )
           
           tripRepository.editEventInTrip(trip: trip, dayIndex: dayNumber - 1, eventId: event.id, updatedEvent: updatedEvent)
+//  			Tried to dismiss the view after saving the event, but then the view would not update
+//					presentationMode.wrappedValue.dismiss()
         }
       }
     }

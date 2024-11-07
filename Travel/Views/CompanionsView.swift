@@ -9,12 +9,17 @@ import SwiftUI
 
 struct CompanionsView: View {
 	var people: [SimpleUser]
+	var trip: Trip
+	let tripRepository: TripRepository
 	
 	var body: some View {
 		VStack {
 			VStack {
 				ForEach(people) { person in
-					CompanionRowView(person: person)
+//				Saying that the current user is Alice so not showing her in the list
+					if person.id != User.example.id {
+						CompanionRowView(person: person, trip: trip, tripRepository: tripRepository)
+					}
 				}
 			}
 			.padding(.vertical)
@@ -45,5 +50,5 @@ struct CompanionsView: View {
 }
 
 #Preview {
-	CompanionsView(people: [SimpleUser.bob, SimpleUser.clara])
+	CompanionsView(people: [SimpleUser.bob, SimpleUser.clara], trip: Trip.example, tripRepository: TripRepository())
 }
