@@ -36,7 +36,7 @@ struct LocationDetailView: View {
         Spacer()
       }
       .padding([.leading, .top], 20)
-      .padding(.bottom, 30)
+      .padding(.bottom, 20)
       
       // Location details section
       VStack(alignment: .leading, spacing: 15) {
@@ -53,6 +53,15 @@ struct LocationDetailView: View {
           }
           .padding(.trailing, 20)
         }
+
+        // Address
+        HStack {
+          Image(systemName: "map")
+            .foregroundColor(.gray)
+          Text(location.address)
+        }
+        .font(.body)
+        .padding(.leading, 20)
         
         // Rating
         HStack {

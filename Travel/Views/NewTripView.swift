@@ -55,14 +55,15 @@ struct NewTripView: View {
       })
       .sheet(isPresented: $showDatePicker) {
         DateSelectionView(tripName: tripName, onSave: { startDate, endDate in
-          // Create a new Trip object
+          // Create a new Trip object with a random color
+          let randomColor = getRandomColorName()
           let newTrip = Trip(
             id: UUID().uuidString,
             name: tripName,
             startDate: formatDate(date: startDate),
             endDate: formatDate(date: endDate),
             photo: "", // Placeholder
-            color: "red", // Placeholder color
+            color: randomColor,
             days: generateDays(from: startDate, to: endDate),
             travelers: [SimpleUser.alice]
           )
@@ -101,6 +102,11 @@ struct NewTripView: View {
     }
 
     return days
+  }
+  
+  private func getRandomColorName() -> String {
+    let colors = ["yellow", "purple", "orange", "blue", "red", "green", "gray"]
+    return colors.randomElement() ?? "gray" // Fallback to gray if random selection fails
   }
 }
 

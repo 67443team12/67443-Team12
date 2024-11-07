@@ -21,6 +21,7 @@ struct DayView: View {
     center: CLLocationCoordinate2D(latitude: 39.8283, longitude: -98.5795),
     span: MKCoordinateSpan(latitudeDelta: 30, longitudeDelta: 30)
   )
+  @State private var selectedEvent: Event? = nil
 
   var body: some View {
     @State var selectedLocation: Location?
@@ -111,13 +112,18 @@ struct DayView: View {
       NavigationStack {
         Map(coordinateRegion: $region, annotationItems: day.events) { event in
           MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(event.latitude), longitude: CLLocationDegrees(event.longitude))) {
-            ZStack {
-              Circle()
-                .fill(.green)
-                .frame(width: 15, height: 15)
-              Text(event.title)
-                .font(.caption)
-                .foregroundColor(.black)
+            Button(action: {
+              selectedEvent = event
+            }) {
+              ZStack {
+                Image(systemName: "mappin.circle.fill")
+                  .foregroundColor(.red)
+                  .font(.title3) // Make the red pin smaller
+                  .frame(width: 10, height: 10)
+                Text(event.title)
+                  .font(.caption.bold())
+                  .foregroundColor(.black)
+              }
             }
           }
         }
@@ -129,13 +135,37 @@ struct DayView: View {
       .frame(width: 350, height: 300)
       .clipShape(RoundedRectangle(cornerRadius: 20))
       .overlay(
-        RoundedRectangle(cornerRadius: 20)
-          .stroke(.gray, lineWidth: 1)
+        selectedEvent != nil ? popUpView : nil,
+        alignment: .bottom
       )
 
       Spacer()
     }
     .onAppear { loadData() }
+  }
+
+  private var popUpView: some View {
+    VStack(spacing: 5) {
+      Text(selectedEvent?.title ?? "") // Display event title
+        .font(.headline)
+        .foregroundColor(.primary)
+      Text(selectedEvent?.location ?? "")
+        .font(.subheadline)
+        .foregroundColor(.gray)
+      Text(selectedEvent?.address ?? "")
+        .font(.footnote)
+      Button(action: {
+        selectedEvent = nil // Close pop-up
+      }) {
+        Text("Close")
+          .font(.footnote.bold())
+          .foregroundColor(.accentColor)
+      }
+    }
+    .padding()
+    .background(Color.white)
+    .cornerRadius(10)
+    .shadow(radius: 5)
   }
 
   private func loadData() {
