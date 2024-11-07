@@ -27,6 +27,14 @@ struct SimpleUser: Codable, Identifiable, Comparable {
 		lhs.id == rhs.id
 	}
 	
+	func toDictionary() -> [String: Any] {
+		return [
+			"userId": id,
+			"name": name,
+			"photo": photo
+		]
+	}
+	
 	static let alice = SimpleUser(
 		id: "Alice215",
 		name: "Alice",

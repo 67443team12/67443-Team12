@@ -8,15 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
-  init() {
-    let appearance = UITabBarAppearance()
-    appearance.configureWithOpaqueBackground()
-    appearance.backgroundColor = UIColor.systemBackground
-    UITabBar.appearance().standardAppearance = appearance
-    UITabBar.appearance().scrollEdgeAppearance = appearance
-  }
-  
-  var body: some View {
+	var aliceVM = MockUser(user: User.example)
+	
+	var body: some View {
+    init() {
+      let appearance = UITabBarAppearance()
+      appearance.configureWithOpaqueBackground()
+      appearance.backgroundColor = UIColor.systemBackground
+      UITabBar.appearance().standardAppearance = appearance
+      UITabBar.appearance().scrollEdgeAppearance = appearance
+    }
+    
 		TabView {
 			MyTripsView()
 				.tabItem {
@@ -38,9 +40,10 @@ struct ContentView: View {
 					Label("Me", systemImage: "person.circle")
 				}
 		}
-  }
+		.environmentObject(aliceVM)
+	}
 }
 
 #Preview {
-  ContentView()
+	ContentView()
 }

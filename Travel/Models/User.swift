@@ -43,7 +43,9 @@ struct User: Codable, Identifiable, Comparable {
 		photo: "",
 		Posts: [SelfPost.example],
 		Bookmarks: [Post.example],
-		Trips: ["269C753NIQ"],
+		Trips: ["73C54CB4-40FC-41DC-88FA-154CA48D429E",
+					 "C32EC717-A11F-4540-8B00-EA3099252331",
+					 "206907B8-7CDA-42BB-849B-A6B3E5145623"],
 		Friends: [SimpleUser.bob],
 		Requests: [SimpleUser.clara]
 	)

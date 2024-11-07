@@ -12,6 +12,8 @@ struct TripDetailsView: View {
   var tripRepository: TripRepository
   @State private var selectedIndex = 0
   @ObservedObject var locationRepository = LocationRepository()
+	
+	@EnvironmentObject var aliceVM: MockUser
 
   var body: some View {
     VStack {
@@ -22,7 +24,7 @@ struct TripDetailsView: View {
           .frame(maxWidth: .infinity, alignment: .center)
       }
       .overlay(
-        NavigationLink(destination: CompanionsView(people: trip.travelers)) {
+				NavigationLink(destination: CompanionsView(people: trip.travelers, trip: trip, tripRepository: tripRepository).environmentObject(aliceVM)) {
           Image(systemName: "person.3")
             .font(.title)
             .fontWeight(.bold)
@@ -80,6 +82,6 @@ struct TripDetailsView: View {
 
 struct TripDetailsView_Previews: PreviewProvider {
   static var previews: some View {
-    TripDetailsView(trip: Trip.example, tripRepository: TripRepository())
+		TripDetailsView(trip: Trip.example, tripRepository: TripRepository()).environmentObject(MockUser(user: User.example))
   }
 }
