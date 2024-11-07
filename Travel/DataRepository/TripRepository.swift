@@ -9,8 +9,11 @@ import Combine
 import FirebaseFirestore
 
 class TripRepository: ObservableObject {
+  // Firestore collection path
   private var path: String = "trips"
   private var store = Firestore.firestore()
+  
+  // Published variable to store fetched trips
   @Published var trips: [Trip] = []
   private var cancellables: Set<AnyCancellable> = []
   
@@ -19,19 +22,23 @@ class TripRepository: ObservableObject {
   }
   
   func get() {
-    store.collection(path).addSnapshotListener { querySnapshot, error in
-      if let error = error {
-        print("Error fetching trips: \(error.localizedDescription)")
-        return
+    // Listen to Firestore changes and fetch trip data
+    store.collection(path)
+      .addSnapshotListener { querySnapshot, error in
+        if let error = error {
+          print("Error fetching trips: \(error.localizedDescription)")
+          return
+        }
+        
+        // Map the documents to Trip model instances
+        self.trips = querySnapshot?.documents.compactMap { document in
+          try? document.data(as: Trip.self)
+        } ?? []
       }
-      
-      self.trips = querySnapshot?.documents.compactMap { document in
-        try? document.data(as: Trip.self)
-      } ?? []
-    }
   }
   
   func addTrip(_ trip: Trip) {
+    // Function to add a new trip to Firestore
     do {
       try store.collection(path).document(trip.id).setData(from: trip)
     } catch {
@@ -39,83 +46,79 @@ class TripRepository: ObservableObject {
     }
   }
   
-  // Updated function to update a specific event within a specific trip and day
-  func updateEvent(tripId: String, dayId: String, updatedEvent: Event) {
-    let tripRef = store.collection(path).document(tripId)
-    
+  func addEventToTrip(trip: Trip, dayIndex: Int, event: Event) {
+    let tripRef = store.collection("trips").document(trip.id)
     tripRef.getDocument { document, error in
-      if let error = error {
-        print("Error retrieving trip document: \(error.localizedDescription)")
-        return
-      }
-      
-      guard let document = document, var tripData = document.data(),
-            var days = tripData["days"] as? [[String: Any]] else {
-        print("No trip data or days array found.")
-        return
-      }
-      
-      // Find the specific day by matching `dayId`
-      if let dayIndex = days.firstIndex(where: { $0["id"] as? String == dayId }),
-         var events = days[dayIndex]["events"] as? [[String: Any]],
-         let eventIndex = events.firstIndex(where: { $0["id"] as? String == updatedEvent.id.uuidString }) {
-        
-        // Update the event within the array
-        events[eventIndex] = updatedEvent.toDictionary() // Convert Event to dictionary format
-        days[dayIndex]["events"] = events
-        tripData["days"] = days
-        
-        // Write the updated days array back to Firestore
-        tripRef.setData(tripData) { error in
-          if let error = error {
-            print("Error updating event in Firestore: \(error.localizedDescription)")
+      if let document = document, document.exists {
+        // Access the 'days' array directly from the document data
+        if var days = document.data()?["days"] as? [[String: Any]] {
+          print("Days array:", days)
+          // You can now manipulate or inspect the 'days' array as needed
+          let day = days[dayIndex]
+          // access events
+          if var events = day["events"] as? [[String: Any]] {
+            print("Events array:", events)
+            
+            let eventData = event.toDictionary()
+            // Access the specific day and append the new event to its events array
+            events.append(eventData)
+            days[dayIndex]["events"] = events
+            
+            tripRef.updateData(["days": days]) { error in
+              if let error = error {
+                print("Error updating document: \(error.localizedDescription)")
+              } else {
+                print("Event successfully added to Firestore.")
+              }
+            }
           } else {
-            print("Event successfully updated in Firestore.")
-            self.get()
+            print("No 'events' array found for this day.")
           }
+        } else {
+          print("The 'days' array does not exist in this trip document.")
         }
       } else {
-        print("No matching day or event found.")
+        print("Error accessing trip document or document does not exist: \(error?.localizedDescription ?? "Unknown error")")
       }
     }
   }
   
-  func deleteEvent(tripId: String, dayId: String, eventId: UUID) {
-    let tripRef = store.collection(path).document(tripId)
+  func editEventInTrip(trip: Trip, dayIndex: Int, eventId: String, updatedEvent: Event) {
+    let tripRef = store.collection("trips").document(trip.id)
     
     tripRef.getDocument { document, error in
-      if let error = error {
-        print("Error retrieving trip document: \(error.localizedDescription)")
-        return
-      }
-      
-      guard let document = document, var tripData = document.data(),
-            var days = tripData["days"] as? [[String: Any]] else {
-        print("No trip data or days array found.")
-        return
-      }
-      
-      // Locate the day and event by id
-      if let dayIndex = days.firstIndex(where: { $0["id"] as? String == dayId }),
-         var events = days[dayIndex]["events"] as? [[String: Any]],
-         let eventIndex = events.firstIndex(where: { $0["id"] as? String == eventId.uuidString }) {
-        
-        // Remove the event from the array
-        events.remove(at: eventIndex)
-        days[dayIndex]["events"] = events
-        tripData["days"] = days
-        
-        // Update Firestore
-        tripRef.setData(tripData) { error in
-          if let error = error {
-            print("Error deleting event in Firestore: \(error.localizedDescription)")
+      if let document = document, document.exists {
+        // Access the 'days' array from the document data
+        if var days = document.data()?["days"] as? [[String: Any]] {
+          if var events = days[dayIndex]["events"] as? [[String: Any]] {
+            // Find the index of the event to be edited
+            if let eventIndex = events.firstIndex(where: { $0["id"] as? String == eventId }) {
+              // Convert the updated event to a dictionary
+              let updatedEventData = updatedEvent.toDictionary()
+              
+              // Update the event at the specific index
+              events[eventIndex] = updatedEventData
+              days[dayIndex]["events"] = events
+              
+              // Update Firestore with the modified 'days' array
+              tripRef.updateData(["days": days]) { error in
+                if let error = error {
+                  print("Error updating event in Firestore: \(error.localizedDescription)")
+                } else {
+                  print("Event successfully updated in Firestore.")
+                }
+              }
+            } else {
+              print("Event with ID \(eventId) not found in the specified day.")
+            }
           } else {
-            print("Event successfully deleted from Firestore.")
-            self.get() // Refresh local data after deletion
+            print("No 'events' array found for this day.")
           }
+        } else {
+          print("The 'days' array does not exist in this trip document.")
         }
       } else {
-        print("No matching day or event found.")
+        print("Error accessing trip document or document does not exist: \(error?.localizedDescription ?? "Unknown error")")
       }
     }
   }

@@ -13,7 +13,7 @@ struct CompanionRowView: View {
 	var body: some View {
 		HStack(spacing: 20) {
 			Circle()
-				.fill(.blue)
+        .fill(.blue)
 				.frame(width: 50, height: 50)
 			Text(person.name)
 				.font(.title3)

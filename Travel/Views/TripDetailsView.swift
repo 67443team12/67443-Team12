@@ -5,25 +5,22 @@
 //  Created by Cindy Jiang on 2024/10/29.
 //
 
-// TripDetailsView.swift
 import SwiftUI
 
 struct TripDetailsView: View {
   var trip: Trip
-  @ObservedObject var tripRepository: TripRepository
+  var tripRepository: TripRepository
   @State private var selectedIndex = 0
-  @State private var searchText: String = ""
+  @ObservedObject var locationRepository = LocationRepository()
 
   var body: some View {
     VStack {
-      // Name and companions row
       HStack {
-        Text(trip.tripName)
+        Text(trip.name)
           .font(.largeTitle)
           .fontWeight(.bold)
           .frame(maxWidth: .infinity, alignment: .center)
       }
-      // Use overlay for the companion link to ensure the trip name is at the center
       .overlay(
         NavigationLink(destination: CompanionsView(people: trip.travelers)) {
           Image(systemName: "person.3")
@@ -34,7 +31,6 @@ struct TripDetailsView: View {
         .frame(maxWidth: .infinity, alignment: .trailing)
       )
       
-      // Switch date row
       if !trip.days.isEmpty {
         HStack {
           Button(action: {
@@ -68,39 +64,8 @@ struct TripDetailsView: View {
         .padding(.horizontal)
         .padding(.bottom, 10)
         
-        // Main content
         ScrollView {
-          // Itinerary section
-          ItineraryView(day: trip.days[selectedIndex], tripId: trip.id, dayId: trip.days[selectedIndex].id.uuidString, tripRepository: tripRepository)
-          
-          // Add to Itinerary section
-          Text("Add to Itinerary")
-            .font(.title2)
-            .fontWeight(.semibold)
-            .padding(.leading, 20)
-            .frame(maxWidth: .infinity, alignment: .leading)
-          
-          TextField("Search for a place", text: $searchText)
-            .padding()
-            .background(Color(.systemGray5))
-            .cornerRadius(10)
-            .padding(.horizontal, 20)
-            .padding(.bottom, 10)
-          
-          // Map section
-          Text("Map")
-            .font(.title2)
-            .fontWeight(.semibold)
-            .padding(.leading, 20)
-            .frame(maxWidth: .infinity, alignment: .leading)
-          
-          Rectangle()
-            .fill(Color(.systemGray6))
-            .frame(height: 200)
-            .cornerRadius(10)
-            .padding(.horizontal, 20)
-          
-          Spacer()
+          DayView(trip: trip, day: trip.days[selectedIndex], dayNumber: selectedIndex + 1, locationRepository: locationRepository, tripRepository: tripRepository)
         }
       } else {
         Text("Loading days...")
@@ -109,6 +74,7 @@ struct TripDetailsView: View {
           .padding()
       }
     }
+//    .toolbar(.hidden, for: .tabBar)
   }
 }
 

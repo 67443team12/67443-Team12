@@ -19,7 +19,8 @@ struct MeView: View {
 						.padding(.leading, 20)
 					Spacer()
 				}
-				HStack {
+				
+        HStack {
 					Circle()
 						.fill(.blue)
 						.frame(width: 100, height: 100)
@@ -41,6 +42,7 @@ struct MeView: View {
 							.padding(.bottom, 25)
 					}
 				}
+        
 				List {
 					NavigationLink(
 						destination: MyPostsView(),
@@ -55,7 +57,6 @@ struct MeView: View {
 				}
 				.listStyle(PlainListStyle())
 				.scrollDisabled(true)
-				
 			}
 		}
 	}

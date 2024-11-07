@@ -23,6 +23,10 @@
 		37BC41E32CD1A11F007AA26B /* NewTripView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC41E22CD1A11F007AA26B /* NewTripView.swift */; };
 		37BC41E52CD1A144007AA26B /* DateSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC41E42CD1A144007AA26B /* DateSelectionView.swift */; };
 		37BC41E72CD1BA5D007AA26B /* TripDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37BC41E62CD1BA5D007AA26B /* TripDetailsView.swift */; };
+		37E8DC7F2CDC0BCE00238FCD /* DayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E8DC7E2CDC0BCE00238FCD /* DayView.swift */; };
+		37E8DC812CDC0DDC00238FCD /* LocationDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E8DC802CDC0DDC00238FCD /* LocationDetailView.swift */; };
+		37E8DC832CDC0E0000238FCD /* LocationHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E8DC822CDC0E0000238FCD /* LocationHoursView.swift */; };
+		37E8DC872CDC0EFE00238FCD /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E8DC862CDC0EFE00238FCD /* AddEventView.swift */; };
 		98DF07012CD5EAA400694B97 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07002CD5EAA400694B97 /* Day.swift */; };
 		98DF07032CD5EABE00694B97 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07022CD5EABE00694B97 /* Event.swift */; };
 		98DF07052CD5EB1300694B97 /* SimpleTrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07042CD5EB1300694B97 /* SimpleTrip.swift */; };
@@ -58,6 +62,10 @@
 		37BC41E22CD1A11F007AA26B /* NewTripView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripView.swift; sourceTree = "<group>"; };
 		37BC41E42CD1A144007AA26B /* DateSelectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateSelectionView.swift; sourceTree = "<group>"; };
 		37BC41E62CD1BA5D007AA26B /* TripDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailsView.swift; sourceTree = "<group>"; };
+		37E8DC7E2CDC0BCE00238FCD /* DayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayView.swift; sourceTree = "<group>"; };
+		37E8DC802CDC0DDC00238FCD /* LocationDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationDetailView.swift; sourceTree = "<group>"; };
+		37E8DC822CDC0E0000238FCD /* LocationHoursView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHoursView.swift; sourceTree = "<group>"; };
+		37E8DC862CDC0EFE00238FCD /* AddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
 		98DF07002CD5EAA400694B97 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		98DF07022CD5EABE00694B97 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		98DF07042CD5EB1300694B97 /* SimpleTrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTrip.swift; sourceTree = "<group>"; };
@@ -172,6 +180,10 @@
 				98DF07202CD7FAD000694B97 /* CompanionRowView.swift */,
 				379843E22CDB3C11001B5A69 /* ItineraryView.swift */,
 				379843E82CDB7A62001B5A69 /* EditEventView.swift */,
+				37E8DC7E2CDC0BCE00238FCD /* DayView.swift */,
+				37E8DC802CDC0DDC00238FCD /* LocationDetailView.swift */,
+				37E8DC822CDC0E0000238FCD /* LocationHoursView.swift */,
+				37E8DC862CDC0EFE00238FCD /* AddEventView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -256,12 +268,14 @@
 			files = (
 				98DF07072CD5EB1B00694B97 /* User.swift in Sources */,
 				98DF07052CD5EB1300694B97 /* SimpleTrip.swift in Sources */,
+				37E8DC832CDC0E0000238FCD /* LocationHoursView.swift in Sources */,
 				98DF070D2CD5EB5E00694B97 /* Location.swift in Sources */,
 				37BC41E12CD19501007AA26B /* MyTripsView.swift in Sources */,
 				98DF07172CD6CAC000694B97 /* MeView.swift in Sources */,
 				379843E32CDB3C11001B5A69 /* ItineraryView.swift in Sources */,
 				98DF07032CD5EABE00694B97 /* Event.swift in Sources */,
 				37BC41E52CD1A144007AA26B /* DateSelectionView.swift in Sources */,
+				37E8DC812CDC0DDC00238FCD /* LocationDetailView.swift in Sources */,
 				37BC41E32CD1A11F007AA26B /* NewTripView.swift in Sources */,
 				98DF07192CD6DA1700694B97 /* MyPostsView.swift in Sources */,
 				37BC41D52CD191A1007AA26B /* Trip.swift in Sources */,
@@ -274,10 +288,12 @@
 				98DF071F2CD7165500694B97 /* EditMeView.swift in Sources */,
 				98DF07212CD7FAD000694B97 /* CompanionRowView.swift in Sources */,
 				98DF070B2CD5EB5600694B97 /* Post.swift in Sources */,
+				37E8DC7F2CDC0BCE00238FCD /* DayView.swift in Sources */,
 				37BC41E72CD1BA5D007AA26B /* TripDetailsView.swift in Sources */,
 				98DF07112CD5EBB800694B97 /* LocationRepository.swift in Sources */,
 				37BC41D92CD192CE007AA26B /* TripRepository.swift in Sources */,
 				37BC41BF2CD1911B007AA26B /* TravelApp.swift in Sources */,
+				37E8DC872CDC0EFE00238FCD /* AddEventView.swift in Sources */,
 				98DF07012CD5EAA400694B97 /* Day.swift in Sources */,
 				37BC41DF2CD194E5007AA26B /* TripCardView.swift in Sources */,
 				98DF071D2CD7159F00694B97 /* CompanionsView.swift in Sources */,

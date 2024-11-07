@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct SelectFriendsView: View {
-    var body: some View {
-        Text("select some friends")
-    }
+  var body: some View {
+    Text("select some friends")
+  }
 }
 
 #Preview {
-    SelectFriendsView()
+  SelectFriendsView()
 }
