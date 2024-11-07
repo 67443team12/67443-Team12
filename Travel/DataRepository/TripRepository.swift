@@ -123,6 +123,27 @@ class TripRepository: ObservableObject {
     }
   }
 	
+	func addTravelers(trip: Trip, travelers: [SimpleUser]) {
+		let tripRef = store.collection(path).document(trip.id)
+		
+		// Combine existing travelers with the new travelers
+		var updatedTravelers = trip.travelers
+		for traveler in travelers {
+			if !updatedTravelers.contains(where: { $0.id == traveler.id }) {
+				updatedTravelers.append(traveler)
+			}
+		}
+		
+		// Update Firestore with the new list of travelers
+		tripRef.updateData(["travelers": updatedTravelers.map { $0.toDictionary() }]) { error in
+			if let error = error {
+				print("Error adding travelers to Firestore: \(error.localizedDescription)")
+			} else {
+				print("Travelers added successfully to Firestore.")
+			}
+		}
+	}
+	
 	func removeTraveler(trip: Trip, traveler: SimpleUser) {
 		// Create a reference to the specific trip document in Firestore
 		let tripRef = store.collection(path).document(trip.id)

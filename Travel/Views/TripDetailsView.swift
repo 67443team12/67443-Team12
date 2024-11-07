@@ -24,7 +24,7 @@ struct TripDetailsView: View {
           .frame(maxWidth: .infinity, alignment: .center)
       }
       .overlay(
-				NavigationLink(destination: CompanionsView(people: trip.travelers, trip: trip, tripRepository: tripRepository).environmentObject(aliceVM)) {
+				NavigationLink(destination: CompanionsView(trip: trip, tripRepository: tripRepository).environmentObject(aliceVM)) {
           Image(systemName: "person.3")
             .font(.title)
             .fontWeight(.bold)
