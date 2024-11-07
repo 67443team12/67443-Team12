@@ -18,6 +18,7 @@ struct CompanionsView: View {
 				}
 			}
 			.padding(.vertical)
+      
 			NavigationLink(destination: SelectFriendsView()) {
 				ZStack {
 					Rectangle()
@@ -35,6 +36,7 @@ struct CompanionsView: View {
 					.foregroundStyle(.black)
 				}
 			}
+      
 			Spacer()
 		}
 		.navigationTitle("Companions")

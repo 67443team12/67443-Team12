@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct BookmarksView: View {
-    var body: some View {
-        Text("This is page for bookmarks")
-    }
+  var body: some View {
+    Text("This is page for bookmarks")
+  }
 }
 
 #Preview {
-    BookmarksView()
+  BookmarksView()
 }

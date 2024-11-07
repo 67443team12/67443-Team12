@@ -10,7 +10,7 @@ import SwiftUI
 
 struct Trip: Identifiable, Codable, Comparable {
   var id: String
-  var tripName: String
+  var name: String
   var startDate: String
   var endDate: String
   var photo: String
@@ -19,8 +19,8 @@ struct Trip: Identifiable, Codable, Comparable {
 	var travelers: [SimpleUser]
   
   enum CodingKeys: String, CodingKey {
-    case id = "tripId"
-    case tripName
+    case id
+    case name
     case startDate
     case endDate
     case photo
@@ -39,13 +39,12 @@ struct Trip: Identifiable, Codable, Comparable {
 	
 	static let example = Trip(
 		id: "1",
-		tripName: "Miami",
+		name: "Miami",
 		startDate: "2024-03-05",
 		endDate: "2024-03-08",
 		photo: "",
 		color: "blue",
-		days: [Day](),
+    days: [Day.example1, Day.example2, Day.example3, Day.example4],
 		travelers: [SimpleUser.bob]
 	)
-	
 }

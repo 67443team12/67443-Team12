@@ -12,17 +12,17 @@ struct User: Codable, Identifiable, Comparable {
 	var id: String
 	var name: String
 	var photo: String
-	var userPosts: [SelfPost]
+	var Posts: [SelfPost]
 	var Bookmarks: [Post]
 	var Trips: [String]
 	var Friends: [SimpleUser]
 	var Requests: [SimpleUser]
 	
 	enum CodingKeys: String, CodingKey {
-		case id = "userId"
+		case id
 		case name
 		case photo
-		case userPosts
+		case Posts
 		case Bookmarks
 		case Trips
 		case Friends
@@ -41,7 +41,7 @@ struct User: Codable, Identifiable, Comparable {
 		id: "Alice215",
 		name: "Alice",
 		photo: "",
-		userPosts: [SelfPost.example],
+		Posts: [SelfPost.example],
 		Bookmarks: [Post.example],
 		Trips: ["269C753NIQ"],
 		Friends: [SimpleUser.bob],

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Location: Identifiable, Codable, Comparable {
+struct Location: Identifiable, Codable, Comparable, Hashable {
 	var id: String
 	var name: String
 	var latitude: Double
@@ -16,31 +16,31 @@ struct Location: Identifiable, Codable, Comparable {
 	var address: String
 	var duration: String
 	var ratings: Double
-	var Monday: String
-	var Tuesday: String
-	var Wednesday: String
-	var Thursday: String
-	var Friday: String
-	var Saturday: String
-	var Sunday: String
+  var sunday: String
+  var monday: String
+  var tuesday: String
+  var wednesday: String
+  var thursday: String
+  var friday: String
+  var saturday: String
 	var image: String
 	var description: String
 	
 	enum CodingKeys: String, CodingKey {
-		case id = "locationId"
-		case name = "locationName"
+		case id
+		case name
 		case latitude
 		case longitude
 		case address
-		case duration = "estimateDuration"
+		case duration
 		case ratings
-		case Monday
-		case Tuesday
-		case Wednesday
-		case Thursday
-		case Friday
-		case Saturday
-		case Sunday
+		case monday
+		case tuesday
+		case wednesday
+		case thursday
+		case friday
+		case saturday
+		case sunday
 		case image
 		case description
 	}
