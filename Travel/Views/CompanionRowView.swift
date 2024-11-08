@@ -20,8 +20,8 @@ struct CompanionRowView: View {
         .fill(.blue)
 				.frame(width: 50, height: 50)
 			Text(person.name)
-				.font(.title3)
-				.fontWeight(.semibold)
+//				.font(.title3)
+//				.fontWeight(.semibold)
 			Spacer()
 			Button(action: {
 				showAlert = true

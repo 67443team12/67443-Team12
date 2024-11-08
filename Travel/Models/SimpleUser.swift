@@ -52,4 +52,16 @@ struct SimpleUser: Codable, Identifiable, Comparable {
 		name: "Clara",
 		photo: ""
 	)
+	
+	static let luke = SimpleUser(
+		id: "Luke123",
+		name: "Luke",
+		photo: ""
+	)
+	
+	static let leia = SimpleUser(
+		id: "Leia456",
+		name: "Leia",
+		photo: ""
+	)
 }
