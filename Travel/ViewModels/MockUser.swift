@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class MockUser: ObservableObject {
 	@Published var user: User

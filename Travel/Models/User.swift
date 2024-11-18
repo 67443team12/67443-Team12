@@ -40,7 +40,7 @@ struct User: Codable, Identifiable, Comparable {
 	static let example = User(
 		id: "Alice215",
 		name: "Alice",
-		photo: "",
+		photo: "https://firebasestorage.googleapis.com/v0/b/cmu443team12.firebasestorage.app/o/alice-icon.png?alt=media&token=1b8e454a-cec1-4433-a441-2f4d7085898d",
 		Posts: [SelfPost.example],
 		Bookmarks: [Post.example],
 		Trips: ["73C54CB4-40FC-41DC-88FA-154CA48D429E",

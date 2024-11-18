@@ -33,11 +33,16 @@ struct MyTripsView: View {
         }
         
         ScrollView {
-					ForEach(tripRepository.trips.filter { aliceVM.user.Trips.contains($0.id) }) { trip in
+					ForEach(
+						tripRepository.trips
+							.filter { aliceVM.user.Trips.contains($0.id) }
+						// Sort by newest start date
+							.sorted(by: >)
+					) { trip in
 						NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository)
 							.environmentObject(aliceVM)
 						) {
-							TripCardView(trip: trip)
+							TripCardView(trip: trip, tripRepository: tripRepository)
 								.padding(.bottom, 10)
 								.padding(.top, 10)
 						}

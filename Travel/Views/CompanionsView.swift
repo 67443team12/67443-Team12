@@ -10,7 +10,7 @@ import SwiftUI
 struct CompanionsView: View {
 //	var people: [SimpleUser]
 	var trip: Trip
-	let tripRepository: TripRepository
+	@ObservedObject var tripRepository: TripRepository
 	
 	@State private var showAlert = false
 	@State private var companions: [SimpleUser]
@@ -69,8 +69,8 @@ struct CompanionsView: View {
 				}
 			}.alert(isPresented: $showAlert) {
 				Alert(
-					title: Text("Leave Trip"),
-					message: Text("Are you sure you want to leave this trip?"),
+					title: Text("Confirm Leaving This Trip"),
+					message: Text("This trip will still be available to other companions after you leave."),
 					primaryButton: .destructive(Text("Leave")) {
 						leaveTrip()
 					},

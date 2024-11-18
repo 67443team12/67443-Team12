@@ -132,7 +132,7 @@ struct DayView: View {
           LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)
         }
       }
-      .frame(width: 350, height: 300)
+      .frame(width: 350, height: 450)
       .clipShape(RoundedRectangle(cornerRadius: 20))
       .overlay(
         selectedEvent != nil ? popUpView : nil,
