@@ -15,6 +15,7 @@ class TripRepository: ObservableObject {
   
   // Published variable to store fetched trips
   @Published var trips: [Trip] = []
+  @Published var filteredTrips: [Trip] = []
   private var cancellables: Set<AnyCancellable> = []
   
   init() {
@@ -166,4 +167,15 @@ class TripRepository: ObservableObject {
 		}
 	}
 	
+  
+  func search(searchText: String) {
+    if searchText == "" {
+      return
+    }
+    self.filteredTrips = self.trips.filter { trip in
+      return trip.name.lowercased().contains(searchText.lowercased())
+    }
+  }
+  
+  
 }
