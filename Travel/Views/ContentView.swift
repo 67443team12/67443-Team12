@@ -31,7 +31,7 @@ struct ContentView: View {
           Label("Posts", systemImage: "square.and.pencil")
         }
 
-      Text("Friends View") // Placeholder for the Friends view
+			FriendsListView()
         .tabItem {
           Label("Friends", systemImage: "person.2")
         }

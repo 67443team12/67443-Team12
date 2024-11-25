@@ -243,4 +243,10 @@ class TripRepository: ObservableObject {
 		}
 	}
 	
+	func filterTrips(by tripIds: [String]) -> [Trip] {
+		return trips.filter { trip in
+			tripIds.contains(trip.id)
+		}
+	}
+	
 }

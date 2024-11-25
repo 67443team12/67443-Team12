@@ -30,6 +30,11 @@
 		98BD764E2CDD56E30008274E /* AddCompanionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BD764D2CDD56E30008274E /* AddCompanionsView.swift */; };
 		98BD76CE2CEADE200008274E /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BD76CD2CEADE200008274E /* UserRepository.swift */; };
 		98BD76D02CEBE6EA0008274E /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 98BD76CF2CEBE6EA0008274E /* FirebaseStorage */; };
+		98BD76D62CEFD2430008274E /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BD76D52CEFD2430008274E /* SplashView.swift */; };
+		98BD76DC2CF3D6E20008274E /* FriendsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BD76DB2CF3D6E20008274E /* FriendsListView.swift */; };
+		98BD76DE2CF3DDB00008274E /* FriendsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BD76DD2CF3DDB00008274E /* FriendsRowView.swift */; };
+		98BD76E02CF3E0DA0008274E /* FriendProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BD76DF2CF3E0DA0008274E /* FriendProfileView.swift */; };
+		98BD76E22CF3E11C0008274E /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BD76E12CF3E11C0008274E /* AddFriendView.swift */; };
 		98DF07012CD5EAA400694B97 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07002CD5EAA400694B97 /* Day.swift */; };
 		98DF07032CD5EABE00694B97 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07022CD5EABE00694B97 /* Event.swift */; };
 		98DF07052CD5EB1300694B97 /* SimpleTrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07042CD5EB1300694B97 /* SimpleTrip.swift */; };
@@ -70,6 +75,12 @@
 		37E8DC862CDC0EFE00238FCD /* AddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
 		98BD764D2CDD56E30008274E /* AddCompanionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCompanionsView.swift; sourceTree = "<group>"; };
 		98BD76CD2CEADE200008274E /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		98BD76D52CEFD2430008274E /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		98BD76DA2CEFD5D40008274E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		98BD76DB2CF3D6E20008274E /* FriendsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsListView.swift; sourceTree = "<group>"; };
+		98BD76DD2CF3DDB00008274E /* FriendsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRowView.swift; sourceTree = "<group>"; };
+		98BD76DF2CF3E0DA0008274E /* FriendProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
+		98BD76E12CF3E11C0008274E /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
 		98DF07002CD5EAA400694B97 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		98DF07022CD5EABE00694B97 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		98DF07042CD5EB1300694B97 /* SimpleTrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTrip.swift; sourceTree = "<group>"; };
@@ -90,6 +101,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		986E600D2CDD3C6C005B4F6E /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
+		98BD76D72CEFD5940008274E /* Font */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Font; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +137,8 @@
 		37BC41BD2CD1911B007AA26B /* Travel */ = {
 			isa = PBXGroup;
 			children = (
+				98BD76DA2CEFD5D40008274E /* Info.plist */,
+				98BD76D72CEFD5940008274E /* Font */,
 				986E600D2CDD3C6C005B4F6E /* ViewModels */,
 				37B588EC2CDBED2800C44206 /* GoogleService-Info.plist */,
 				37BC41DA2CD19455007AA26B /* Views */,
@@ -176,9 +190,14 @@
 			isa = PBXGroup;
 			children = (
 				37BC41C02CD1911B007AA26B /* ContentView.swift */,
+				98BD76DB2CF3D6E20008274E /* FriendsListView.swift */,
+				98BD76E12CF3E11C0008274E /* AddFriendView.swift */,
+				98BD76DF2CF3E0DA0008274E /* FriendProfileView.swift */,
+				98BD76DD2CF3DDB00008274E /* FriendsRowView.swift */,
 				37BC41DE2CD194E5007AA26B /* TripCardView.swift */,
 				37BC41E02CD19501007AA26B /* MyTripsView.swift */,
 				37BC41E22CD1A11F007AA26B /* NewTripView.swift */,
+				98BD76D52CEFD2430008274E /* SplashView.swift */,
 				98DF07162CD6CAC000694B97 /* MeView.swift */,
 				98DF071E2CD7165500694B97 /* EditMeView.swift */,
 				98DF07182CD6DA1700694B97 /* MyPostsView.swift */,
@@ -215,6 +234,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				986E600D2CDD3C6C005B4F6E /* ViewModels */,
+				98BD76D72CEFD5940008274E /* Font */,
 			);
 			name = Travel;
 			packageProductDependencies = (
@@ -286,6 +306,7 @@
 				98DF070D2CD5EB5E00694B97 /* Location.swift in Sources */,
 				37BC41E12CD19501007AA26B /* MyTripsView.swift in Sources */,
 				98DF07172CD6CAC000694B97 /* MeView.swift in Sources */,
+				98BD76DE2CF3DDB00008274E /* FriendsRowView.swift in Sources */,
 				98BD76CE2CEADE200008274E /* UserRepository.swift in Sources */,
 				379843E32CDB3C11001B5A69 /* ItineraryView.swift in Sources */,
 				98DF07032CD5EABE00694B97 /* Event.swift in Sources */,
@@ -293,6 +314,7 @@
 				37E8DC812CDC0DDC00238FCD /* LocationDetailView.swift in Sources */,
 				37BC41E32CD1A11F007AA26B /* NewTripView.swift in Sources */,
 				98DF07192CD6DA1700694B97 /* MyPostsView.swift in Sources */,
+				98BD76DC2CF3D6E20008274E /* FriendsListView.swift in Sources */,
 				37BC41D52CD191A1007AA26B /* Trip.swift in Sources */,
 				37BC41C12CD1911B007AA26B /* ContentView.swift in Sources */,
 				98DF07132CD6C8B200694B97 /* SelfPost.swift in Sources */,
@@ -301,11 +323,14 @@
 				98DF07092CD5EB2C00694B97 /* SimpleUser.swift in Sources */,
 				98DF071F2CD7165500694B97 /* EditMeView.swift in Sources */,
 				98DF07212CD7FAD000694B97 /* CompanionRowView.swift in Sources */,
+				98BD76E22CF3E11C0008274E /* AddFriendView.swift in Sources */,
 				98DF070B2CD5EB5600694B97 /* Post.swift in Sources */,
 				37E8DC7F2CDC0BCE00238FCD /* DayView.swift in Sources */,
 				37BC41E72CD1BA5D007AA26B /* TripDetailsView.swift in Sources */,
 				98DF07112CD5EBB800694B97 /* LocationRepository.swift in Sources */,
 				37BC41D92CD192CE007AA26B /* TripRepository.swift in Sources */,
+				98BD76D62CEFD2430008274E /* SplashView.swift in Sources */,
+				98BD76E02CF3E0DA0008274E /* FriendProfileView.swift in Sources */,
 				37BC41BF2CD1911B007AA26B /* TravelApp.swift in Sources */,
 				37E8DC872CDC0EFE00238FCD /* AddEventView.swift in Sources */,
 				98DF07012CD5EAA400694B97 /* Day.swift in Sources */,
@@ -449,6 +474,7 @@
 				DEVELOPMENT_TEAM = 2895YJW5H6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Travel/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -478,6 +504,7 @@
 				DEVELOPMENT_TEAM = 2895YJW5H6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Travel/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;

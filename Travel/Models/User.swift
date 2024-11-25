@@ -49,4 +49,16 @@ struct User: Codable, Identifiable, Comparable {
 		Friends: [SimpleUser.bob, SimpleUser.leia, SimpleUser.luke],
 		Requests: [SimpleUser.clara]
 	)
+	
+	static let bob = User(
+		id: "Bob1241",
+		name: "Bob",
+		photo: "",
+		Posts: [],
+		Bookmarks: [],
+		Trips: ["73C54CB4-40FC-41DC-88FA-154CA48D429E",
+						"C32EC717-A11F-4540-8B00-EA3099252331"],
+		Friends: [SimpleUser.alice],
+		Requests: []
+	)
 }

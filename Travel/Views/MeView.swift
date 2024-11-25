@@ -20,6 +20,16 @@ struct MeView: View {
 						.padding(.top, 15)
 						.padding(.leading, 20)
 					Spacer()
+					// edit profile action not yet implemented
+					NavigationLink(destination: EditMeView()) {
+						HStack {
+							Text("Edit")
+							Image(systemName: "ellipsis.circle")
+								.font(.largeTitle)
+						}
+						.padding(.top, 15)
+						.padding(.trailing, 20)
+					}
 				}
 				
         HStack {
@@ -40,13 +50,6 @@ struct MeView: View {
 					}
 						.padding(.leading, 20)
 					Spacer()
-					// edit profile action not yet implemented
-					NavigationLink(destination: EditMeView()) {
-						Image(systemName: "ellipsis.circle")
-							.font(.title)
-							.padding(.trailing, 20)
-							.padding(.bottom, 25)
-					}
 				}
         
 				List {
