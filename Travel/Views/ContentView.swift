@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct ContentView: View {
-  var aliceVM = MockUser(user: User.example)
+//  var aliceVM = MockUser(user: User.example)
+  @ObservedObject var userRepository = UserRepository()
   
   init() {
     let appearance = UITabBarAppearance()
@@ -20,28 +21,34 @@ struct ContentView: View {
   }
   
   var body: some View {
-    TabView {
-      MyTripsView()
-        .tabItem {
-          Label("Trips", systemImage: "calendar")
-        }
+    if userRepository.users.isEmpty {
+        Text("Loading users...")
+    } else {
+      
+      TabView {
+        MyTripsView(currUser: userRepository.users[0])
+          .tabItem {
+            Label("Trips", systemImage: "calendar")
+          }
 
-      Text("Posts View") // Placeholder for the Posts view
-        .tabItem {
-          Label("Posts", systemImage: "square.and.pencil")
-        }
+        Text("Posts View") // Placeholder for the Posts view
+          .tabItem {
+            Label("Posts", systemImage: "square.and.pencil")
+          }
 
-      Text("Friends View") // Placeholder for the Friends view
-        .tabItem {
-          Label("Friends", systemImage: "person.2")
-        }
+        Text("Friends View") // Placeholder for the Friends view
+          .tabItem {
+            Label("Friends", systemImage: "person.2")
+          }
 
-      MeView()
-        .tabItem {
-          Label("Me", systemImage: "person.circle")
-        }
+        MeView(currUser: userRepository.users[0], userRepository: userRepository)
+          .tabItem {
+            Label("Me", systemImage: "person.circle")
+          }
+      }
+      
     }
-    .environmentObject(aliceVM)
+
   }
 }
 

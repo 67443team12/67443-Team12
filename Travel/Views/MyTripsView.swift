@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct MyTripsView: View {
-	@EnvironmentObject var aliceVM: MockUser
+//	@EnvironmentObject var aliceVM: MockUser
   @ObservedObject var tripRepository = TripRepository()
+  @ObservedObject var locationRepository = LocationRepository()
+  let currUser: User
   @State private var showNewTripView = false
   
 //  search stuff
@@ -48,6 +50,7 @@ struct MyTripsView: View {
             .padding(.leading, 10) // Extra padding for text
             .padding(.vertical, 15)
           
+          
           if !searchText.isEmpty {
             Button(action: {
               searchText = ""
@@ -64,11 +67,17 @@ struct MyTripsView: View {
         .padding(.horizontal, 20)
         .padding(.bottom, 10)
         
+        // for debugging
+//        Text(currUser.Trips.joined(separator: ", "))
+//        ForEach(tripRepository.trips) {
+//          trip in Text(trip.id)
+//        }
+        
         if !searchText.isEmpty {
           ScrollView {
-            ForEach(displayedTrips.filter { aliceVM.user.Trips.contains($0.id) }) { trip in
-              NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository)
-                .environmentObject(aliceVM)
+            ForEach(displayedTrips.filter { currUser.Trips.contains("\"\($0.id)\"") }) { trip in
+              NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository, locationRepository: locationRepository, currUser: currUser)
+//                .environmentObject(aliceVM)
               ) {
                 TripCardView(trip: trip)
                   .padding(.bottom, 10)
@@ -79,9 +88,9 @@ struct MyTripsView: View {
           .padding(.horizontal)
         } else {
           ScrollView {
-            ForEach(tripRepository.trips.filter { aliceVM.user.Trips.contains($0.id) }) { trip in
-              NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository)
-                .environmentObject(aliceVM)
+            ForEach(tripRepository.trips.filter { currUser.Trips.contains("\"\($0.id)\"") }) { trip in
+              NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository, locationRepository: locationRepository, currUser: currUser)
+//                .environmentObject(aliceVM)
               ) {
                 TripCardView(trip: trip)
                   .padding(.bottom, 10)
@@ -95,10 +104,10 @@ struct MyTripsView: View {
       }
       .navigationBarHidden(true)
       .sheet(isPresented: $showNewTripView) {
-        NewTripView(isPresented: $showNewTripView, tripRepository: tripRepository)
+        NewTripView(isPresented: $showNewTripView, tripRepository: tripRepository, currUser: currUser)
           .presentationDetents([.fraction(0.97)])
           .presentationDragIndicator(.visible)
-					.environmentObject(aliceVM)
+//					.environmentObject(aliceVM)
       }
       .onAppear {
         tripRepository.get()
@@ -119,9 +128,9 @@ struct MyTripsView: View {
 
 
 
-
-struct MyTripsView_Previews: PreviewProvider {
-  static var previews: some View {
-		MyTripsView().environmentObject(MockUser(user: User.example))
-  }
-}
+//
+//struct MyTripsView_Previews: PreviewProvider {
+//  static var previews: some View {
+//		MyTripsView().environmentObject(MockUser(user: User.example))
+//  }
+//}

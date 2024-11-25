@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct MeView: View {
-	@EnvironmentObject var aliceVM: MockUser
+//	@EnvironmentObject var aliceVM: MockUser
+  let currUser: User
+  let userRepository: UserRepository
 	
 	var body: some View {
 		NavigationView {
@@ -28,16 +30,16 @@ struct MeView: View {
 						.frame(width: 100, height: 100)
 						.padding(.leading, 20)
 					VStack(alignment: .leading) {
-						Text(aliceVM.user.name)
+            Text(currUser.name)
 							.font(.largeTitle)
 							.fontWeight(.semibold)
-						Text("ID: \(aliceVM.user.id)")
+            Text("ID: \(currUser.id)")
 							.fontWeight(.semibold)
 					}
 						.padding(.leading, 20)
 					Spacer()
 					// edit profile action not yet implemented
-					NavigationLink(destination: EditMeView()) {
+          NavigationLink(destination: EditMeView(currUser: currUser, userRepository: userRepository, newId: currUser.id, newName: currUser.name, newImage: currUser.photo)) {
 						Image(systemName: "ellipsis.circle")
 							.font(.title)
 							.padding(.trailing, 20)
@@ -64,7 +66,7 @@ struct MeView: View {
 	}
 }
 
-#Preview {
-	MeView()
-		.environmentObject(MockUser(user: User.example))
-}
+//#Preview {
+//	MeView()
+//		.environmentObject(MockUser(user: User.example))
+//}

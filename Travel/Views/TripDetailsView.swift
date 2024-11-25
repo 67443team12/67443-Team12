@@ -10,10 +10,11 @@ import SwiftUI
 struct TripDetailsView: View {
   var trip: Trip
   var tripRepository: TripRepository
+  var locationRepository: LocationRepository
   @State private var selectedIndex = 0
-  @ObservedObject var locationRepository = LocationRepository()
+  var currUser: User
 	
-	@EnvironmentObject var aliceVM: MockUser
+//	@EnvironmentObject var aliceVM: MockUser
 
   var body: some View {
     VStack {
@@ -24,7 +25,7 @@ struct TripDetailsView: View {
           .frame(maxWidth: .infinity, alignment: .center)
       }
       .overlay(
-				NavigationLink(destination: CompanionsView(trip: trip, tripRepository: tripRepository).environmentObject(aliceVM)) {
+        NavigationLink(destination: CompanionsView(trip: trip, tripRepository: tripRepository, currUser: currUser)) {
           Image(systemName: "person.3")
             .font(.title)
             .fontWeight(.bold)
@@ -80,8 +81,3 @@ struct TripDetailsView: View {
   }
 }
 
-struct TripDetailsView_Previews: PreviewProvider {
-  static var previews: some View {
-		TripDetailsView(trip: Trip.example, tripRepository: TripRepository()).environmentObject(MockUser(user: User.example))
-  }
-}
