@@ -41,7 +41,7 @@ struct ContentView: View {
             Label("Friends", systemImage: "person.2")
           }
 
-        MeView(currUser: userRepository.users[0], userRepository: userRepository)
+        MeView(userRepository: userRepository)
           .tabItem {
             Label("Me", systemImage: "person.circle")
           }

@@ -8,13 +8,11 @@
 import SwiftUI
 
 struct EditMeView: View {
-  let currUser: User
-  let userRepository: UserRepository
+  @ObservedObject var userRepository: UserRepository
   
-  @State var newId: String
+  @State var id: String
   @State var newName: String
   @State var newImage: String
-  
 //  init(currUser: User, userRepository: UserRepository, newId: String, newImage: String) {
 //    self.currUser = currUser
 //    self.userRepository = userRepository
@@ -28,7 +26,7 @@ struct EditMeView: View {
       Section(header: Text("Edit Profile").font(.headline)) {
         HStack {
           Text("User ID: ")
-          TextField("User ID", text: $newId)
+          TextField("User ID", text: $id)
         }
         
         HStack {
@@ -40,13 +38,13 @@ struct EditMeView: View {
         
         Button("Save Changes") {
           let updatedUser = User(
-            id: newId,
+            id: id,
             name: newName,
             photo: newImage,
-            Trips: currUser.Trips
+            Trips: userRepository.users[0].Trips
           )
           
-          userRepository.editUser(userId: currUser.id, updatedUser: updatedUser)
+          userRepository.editUser(userId: userRepository.users[0].id, updatedUser: updatedUser)
 
         }
       }

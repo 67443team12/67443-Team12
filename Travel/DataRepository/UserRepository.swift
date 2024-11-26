@@ -38,17 +38,33 @@ class UserRepository: ObservableObject {
   }
   
   func editUser(userId: String, updatedUser: User) {
-      // Reference the specific user document by ID
-      let userRef = store.collection(path).document(userId)
-      
-      // Perform the update operation
-    userRef.updateData(updatedUser.toDictionary()) { error in
-          if let error = error {
-              print("Error updating user: \(error.localizedDescription)")
-          } else {
-              print("User successfully updated.")
-          }
-      }
+    // Query Firestore to find the document with the specified 'id' field
+    store.collection(path)
+        .whereField("id", isEqualTo: userId)
+        .getDocuments { querySnapshot, error in
+            if let error = error {
+                print("Error fetching user document: \(error.localizedDescription)")
+                return
+            }
+            
+            // Ensure a document with the specified 'id' was found
+            guard let document = querySnapshot?.documents.first else {
+                print("No user found with id: \(userId)")
+                return
+            }
+            
+            // Update the document with the new data
+          document.reference.updateData(updatedUser.toDictionary()) { error in
+                if let error = error {
+                    print("Error updating user: \(error.localizedDescription)")
+                } else {
+                    print("User with id \(userId) successfully updated.")
+                }
+            }
+        }
+    
+    self.get()
+    
   }
   
 }
