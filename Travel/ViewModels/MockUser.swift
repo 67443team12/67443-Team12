@@ -15,13 +15,13 @@ class MockUser: ObservableObject {
 		self.user = user
 	}
 	
-	func addTrip(tripID: String) {
-		if !user.Trips.contains(tripID) {
-			user.Trips.append(tripID)
-		}
-	}
-	
-	func removeTrip(tripID: String) {
-		user.Trips.removeAll { $0 == tripID }
-	}
+//	func addTrip(tripID: String) {
+//		if !user.Trips.contains(tripID) {
+//			user.Trips.append(tripID)
+//		}
+//	}
+//	
+//	func removeTrip(tripID: String) {
+//		user.Trips.removeAll { $0 == tripID }
+//	}
 }

@@ -11,9 +11,10 @@ struct TripDetailsView: View {
   var trip: Trip
 	@ObservedObject var tripRepository: TripRepository
   @State private var selectedIndex = 0
-  @ObservedObject var locationRepository = LocationRepository()
+	var locationRepository: LocationRepository
 	
-	@EnvironmentObject var aliceVM: MockUser
+//	@EnvironmentObject var aliceVM: MockUser
+	var currUser: User
 
   var body: some View {
     VStack {
@@ -86,7 +87,7 @@ struct TripDetailsView: View {
 		.toolbar {
 			ToolbarItem(placement: .navigationBarTrailing) {
 				NavigationLink(
-					destination: CompanionsView(trip: trip, tripRepository: tripRepository).environmentObject(aliceVM)
+					destination: CompanionsView(trip: trip, tripRepository: tripRepository, currUser: currUser)
 				) {
 					VStack(spacing: 2) {
 						Image(systemName: "person.3")
@@ -102,8 +103,8 @@ struct TripDetailsView: View {
   }
 }
 
-struct TripDetailsView_Previews: PreviewProvider {
-  static var previews: some View {
-		TripDetailsView(trip: Trip.example, tripRepository: TripRepository()).environmentObject(MockUser(user: User.example))
-  }
-}
+//struct TripDetailsView_Previews: PreviewProvider {
+//  static var previews: some View {
+//		TripDetailsView(trip: Trip.example, tripRepository: TripRepository())
+//  }
+//}

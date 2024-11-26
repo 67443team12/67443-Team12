@@ -11,13 +11,13 @@ struct AddCompanionsView: View {
 	var trip: Trip
 	let tripRepository: TripRepository
 	var onCompanionsAdded: ([SimpleUser]) -> Void
-	var availableFriends: [SimpleUser] {
-		aliceVM.user.Friends.filter { friend in
-			!trip.travelers.contains { traveler in
-				traveler.id == friend.id
-			}
-		}
-	}
+//	var availableFriends: [SimpleUser] {
+//		aliceVM.user.Friends.filter { friend in
+//			!trip.travelers.contains { traveler in
+//				traveler.id == friend.id
+//			}
+//		}
+//	}
 	
 	@EnvironmentObject var aliceVM: MockUser
 	@Environment(\.presentationMode) var presentationMode
@@ -25,26 +25,26 @@ struct AddCompanionsView: View {
 	
 	var body: some View {
 		VStack {
-			List(availableFriends) { friend in
-				HStack(spacing: 20) {
-					Circle()
-						.fill(.blue)
-						.frame(width: 44, height: 44)
-					Text(friend.name)
-					Spacer()
-					if selectedFriends.contains(where: { $0.id == friend.id }) {
-						Image(systemName: "checkmark.circle.fill")
-							.foregroundColor(.green)
-					} else {
-						Image(systemName: "circle")
-							.foregroundColor(.gray)
-					}
-				}
-				.contentShape(Rectangle())  // Make the whole row tappable
-				.onTapGesture {
-					toggleSelection(friend)
-				}
-			}
+//			List(availableFriends) { friend in
+//				HStack(spacing: 20) {
+//					Circle()
+//						.fill(.blue)
+//						.frame(width: 44, height: 44)
+//					Text(friend.name)
+//					Spacer()
+//					if selectedFriends.contains(where: { $0.id == friend.id }) {
+//						Image(systemName: "checkmark.circle.fill")
+//							.foregroundColor(.green)
+//					} else {
+//						Image(systemName: "circle")
+//							.foregroundColor(.gray)
+//					}
+//				}
+//				.contentShape(Rectangle())  // Make the whole row tappable
+//				.onTapGesture {
+//					toggleSelection(friend)
+//				}
+//			}
 			// Save button appear only after choosing someone
 			if !selectedFriends.isEmpty {
 				Button(action: {
@@ -89,6 +89,6 @@ struct AddCompanionsView: View {
 	}
 }
 
-#Preview {
-	AddCompanionsView(trip: Trip.example, tripRepository: TripRepository(), onCompanionsAdded: { _ in }).environmentObject(MockUser(user: User.example))
-}
+//#Preview {
+//	AddCompanionsView(trip: Trip.example, tripRepository: TripRepository(), onCompanionsAdded: { _ in }).environmentObject(MockUser(user: User.example))
+//}

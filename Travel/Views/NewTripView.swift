@@ -11,8 +11,9 @@ struct NewTripView: View {
   @Binding var isPresented: Bool // Control dismissal of both views
   @State private var tripName: String = ""
   @State private var showDatePicker = false
-	@EnvironmentObject var aliceVM: MockUser
+//	@EnvironmentObject var aliceVM: MockUser
   @ObservedObject var tripRepository: TripRepository
+	let currUser: User
 
   var body: some View {
     NavigationView {
@@ -69,13 +70,13 @@ struct NewTripView: View {
               photo: "", // Placeholder
               color: randomColor,
               days: generateDays(from: startDate, to: endDate),
-              travelers: [SimpleUser.alice]
+							travelers: [SimpleUser(id: currUser.id, name: currUser.name, photo: currUser.photo)]
             )
             
             // Save the new trip to the repository
             tripRepository.trips.append(newTrip)
             tripRepository.addTrip(newTrip)
-            aliceVM.addTrip(tripID: newTrip.id)
+//            aliceVM.addTrip(tripID: newTrip.id)
             
             // Dismiss both the date picker and the new trip view
             showDatePicker = false
@@ -121,9 +122,9 @@ struct NewTripView: View {
   }
 }
 
-struct NewTripView_Previews: PreviewProvider {
-  static var previews: some View {
-    NewTripView(isPresented: .constant(true), tripRepository: TripRepository())
-    .environmentObject(MockUser(user: User.example))
-  }
-}
+//struct NewTripView_Previews: PreviewProvider {
+//  static var previews: some View {
+//    NewTripView(isPresented: .constant(true), tripRepository: TripRepository())
+//    .environmentObject(MockUser(user: User.example))
+//  }
+//}

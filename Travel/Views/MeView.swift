@@ -8,7 +8,9 @@
 import SwiftUI
 
 struct MeView: View {
-	@EnvironmentObject var aliceVM: MockUser
+//	@EnvironmentObject var aliceVM: MockUser
+	let currUser: User
+	let userRepository: UserRepository
 	
 	var body: some View {
 		NavigationView {
@@ -20,8 +22,8 @@ struct MeView: View {
 						.padding(.top, 15)
 						.padding(.leading, 20)
 					Spacer()
-					// edit profile action not yet implemented
-					NavigationLink(destination: EditMeView()) {
+					// edit profile action
+					NavigationLink(destination: EditMeView(currUser: currUser, userRepository: userRepository, newId: currUser.id, newName: currUser.name, newImage: currUser.photo)) {
 						HStack {
 							Text("Edit")
 							Image(systemName: "ellipsis.circle")
@@ -33,7 +35,7 @@ struct MeView: View {
 				}
 				
         HStack {
-					AsyncImage(url: URL(string: aliceVM.user.photo)) { image in
+					AsyncImage(url: URL(string: currUser.photo)) { image in
 						image.resizable()
 					} placeholder: {
 						Color.gray
@@ -42,10 +44,10 @@ struct MeView: View {
 						.clipShape(Circle())
 						.padding(.leading, 20)
 					VStack(alignment: .leading) {
-						Text(aliceVM.user.name)
+						Text(currUser.name)
 							.font(.largeTitle)
 							.fontWeight(.semibold)
-						Text("ID: \(aliceVM.user.id)")
+						Text("ID: \(currUser.id)")
 							.fontWeight(.semibold)
 					}
 						.padding(.leading, 20)
@@ -59,7 +61,7 @@ struct MeView: View {
 							Text("My Posts")
 						})
 					NavigationLink(
-						destination: MyPostsView(),
+						destination: BookmarksView(),
 						label: {
 							Text("Bookmarks")
 						})
@@ -71,7 +73,6 @@ struct MeView: View {
 	}
 }
 
-#Preview {
-	MeView()
-		.environmentObject(MockUser(user: User.example))
-}
+//#Preview {
+//	MeView()
+//}

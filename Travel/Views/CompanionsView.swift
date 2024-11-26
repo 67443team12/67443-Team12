@@ -10,17 +10,20 @@ import SwiftUI
 struct CompanionsView: View {
 //	var people: [SimpleUser]
 	var trip: Trip
+	let currUser: User
+	
 	@ObservedObject var tripRepository: TripRepository
 	
 	@State private var showAlert = false
 	@State private var companions: [SimpleUser]
 	
-	@EnvironmentObject var aliceVM: MockUser
+//	@EnvironmentObject var aliceVM: MockUser
 	@Environment(\.presentationMode) var presentationMode
 	
-	init(trip: Trip, tripRepository: TripRepository) {
+	init(trip: Trip, tripRepository: TripRepository, currUser: User) {
 		self.trip = trip
 		self.tripRepository = tripRepository
+		self.currUser = currUser
 		_companions = State(initialValue: trip.travelers)
 	}
 	
@@ -28,15 +31,15 @@ struct CompanionsView: View {
 		VStack {
 			VStack {
 				ForEach(companions) { person in
-					//	Pretending that the current user is Alice so not showing her in the list
-					if person.id != User.example.id {
+					//	not showing current user in the list
+					if person.id != currUser.id {
 						CompanionRowView(person: person, trip: trip, tripRepository: tripRepository)
 					}
 				}
 			}
 			.padding(.vertical)
 			
-			NavigationLink(destination: AddCompanionsView(trip: trip, tripRepository: tripRepository, onCompanionsAdded: refreshCompanions).environmentObject(aliceVM)) {
+			NavigationLink(destination: AddCompanionsView(trip: trip, tripRepository: tripRepository, onCompanionsAdded: refreshCompanions)) {
 				ZStack {
 					Rectangle()
 						.fill(Color("LightPurple"))
@@ -72,7 +75,7 @@ struct CompanionsView: View {
 					title: Text("Confirm Leaving This Trip"),
 					message: Text("This trip will still be available to other companions after you leave."),
 					primaryButton: .destructive(Text("Leave")) {
-						leaveTrip()
+//						leaveTrip()
 					},
 					secondaryButton: .cancel()
 				)
@@ -87,18 +90,15 @@ struct CompanionsView: View {
 		companions = newCompanions
 	}
 	
-	func leaveTrip() {
-		// Remove the trip from Alice's trips in the ViewModel
-		aliceVM.removeTrip(tripID: trip.id)
-		// Remove Alice from the trip's travelers in Firestore
-		tripRepository.removeTraveler(trip: trip, traveler: SimpleUser.alice)
-		
-		presentationMode.wrappedValue.dismiss()
-	}
+//	func leaveTrip() {
+//		// Remove the trip from Alice's trips in the ViewModel
+//		aliceVM.removeTrip(tripID: trip.id)
+//		// Remove Alice from the trip's travelers in Firestore
+//		tripRepository.removeTraveler(trip: trip, traveler: SimpleUser.alice)
+//		
+//		presentationMode.wrappedValue.dismiss()
+//	}
 	
 }
 
-#Preview {
-	CompanionsView(trip: Trip.example, tripRepository: TripRepository())
-		.environmentObject(MockUser(user: User.example))
-}
+
