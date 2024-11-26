@@ -43,7 +43,7 @@ struct MyTripsView: View {
 						Image(systemName: "plus.circle")
 							.font(.largeTitle)
 							.padding(.trailing, 20)
-							.padding(.top, 10)
+							.padding(.top, 15)
 					}
 				}
 				

@@ -28,7 +28,7 @@ struct FriendsListView: View {
 						.padding(.top, 15)
 						.padding(.leading, 20)
 					Spacer()
-					NavigationLink(destination: AddFriendView()) {
+					NavigationLink(destination: AddFriendView(userRepository: userRepository)) {
 						Image(systemName: "person.badge.plus")
 							.font(.largeTitle)
 							.padding(.top, 15)

@@ -15,6 +15,7 @@ class UserRepository: ObservableObject {
 	
 	// Published variable to store fetched trips
 	@Published var users: [User] = []
+	@Published var filteredUsers: [User] = []
 	private var cancellables: Set<AnyCancellable> = []
 	
 	init() {
@@ -112,6 +113,21 @@ class UserRepository: ObservableObject {
 		
 		self.editUser(userId: currUser.id, updatedUser: updatedCurrUser)
 		self.editUser(userId: friend.id, updatedUser: updatedUser)
+	}
+	
+	func searchById(searchText: String) {
+		guard let currentUser = users.first else {
+			filteredUsers = []
+			return
+		}
+		
+		if searchText == "" {
+			filteredUsers = []
+		} else {
+			filteredUsers = users.filter { user in
+				user.id.hasPrefix(searchText) && !currentUser.Friends.contains(user.id) && user.id != currentUser.id
+			}
+		}
 	}
 	
 }
