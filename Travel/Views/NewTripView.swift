@@ -12,8 +12,9 @@ struct NewTripView: View {
   @State private var tripName: String = ""
   @State private var showDatePicker = false
 //	@EnvironmentObject var aliceVM: MockUser
+	@ObservedObject var userRepository: UserRepository = UserRepository()
   @ObservedObject var tripRepository: TripRepository
-	let currUser: User
+	var currUser: User
 
   var body: some View {
     NavigationView {
@@ -76,7 +77,7 @@ struct NewTripView: View {
             // Save the new trip to the repository
             tripRepository.trips.append(newTrip)
             tripRepository.addTrip(newTrip)
-//            aliceVM.addTrip(tripID: newTrip.id)
+						userRepository.addTripToUser(currUser: currUser, newTripId: newTrip.id)
             
             // Dismiss both the date picker and the new trip view
             showDatePicker = false

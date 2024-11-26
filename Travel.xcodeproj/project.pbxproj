@@ -35,6 +35,7 @@
 		98BD76DE2CF3DDB00008274E /* FriendsRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BD76DD2CF3DDB00008274E /* FriendsRowView.swift */; };
 		98BD76E02CF3E0DA0008274E /* FriendProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BD76DF2CF3E0DA0008274E /* FriendProfileView.swift */; };
 		98BD76E22CF3E11C0008274E /* AddFriendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BD76E12CF3E11C0008274E /* AddFriendView.swift */; };
+		98BD76EE2CF579A30008274E /* FriendProfileTripCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BD76ED2CF579A20008274E /* FriendProfileTripCardView.swift */; };
 		98DF07012CD5EAA400694B97 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07002CD5EAA400694B97 /* Day.swift */; };
 		98DF07032CD5EABE00694B97 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07022CD5EABE00694B97 /* Event.swift */; };
 		98DF07052CD5EB1300694B97 /* SimpleTrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07042CD5EB1300694B97 /* SimpleTrip.swift */; };
@@ -81,6 +82,7 @@
 		98BD76DD2CF3DDB00008274E /* FriendsRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRowView.swift; sourceTree = "<group>"; };
 		98BD76DF2CF3E0DA0008274E /* FriendProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileView.swift; sourceTree = "<group>"; };
 		98BD76E12CF3E11C0008274E /* AddFriendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddFriendView.swift; sourceTree = "<group>"; };
+		98BD76ED2CF579A20008274E /* FriendProfileTripCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendProfileTripCardView.swift; sourceTree = "<group>"; };
 		98DF07002CD5EAA400694B97 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		98DF07022CD5EABE00694B97 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		98DF07042CD5EB1300694B97 /* SimpleTrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTrip.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 				98BD76DB2CF3D6E20008274E /* FriendsListView.swift */,
 				98BD76E12CF3E11C0008274E /* AddFriendView.swift */,
 				98BD76DF2CF3E0DA0008274E /* FriendProfileView.swift */,
+				98BD76ED2CF579A20008274E /* FriendProfileTripCardView.swift */,
 				98BD76DD2CF3DDB00008274E /* FriendsRowView.swift */,
 				37BC41DE2CD194E5007AA26B /* TripCardView.swift */,
 				37BC41E02CD19501007AA26B /* MyTripsView.swift */,
@@ -330,6 +333,7 @@
 				98DF07112CD5EBB800694B97 /* LocationRepository.swift in Sources */,
 				37BC41D92CD192CE007AA26B /* TripRepository.swift in Sources */,
 				98BD76D62CEFD2430008274E /* SplashView.swift in Sources */,
+				98BD76EE2CF579A30008274E /* FriendProfileTripCardView.swift in Sources */,
 				98BD76E02CF3E0DA0008274E /* FriendProfileView.swift in Sources */,
 				37BC41BF2CD1911B007AA26B /* TravelApp.swift in Sources */,
 				37E8DC872CDC0EFE00238FCD /* AddEventView.swift in Sources */,

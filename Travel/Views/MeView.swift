@@ -9,8 +9,7 @@ import SwiftUI
 
 struct MeView: View {
 //	@EnvironmentObject var aliceVM: MockUser
-	let currUser: User
-	let userRepository: UserRepository
+	@ObservedObject var userRepository: UserRepository
 	
 	var body: some View {
 		NavigationView {
@@ -23,11 +22,12 @@ struct MeView: View {
 						.padding(.leading, 20)
 					Spacer()
 					// edit profile action
-					NavigationLink(destination: EditMeView(currUser: currUser, userRepository: userRepository, newId: currUser.id, newName: currUser.name, newImage: currUser.photo)) {
-						HStack {
+					NavigationLink(destination: EditMeView(userRepository: userRepository, id: userRepository.users[0].id, newName: userRepository.users[0].name, newImage: userRepository.users[0].photo)) {
+						VStack {
+							Image(systemName: "pencil.and.scribble")
+								.font(.title)
 							Text("Edit")
-							Image(systemName: "ellipsis.circle")
-								.font(.largeTitle)
+								.font(.caption)
 						}
 						.padding(.top, 15)
 						.padding(.trailing, 20)
@@ -35,7 +35,7 @@ struct MeView: View {
 				}
 				
         HStack {
-					AsyncImage(url: URL(string: currUser.photo)) { image in
+					AsyncImage(url: URL(string: userRepository.users[0].photo)) { image in
 						image.resizable()
 					} placeholder: {
 						Color.gray
@@ -44,10 +44,10 @@ struct MeView: View {
 						.clipShape(Circle())
 						.padding(.leading, 20)
 					VStack(alignment: .leading) {
-						Text(currUser.name)
+						Text(userRepository.users[0].name)
 							.font(.largeTitle)
 							.fontWeight(.semibold)
-						Text("ID: \(currUser.id)")
+						Text("ID: \(userRepository.users[0].id)")
 							.fontWeight(.semibold)
 					}
 						.padding(.leading, 20)

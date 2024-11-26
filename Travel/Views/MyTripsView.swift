@@ -65,13 +65,15 @@ struct MyTripsView: View {
 					}
 				}
 				.background(Color(.systemGray5))
-				.cornerRadius(10)
+				.cornerRadius(15)
 				.padding(.horizontal, 20)
 				.padding(.bottom, 10)
 				
 				if !searchText.isEmpty {
 					ScrollView {
-						ForEach(displayedTrips.filter { currUser.Trips.contains("\"\($0.id)\"") }) { trip in
+						ForEach(displayedTrips.filter { currUser.Trips.contains($0.id) }.sorted {
+							($0.startDateAsDate ?? .distantPast) > ($1.startDateAsDate ?? .distantPast)
+		 }) { trip in
 							NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository, locationRepository: locationRepository, currUser: currUser)
 														 //                .environmentObject(aliceVM)
 							) {
@@ -84,7 +86,9 @@ struct MyTripsView: View {
 					.padding(.horizontal)
 				} else {
 					ScrollView {
-						ForEach(tripRepository.trips.filter { currUser.Trips.contains("\"\($0.id)\"") }) { trip in
+						ForEach(tripRepository.trips.filter { currUser.Trips.contains($0.id) }.sorted {
+							($0.startDateAsDate ?? .distantPast) > ($1.startDateAsDate ?? .distantPast)
+		 }) { trip in
 							NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository, locationRepository: locationRepository, currUser: currUser)
 														 //                .environmentObject(aliceVM)
 							) {
@@ -94,7 +98,6 @@ struct MyTripsView: View {
 							}
 						}
 					}
-					.padding(.horizontal)
 				}
 			}
 			.navigationBarHidden(true)

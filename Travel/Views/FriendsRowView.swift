@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct FriendsRowView: View {
-	var friend: SimpleUser
+	var friend: User
 	var body: some View {
 		HStack(spacing: 20) {
 			AsyncImage(url: URL(string: friend.photo)) { image in
@@ -24,8 +24,4 @@ struct FriendsRowView: View {
 			Text(friend.name)
 		}
 	}
-}
-
-#Preview {
-	FriendsRowView(friend: SimpleUser.bob)
 }

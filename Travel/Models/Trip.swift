@@ -37,6 +37,12 @@ struct Trip: Identifiable, Codable, Comparable {
 		lhs.id == rhs.id
 	}
 	
+	var startDateAsDate: Date? {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy-MM-dd"
+		return dateFormatter.date(from: startDate)
+	}
+	
 	static let example = Trip(
 		id: "1",
 		name: "Miami",

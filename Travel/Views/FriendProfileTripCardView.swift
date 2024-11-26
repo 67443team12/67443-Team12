@@ -1,21 +1,15 @@
 //
-//  TripCardView.swift
+//  FriendProfileTripCardView.swift
 //  Travel
 //
-//  Created by Cindy Jiang on 2024/10/29.
+//  Created by Emma Shi on 11/25/24.
 //
 
 import SwiftUI
-import PhotosUI
-import FirebaseStorage
-import FirebaseFirestore
 
-struct TripCardView: View {
+struct FriendProfileTripCardView: View {
 	@State var trip: Trip
 	@ObservedObject var tripRepository: TripRepository
-	@State private var selectedItems: [PhotosPickerItem] = []
-	@State private var photoURL: URL? = nil
-	@State private var isShowingPicker = false
 	
 	var body: some View {
 		VStack(alignment: .leading) {
@@ -35,31 +29,6 @@ struct TripCardView: View {
 								topTrailingRadius: 15
 						)
 				)
-				Button(action: {
-					isShowingPicker = true
-				}) {
-					Image(systemName: "photo.on.rectangle.angled")
-						.font(.title2)
-						.foregroundColor(.white)
-						.padding(10)
-						.shadow(color: .black, radius: 2)
-				}
-				.photosPicker(isPresented: $isShowingPicker, selection: $selectedItems, maxSelectionCount: 1, matching: .images)
-				// trigger to update photo in firebase
-				.onChange(of: selectedItems) { newItems in
-					guard let selectedItem = newItems.first else { return }
-					Task {
-						if let selectedAsset = try? await selectedItem.loadTransferable(type: Data.self) {
-							// Upload to Firebase Storage via TripRepository
-							tripRepository.uploadPhotoToStorage(imageData: selectedAsset, tripId: trip.id) { photoURL in
-								if let photoURL = photoURL {
-									print("Photo uploaded and URL updated: \(photoURL)")
-									trip.photo = photoURL
-								}
-							}
-						}
-					}
-				}
 			}
 			// Display trip name and dates
 			Text(trip.name)
@@ -76,7 +45,6 @@ struct TripCardView: View {
 		.background(Color.white)
 		.cornerRadius(15)
 		.shadow(radius: 5)
-		.padding(.horizontal, 20)
 	}
 	
 	func getColor(from colorName: String) -> Color {
@@ -103,9 +71,6 @@ struct TripCardView: View {
 	}
 }
 
-struct TripCardView_Previews: PreviewProvider {
-  static var previews: some View {
-		TripCardView(trip: Trip.example, tripRepository: TripRepository())
-    .previewLayout(.sizeThatFits)
-  }
+#Preview {
+    FriendProfileTripCardView(trip: Trip.example, tripRepository: TripRepository())
 }

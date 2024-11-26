@@ -32,21 +32,19 @@ struct ContentView: View {
 				
 				Text("Posts View") // Placeholder for the Posts view
 					.tabItem {
-						Label("Posts", systemImage: "square.and.pencil")
+						Label("Posts", systemImage: "text.rectangle.page")
 					}
 				
-//				FriendsListView()
-				Text("Friends")
+				FriendsListView(userRepository: userRepository)
 					.tabItem {
 						Label("Friends", systemImage: "person.2")
 					}
 				
-				MeView(currUser: userRepository.users[0], userRepository: userRepository)
+				MeView(userRepository: userRepository)
 					.tabItem {
 						Label("Me", systemImage: "person.circle")
 					}
 			}
-			//    .environmentObject(aliceVM)
 		}
 	}
 }

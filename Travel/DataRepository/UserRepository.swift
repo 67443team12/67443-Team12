@@ -38,17 +38,80 @@ class UserRepository: ObservableObject {
 	}
 	
 	func editUser(userId: String, updatedUser: User) {
-			// Reference the specific user document by ID
-			let userRef = store.collection(path).document(userId)
-			
-			// Perform the update operation
-		userRef.updateData(updatedUser.toDictionary()) { error in
+		// Query Firestore to find the document with the specified 'id' field
+		store.collection(path)
+			.whereField("id", isEqualTo: userId)
+			.getDocuments { querySnapshot, error in
+				if let error = error {
+					print("Error fetching user document: \(error.localizedDescription)")
+					return
+				}
+				
+				// Ensure a document with the specified 'id' was found
+				guard let document = querySnapshot?.documents.first else {
+					print("No user found with id: \(userId)")
+					return
+				}
+				
+				// Update the document with the new data
+				document.reference.updateData(updatedUser.toDictionary()) { error in
 					if let error = error {
-							print("Error updating user: \(error.localizedDescription)")
+						print("Error updating user: \(error.localizedDescription)")
 					} else {
-							print("User successfully updated.")
+						print("User with id \(userId) successfully updated.")
 					}
+				}
 			}
+		
+		self.get()
+		
+	}
+	
+	func addTripToUser(currUser: User, newTripId: String) {
+		var newUserTrips = currUser.Trips
+		newUserTrips.append(newTripId)
+		
+		let updatedUser = User(
+			id: currUser.id,
+			name: currUser.name,
+			photo: currUser.photo,
+			Posts: currUser.Posts,
+			Bookmarks: currUser.Bookmarks,
+			Trips: newUserTrips,
+			Friends: currUser.Friends,
+			Requests: currUser.Requests
+		)
+		
+		self.editUser(userId: currUser.id, updatedUser: updatedUser)
+	}
+	
+	func deleteFriend(currUser: User, friend: User) {
+		let currNewFriends = currUser.Friends.filter { $0 != friend.id }
+		let userNewFriends = friend.Friends.filter { $0 != currUser.id }
+		
+		let updatedCurrUser = User(
+			id: currUser.id,
+			name: currUser.name,
+			photo: currUser.photo,
+			Posts: currUser.Posts,
+			Bookmarks: currUser.Bookmarks,
+			Trips: currUser.Trips,
+			Friends: currNewFriends,
+			Requests: currUser.Requests
+		)
+		let updatedUser = User(
+			id: friend.id,
+			name: friend.name,
+			photo: friend.photo,
+			Posts: friend.Posts,
+			Bookmarks: friend.Bookmarks,
+			Trips: friend.Trips,
+			Friends: userNewFriends,
+			Requests: friend.Requests
+		)
+		
+		self.editUser(userId: currUser.id, updatedUser: updatedCurrUser)
+		self.editUser(userId: friend.id, updatedUser: updatedUser)
 	}
 	
 }
