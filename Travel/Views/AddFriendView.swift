@@ -10,6 +10,7 @@ import SwiftUI
 struct AddFriendView: View {
 	@ObservedObject var userRepository: UserRepository
 	@State private var searchText: String = ""
+	@State private var showAlert = false
 	
 	var body: some View {
 		VStack(spacing: 15) {
@@ -44,7 +45,7 @@ struct AddFriendView: View {
 						.padding(.leading, 20)
 						.frame(maxWidth: .infinity, alignment: .leading)
 					ForEach(userRepository.users.filter {userRepository.users[0].Requests.contains($0.id)}) { request in
-						RequestRowView(request: request)
+						RequestRowView(userRepository: userRepository, request: request, showAlert: $showAlert)
 					}
 					Spacer()
 				}
@@ -77,6 +78,9 @@ struct AddFriendView: View {
 		}
 		.navigationTitle("Add Friend")
 		.navigationBarTitleDisplayMode(.inline)
+//		.onAppear() {
+//			userRepository.get()
+//		}
 	}
 }
 

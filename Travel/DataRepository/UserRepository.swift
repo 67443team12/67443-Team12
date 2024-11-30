@@ -125,9 +125,65 @@ class UserRepository: ObservableObject {
 			filteredUsers = []
 		} else {
 			filteredUsers = users.filter { user in
-				user.id.hasPrefix(searchText) && !currentUser.Friends.contains(user.id) && user.id != currentUser.id
+				// only shows users that are not friends with the current user,
+				// current user has not sent a request to, and not the current user
+				user.id.hasPrefix(searchText) && !currentUser.Friends.contains(user.id) && !user.Requests.contains(currentUser.id) && user.id != currentUser.id
 			}
 		}
+	}
+	
+	func sendRequest(currUser: User, request: User) {
+		var newUserRequests = request.Requests
+		newUserRequests.append(currUser.id)
+		
+		let updatedUser = User(
+			id: request.id,
+			name: request.name,
+			photo: request.photo,
+			Posts: request.Posts,
+			Bookmarks: request.Bookmarks,
+			Trips: request.Trips,
+			Friends: request.Friends,
+			Requests: newUserRequests
+		)
+		
+		self.editUser(userId: request.id, updatedUser: updatedUser)
+	}
+	
+	func acceptRequest(currUser: User, request: User) {
+		var newCurrUserFriends = currUser.Friends
+		newCurrUserFriends.append(request.id)
+		
+		var newCurrUserRequests = currUser.Requests
+		newCurrUserRequests = newCurrUserRequests.filter { $0 != request.id }
+		
+		var newUsersFriends = request.Friends
+		newUsersFriends.append(currUser.id)
+		
+		let updatedCurrUser = User(
+			id: currUser.id,
+			name: currUser.name,
+			photo: currUser.photo,
+			Posts: currUser.Posts,
+			Bookmarks: currUser.Bookmarks,
+			Trips: currUser.Trips,
+			Friends: newCurrUserFriends,
+			Requests: newCurrUserRequests
+		)
+		
+		let updatedUser = User(
+			id: request.id,
+			name: request.name,
+			photo: request.photo,
+			Posts: request.Posts,
+			Bookmarks: request.Bookmarks,
+			Trips: request.Trips,
+			Friends: newUsersFriends,
+			Requests: request.Requests
+		)
+		
+		self.editUser(userId: currUser.id, updatedUser: updatedCurrUser)
+		self.editUser(userId: request.id, updatedUser: updatedUser)
 	}
 	
 }

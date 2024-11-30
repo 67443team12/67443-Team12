@@ -69,6 +69,9 @@ struct MeView: View {
 				.listStyle(PlainListStyle())
 				.scrollDisabled(true)
 			}
+			.onAppear {
+				userRepository.get()
+			}
 		}
 	}
 }

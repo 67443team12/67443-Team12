@@ -76,6 +76,9 @@ struct FriendsListView: View {
 				}
 				.listStyle(PlainListStyle())
 			}
+			.onAppear {
+				userRepository.get()
+			}
 		}
 	}
 }

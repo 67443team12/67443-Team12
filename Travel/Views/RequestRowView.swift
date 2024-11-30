@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct RequestRowView: View {
+	@ObservedObject var userRepository: UserRepository
 	var request: User
 	
-	@State private var showAlert = false
+	@Binding var showAlert: Bool
 	
 	var body: some View {
 		HStack(spacing: 20) {
@@ -29,7 +30,7 @@ struct RequestRowView: View {
 			}
 			Spacer()
 			Button(action: {
-				// need a confirm request function
+				userRepository.acceptRequest(currUser: userRepository.users[0], request: request)
 				showAlert = true
 			}) {
 				Text("Accept")
@@ -41,7 +42,7 @@ struct RequestRowView: View {
 			.alert(isPresented: $showAlert) {
 				Alert(
 					title: Text("Request Accepted"),
-					message: Text("You and \(request.name) are now friends!"),
+					message: Text("You are now officially friends! Hooraay!"),
 					dismissButton: .default(Text("OK"))
 				)
 			}

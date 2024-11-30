@@ -12,6 +12,8 @@ struct AddFriendDetailView: View {
 	@ObservedObject var userRepository: UserRepository
 	@State private var showAlert: Bool = false
 	
+	@Environment(\.presentationMode) var presentationMode
+	
 	var body: some View {
 		VStack {
 			HStack {
@@ -35,7 +37,8 @@ struct AddFriendDetailView: View {
 			}
 			.padding(.vertical, 30)
 			Button(action: {
-				// need a send request function
+				// hard code current user here
+				userRepository.sendRequest(currUser: userRepository.users[0], request: user)
 				showAlert = true
 			}) {
 				ZStack {
@@ -50,10 +53,11 @@ struct AddFriendDetailView: View {
 				Alert(
 					title: Text("Request Sent"),
 					message: Text("Your friend request is sent to \(user.name)!"),
-					dismissButton: .default(Text("OK"))
+					dismissButton: .default(Text("OK")) {
+						presentationMode.wrappedValue.dismiss()
+					}
 				)
 			}
-			// after dismiss revert navigation?
 			Spacer()
 		}
 	}
