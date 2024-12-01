@@ -26,10 +26,10 @@ struct ContentView: View {
           Label("Trips", systemImage: "calendar")
         }
 
-      Text("Posts View") // Placeholder for the Posts view
+      PostsView()
         .tabItem {
           Label("Posts", systemImage: "square.and.pencil")
-        }
+      }
 
       Text("Friends View") // Placeholder for the Friends view
         .tabItem {

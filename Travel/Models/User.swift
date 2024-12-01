@@ -42,7 +42,7 @@ struct User: Codable, Identifiable, Comparable {
 		name: "Alice",
 		photo: "",
 		Posts: [SelfPost.example],
-		Bookmarks: [Post.example],
+		Bookmarks: [Post.example1],
 		Trips: ["73C54CB4-40FC-41DC-88FA-154CA48D429E",
 					 "C32EC717-A11F-4540-8B00-EA3099252331",
 					 "206907B8-7CDA-42BB-849B-A6B3E5145623"],
