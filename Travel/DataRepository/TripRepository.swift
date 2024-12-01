@@ -143,6 +143,7 @@ class TripRepository: ObservableObject {
 				print("Travelers added successfully to Firestore.")
 			}
 		}
+    self.get()
 	}
 	
 	func removeTraveler(trip: Trip, traveler: SimpleUser) {
@@ -165,8 +166,23 @@ class TripRepository: ObservableObject {
 		} else {
 			print("Traveler not found in the trip.")
 		}
+    self.get()
 	}
 	
+  
+  func getCompanions(tripId: String) -> [SimpleUser] {
+      // Search for the trip with the matching id
+      if let trip = trips.first(where: { $0.id == tripId }) {
+          // Return the companions list of the found trip
+          return trip.travelers
+      }
+      
+      // If no trip is found, return nil
+      return []
+  }
+  
+  
+  
   
   func search(searchText: String) {
     if searchText == "" {

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct AddCompanionsView: View {
 	var trip: Trip
-	let tripRepository: TripRepository
-	var onCompanionsAdded: ([SimpleUser]) -> Void
+  @ObservedObject var tripRepository: TripRepository
+//	var onCompanionsAdded: ([SimpleUser]) -> Void
 //	var availableFriends: [SimpleUser]
 //  {
 //		aliceVM.user.Friends.filter { friend in
@@ -83,7 +83,7 @@ struct AddCompanionsView: View {
 		// Call the completion handler to update companions in CompanionsView
 		var updatedCompanions = trip.travelers
 		updatedCompanions.append(contentsOf: selectedFriends)
-		onCompanionsAdded(updatedCompanions)
+//		onCompanionsAdded(updatedCompanions)
 		
 		// Dismiss this view to go back to CompanionsView
 		presentationMode.wrappedValue.dismiss()

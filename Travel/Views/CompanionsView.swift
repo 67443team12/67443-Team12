@@ -10,35 +10,36 @@ import SwiftUI
 struct CompanionsView: View {
 //	var people: [SimpleUser]
 	var trip: Trip
-	let tripRepository: TripRepository
-  let currUser: User
-	
+	@ObservedObject var tripRepository: TripRepository
+  @ObservedObject var userRepository: UserRepository
+  
 	@State private var showAlert = false
-	@State private var companions: [SimpleUser]
+//	@State private var companions: [SimpleUser]
 	
 //	@EnvironmentObject var aliceVM: MockUser
 	@Environment(\.presentationMode) var presentationMode
 	
-  init(trip: Trip, tripRepository: TripRepository, currUser: User) {
+  init(trip: Trip, tripRepository: TripRepository, userRepository: UserRepository) {
 		self.trip = trip
 		self.tripRepository = tripRepository
-    self.currUser = currUser
-		_companions = State(initialValue: trip.travelers)
+    self.userRepository = userRepository
+//    self.currUser = currUser
+//		_companions = State(initialValue: trip.travelers)
 	}
 	
 	var body: some View {
 		VStack {
 			VStack {
-				ForEach(companions) { person in
+        ForEach(tripRepository.getCompanions(tripId: trip.id)) { person in
 					//	Pretending that the current user is Alice so not showing her in the list
-          if person.id != currUser.id {
+          if person.id != userRepository.users[0].id {
 						CompanionRowView(person: person, trip: trip, tripRepository: tripRepository)
 					}
 				}
 			}
 			.padding(.vertical)
 			
-			NavigationLink(destination: AddCompanionsView(trip: trip, tripRepository: tripRepository, onCompanionsAdded: refreshCompanions)) {
+			NavigationLink(destination: AddCompanionsView(trip: trip, tripRepository: tripRepository)) {
 				ZStack {
 					Rectangle()
 						.fill(Color("LightPurple"))
@@ -84,10 +85,10 @@ struct CompanionsView: View {
 		.navigationBarTitleDisplayMode(.inline)
 	}
 	
-	func refreshCompanions(newCompanions: [SimpleUser]) {
-		// Update the companions list after friends are added
-		companions = newCompanions
-	}
+//	func refreshCompanions(newCompanions: [SimpleUser]) {
+//		// Update the companions list after friends are added
+//		companions = newCompanions
+//	}
 	
   // comment out while debugging user
 //	func leaveTrip() {

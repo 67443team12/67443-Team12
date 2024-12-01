@@ -17,6 +17,8 @@ struct Post: Identifiable, Codable, Comparable {
 	var userName: String
 	var userPhoto: String
 	var ifBookmarked: Bool
+  var comments: [Comment]
+  var photo: String
 //  var photos: [Photo]
 //  var comments: [Comment]
 	
@@ -29,6 +31,8 @@ struct Post: Identifiable, Codable, Comparable {
 		case userName
 		case userPhoto
 		case ifBookmarked
+    case comments
+    case photo
 	}
 	
 	static func < (lhs: Post, rhs: Post) -> Bool {
@@ -47,7 +51,9 @@ struct Post: Identifiable, Codable, Comparable {
 		userId: "Bob1241",
 		userName: "Bob",
 		userPhoto: "",
-		ifBookmarked: true
+		ifBookmarked: true,
+    comments: [],
+    photo: ""
 //    photos: [],
 //    comments: []
 	)

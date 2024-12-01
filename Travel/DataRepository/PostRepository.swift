@@ -44,4 +44,20 @@ class PostRepository: ObservableObject {
       print("Error adding post: \(error.localizedDescription)")
     }
   }
+  
+  
+  func addComment(to post: Post, comment: Comment) {
+    var updatedPost = post
+    updatedPost.comments.insert(comment, at: 0)
+    savePost(updatedPost)
+  }
+  
+  private func savePost(_ post: Post) {
+    do {
+      try store.collection(path).document(post.id).setData(from: post)
+    } catch {
+      print("Error saving post: \(error.localizedDescription)")
+    }
+  }
+  
 }

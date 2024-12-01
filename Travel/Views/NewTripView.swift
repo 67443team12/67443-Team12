@@ -13,7 +13,8 @@ struct NewTripView: View {
   @State private var showDatePicker = false
 //	@EnvironmentObject var aliceVM: MockUser
   @ObservedObject var tripRepository: TripRepository
-  let currUser: User
+  @ObservedObject var userRepository: UserRepository
+//  let currUser: User
 //  let userRepository: UserRepository
 
   var body: some View {
@@ -71,7 +72,7 @@ struct NewTripView: View {
               photo: "", // Placeholder
               color: randomColor,
               days: generateDays(from: startDate, to: endDate),
-              travelers: [SimpleUser.alice]
+              travelers: [] // need to fill in with userRepo.users[0] later
             )
             
             // Save the new trip to the repository

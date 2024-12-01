@@ -10,6 +10,7 @@ import SwiftUI
 struct MeView: View {
 //	@EnvironmentObject var aliceVM: MockUser
   @ObservedObject var userRepository: UserRepository
+  @ObservedObject var postRepository: PostRepository
 	
 	var body: some View {
 		NavigationView {
@@ -37,7 +38,6 @@ struct MeView: View {
 					}
 						.padding(.leading, 20)
 					Spacer()
-					// edit profile action not yet implemented
           NavigationLink(destination: EditMeView(userRepository: userRepository, id: userRepository.users[0].id, newName: userRepository.users[0].name, newImage: userRepository.users[0].photo)) {
 						Image(systemName: "ellipsis.circle")
 							.font(.title)
@@ -48,12 +48,12 @@ struct MeView: View {
         
 				List {
 					NavigationLink(
-						destination: MyPostsView(),
+            destination: MyPostsView(postRepository: postRepository, userRepository: userRepository),
 						label: {
 							Text("My Posts")
 						})
 					NavigationLink(
-						destination: MyPostsView(),
+            destination: MyBookmarksView(postRepository: postRepository, userRepository: userRepository),
 						label: {
 							Text("Bookmarks")
 						})

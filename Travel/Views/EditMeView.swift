@@ -41,7 +41,11 @@ struct EditMeView: View {
             id: id,
             name: newName,
             photo: newImage,
-            Trips: userRepository.users[0].Trips
+            Posts: userRepository.users[0].Posts,
+            Bookmarks: userRepository.users[0].Bookmarks,
+            Trips: userRepository.users[0].Trips,
+            Friends: userRepository.users[0].Friends,
+            Requests: userRepository.users[0].Requests
           )
           
           userRepository.editUser(userId: userRepository.users[0].id, updatedUser: updatedUser)

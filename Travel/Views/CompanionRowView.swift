@@ -49,6 +49,6 @@ struct CompanionRowView: View {
 	}
 }
 
-#Preview {
-	CompanionRowView(person: SimpleUser.bob, trip: Trip.example, tripRepository: TripRepository())
-}
+//#Preview {
+//	CompanionRowView(person: SimpleUser.bob, trip: Trip.example, tripRepository: TripRepository())
+//}

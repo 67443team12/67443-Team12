@@ -10,6 +10,8 @@ import SwiftUI
 struct ContentView: View {
 //  var aliceVM = MockUser(user: User.example)
   @ObservedObject var userRepository = UserRepository()
+  @ObservedObject var tripRepository = TripRepository()
+  @ObservedObject var postRepository = PostRepository()
   
   init() {
     let appearance = UITabBarAppearance()
@@ -26,7 +28,7 @@ struct ContentView: View {
     } else {
       
       TabView {
-        MyTripsView(currUser: userRepository.users[0])
+        MyTripsView(userRepository: userRepository)
           .tabItem {
             Label("Trips", systemImage: "calendar")
           }
@@ -41,7 +43,7 @@ struct ContentView: View {
             Label("Friends", systemImage: "person.2")
           }
 
-        MeView(userRepository: userRepository)
+        MeView(userRepository: userRepository, postRepository: postRepository)
           .tabItem {
             Label("Me", systemImage: "person.circle")
           }

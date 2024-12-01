@@ -9,24 +9,24 @@ import Foundation
 import SwiftUI
 
 struct User: Codable, Identifiable, Comparable {
-	var id: String
-	var name: String
-	var photo: String
-//	var Posts: [SelfPost]
-//	var Bookmarks: [Post]
-	var Trips: [String]
-//	var Friends: [SimpleUser]
-//	var Requests: [SimpleUser]
+  var id: String
+  var name: String
+  var photo: String
+  var Posts: [String]
+  var Bookmarks: [String]
+  var Trips: [String]
+  var Friends: [String]
+  var Requests: [String]
 	
 	enum CodingKeys: String, CodingKey {
-		case id
-		case name
-		case photo
-//		case Posts
-//		case Bookmarks
-		case Trips
-//		case Friends
-//		case Requests
+    case id
+    case name
+    case photo
+    case Posts
+    case Bookmarks
+    case Trips
+    case Friends
+    case Requests
 	}
 	
 	static func < (lhs: User, rhs: User) -> Bool {
@@ -42,7 +42,11 @@ struct User: Codable, Identifiable, Comparable {
       "id": id,
       "name": name,
       "photo": photo,
-      "Trips": Trips
+      "Posts": Posts,
+      "Bookmarks": Bookmarks,
+      "Trips": Trips,
+      "Friends": Friends,
+      "Requests": Requests
     ]
   }
 }

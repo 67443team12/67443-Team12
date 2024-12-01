@@ -37,14 +37,14 @@ struct Trip: Identifiable, Codable, Comparable {
 		lhs.id == rhs.id
 	}
 	
-	static let example = Trip(
-		id: "1",
-		name: "Miami",
-		startDate: "2024-03-05",
-		endDate: "2024-03-08",
-		photo: "",
-		color: "blue",
-    days: [Day.example1, Day.example2, Day.example3, Day.example4],
-		travelers: [SimpleUser.bob]
-	)
+//	static let example = Trip(
+//		id: "1",
+//		name: "Miami",
+//		startDate: "2024-03-05",
+//		endDate: "2024-03-08",
+//		photo: "",
+//		color: "blue",
+//    days: [Day.example1, Day.example2, Day.example3, Day.example4],
+//		travelers: [SimpleUser.bob]
+//	)
 }

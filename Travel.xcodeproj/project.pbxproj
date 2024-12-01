@@ -28,6 +28,11 @@
 		37E8DC832CDC0E0000238FCD /* LocationHoursView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E8DC822CDC0E0000238FCD /* LocationHoursView.swift */; };
 		37E8DC872CDC0EFE00238FCD /* AddEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37E8DC862CDC0EFE00238FCD /* AddEventView.swift */; };
 		6BC1D83D2CF412A300B4F5CF /* UserRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC1D83C2CF412A300B4F5CF /* UserRepository.swift */; };
+		6BC1D8432CFD0DE500B4F5CF /* MyPostCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC1D8422CFD0DE500B4F5CF /* MyPostCardView.swift */; };
+		6BC1D8492CFD14DA00B4F5CF /* MyPostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC1D8482CFD14DA00B4F5CF /* MyPostDetailView.swift */; };
+		6BC1D84B2CFD166B00B4F5CF /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC1D84A2CFD166800B4F5CF /* Comment.swift */; };
+		6BC1D84E2CFD1BFF00B4F5CF /* MyBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC1D84D2CFD1BFF00B4F5CF /* MyBookmarksView.swift */; };
+		6BC1D8502CFD259B00B4F5CF /* LargeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BC1D84F2CFD259B00B4F5CF /* LargeMapView.swift */; };
 		98BD764E2CDD56E30008274E /* AddCompanionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BD764D2CDD56E30008274E /* AddCompanionsView.swift */; };
 		98DF07012CD5EAA400694B97 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07002CD5EAA400694B97 /* Day.swift */; };
 		98DF07032CD5EABE00694B97 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07022CD5EABE00694B97 /* Event.swift */; };
@@ -68,6 +73,11 @@
 		37E8DC822CDC0E0000238FCD /* LocationHoursView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationHoursView.swift; sourceTree = "<group>"; };
 		37E8DC862CDC0EFE00238FCD /* AddEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventView.swift; sourceTree = "<group>"; };
 		6BC1D83C2CF412A300B4F5CF /* UserRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRepository.swift; sourceTree = "<group>"; };
+		6BC1D8422CFD0DE500B4F5CF /* MyPostCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostCardView.swift; sourceTree = "<group>"; };
+		6BC1D8482CFD14DA00B4F5CF /* MyPostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostDetailView.swift; sourceTree = "<group>"; };
+		6BC1D84A2CFD166800B4F5CF /* Comment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comment.swift; sourceTree = "<group>"; };
+		6BC1D84D2CFD1BFF00B4F5CF /* MyBookmarksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBookmarksView.swift; sourceTree = "<group>"; };
+		6BC1D84F2CFD259B00B4F5CF /* LargeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeMapView.swift; sourceTree = "<group>"; };
 		98BD764D2CDD56E30008274E /* AddCompanionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCompanionsView.swift; sourceTree = "<group>"; };
 		98DF07002CD5EAA400694B97 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		98DF07022CD5EABE00694B97 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -146,6 +156,7 @@
 		37BC41D32CD19199007AA26B /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6BC1D84A2CFD166800B4F5CF /* Comment.swift */,
 				37BC41D42CD191A1007AA26B /* Trip.swift */,
 				98DF07002CD5EAA400694B97 /* Day.swift */,
 				98DF07022CD5EABE00694B97 /* Event.swift */,
@@ -180,6 +191,7 @@
 				98DF07162CD6CAC000694B97 /* MeView.swift */,
 				98DF071E2CD7165500694B97 /* EditMeView.swift */,
 				98DF07182CD6DA1700694B97 /* MyPostsView.swift */,
+				6BC1D8422CFD0DE500B4F5CF /* MyPostCardView.swift */,
 				98DF071A2CD6DA2200694B97 /* BookmarksView.swift */,
 				37BC41E42CD1A144007AA26B /* DateSelectionView.swift */,
 				37BC41E62CD1BA5D007AA26B /* TripDetailsView.swift */,
@@ -192,6 +204,9 @@
 				37E8DC802CDC0DDC00238FCD /* LocationDetailView.swift */,
 				37E8DC822CDC0E0000238FCD /* LocationHoursView.swift */,
 				37E8DC862CDC0EFE00238FCD /* AddEventView.swift */,
+				6BC1D8482CFD14DA00B4F5CF /* MyPostDetailView.swift */,
+				6BC1D84D2CFD1BFF00B4F5CF /* MyBookmarksView.swift */,
+				6BC1D84F2CFD259B00B4F5CF /* LargeMapView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -283,11 +298,13 @@
 				98DF070D2CD5EB5E00694B97 /* Location.swift in Sources */,
 				37BC41E12CD19501007AA26B /* MyTripsView.swift in Sources */,
 				98DF07172CD6CAC000694B97 /* MeView.swift in Sources */,
+				6BC1D84E2CFD1BFF00B4F5CF /* MyBookmarksView.swift in Sources */,
 				6BC1D83D2CF412A300B4F5CF /* UserRepository.swift in Sources */,
 				379843E32CDB3C11001B5A69 /* ItineraryView.swift in Sources */,
 				98DF07032CD5EABE00694B97 /* Event.swift in Sources */,
 				37BC41E52CD1A144007AA26B /* DateSelectionView.swift in Sources */,
 				37E8DC812CDC0DDC00238FCD /* LocationDetailView.swift in Sources */,
+				6BC1D8492CFD14DA00B4F5CF /* MyPostDetailView.swift in Sources */,
 				37BC41E32CD1A11F007AA26B /* NewTripView.swift in Sources */,
 				98DF07192CD6DA1700694B97 /* MyPostsView.swift in Sources */,
 				37BC41D52CD191A1007AA26B /* Trip.swift in Sources */,
@@ -296,6 +313,8 @@
 				379843E92CDB7A62001B5A69 /* EditEventView.swift in Sources */,
 				98DF071B2CD6DA2200694B97 /* BookmarksView.swift in Sources */,
 				98DF07092CD5EB2C00694B97 /* SimpleUser.swift in Sources */,
+				6BC1D84B2CFD166B00B4F5CF /* Comment.swift in Sources */,
+				6BC1D8502CFD259B00B4F5CF /* LargeMapView.swift in Sources */,
 				98DF071F2CD7165500694B97 /* EditMeView.swift in Sources */,
 				98DF07212CD7FAD000694B97 /* CompanionRowView.swift in Sources */,
 				98DF070B2CD5EB5600694B97 /* Post.swift in Sources */,
@@ -305,6 +324,7 @@
 				37BC41D92CD192CE007AA26B /* TripRepository.swift in Sources */,
 				37BC41BF2CD1911B007AA26B /* TravelApp.swift in Sources */,
 				37E8DC872CDC0EFE00238FCD /* AddEventView.swift in Sources */,
+				6BC1D8432CFD0DE500B4F5CF /* MyPostCardView.swift in Sources */,
 				98DF07012CD5EAA400694B97 /* Day.swift in Sources */,
 				37BC41DF2CD194E5007AA26B /* TripCardView.swift in Sources */,
 				98DF071D2CD7159F00694B97 /* CompanionsView.swift in Sources */,

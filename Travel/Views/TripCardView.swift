@@ -49,9 +49,9 @@ struct TripCardView: View {
   }
 }
 
-struct TripCardView_Previews: PreviewProvider {
-  static var previews: some View {
-		TripCardView(trip: Trip.example)
-    .previewLayout(.sizeThatFits)
-  }
-}
+//struct TripCardView_Previews: PreviewProvider {
+//  static var previews: some View {
+//		TripCardView(trip: Trip.example)
+//    .previewLayout(.sizeThatFits)
+//  }
+//}

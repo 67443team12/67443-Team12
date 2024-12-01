@@ -9,10 +9,11 @@ import SwiftUI
 
 struct TripDetailsView: View {
   var trip: Trip
-  var tripRepository: TripRepository
+  @ObservedObject var tripRepository: TripRepository
   var locationRepository: LocationRepository
   @State private var selectedIndex = 0
-  var currUser: User
+  @ObservedObject var userRepository: UserRepository
+//  var currUser: User
 	
 //	@EnvironmentObject var aliceVM: MockUser
 
@@ -25,7 +26,7 @@ struct TripDetailsView: View {
           .frame(maxWidth: .infinity, alignment: .center)
       }
       .overlay(
-        NavigationLink(destination: CompanionsView(trip: trip, tripRepository: tripRepository, currUser: currUser)) {
+        NavigationLink(destination: CompanionsView(trip: trip, tripRepository: tripRepository, userRepository: userRepository)) {
           Image(systemName: "person.3")
             .font(.title)
             .fontWeight(.bold)

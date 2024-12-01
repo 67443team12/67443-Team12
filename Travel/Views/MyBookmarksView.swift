@@ -1,14 +1,20 @@
+//
+//  MyBookmarksView.swift
+//  Travel
+//
+//  Created by k mao on 12/1/24.
+//
 
 import SwiftUI
 
-struct MyPostsView: View {
+struct MyBookmarksView: View {
   @ObservedObject var postRepository: PostRepository
   @ObservedObject var userRepository: UserRepository
   
   var body: some View {
     VStack {
       // Title
-      Text("My Posts")
+      Text("My Bookmarks")
         .font(.largeTitle)
         .fontWeight(.bold)
         .padding(.top, 15)
@@ -23,16 +29,16 @@ struct MyPostsView: View {
       
       // Posts with logged in userId
       ScrollView {
-        ForEach(filterPostsByUserId(posts: postRepository.posts, userId: userRepository.users[0].id), id: \.id) { post in
+        ForEach(getUserBookmarks(bookmarks: userRepository.users[0].Bookmarks, posts: postRepository.posts), id: \.id) { post in
           MyPostCardView(post: post, postRepository: postRepository, userRepository: userRepository)
         }
       }
     }
   }
   
-  func filterPostsByUserId(posts: [Post], userId: String) -> [Post] {
+  func getUserBookmarks(bookmarks: [String], posts: [Post]) -> [Post] {
       // Filter the posts array where userId matches the given userId string
-      return posts.filter { $0.userId == userId }
+    return posts.filter { bookmarks.contains($0.id) }
   }
 
 }

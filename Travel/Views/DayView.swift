@@ -17,7 +17,7 @@ struct DayView: View {
   let tripRepository: TripRepository
   @State var displayedLocations: [Location] = [Location]()
   @State var searchText: String = ""
-  @State private var region = MKCoordinateRegion(
+  @State var region = MKCoordinateRegion(
     center: CLLocationCoordinate2D(latitude: 39.8283, longitude: -98.5795),
     span: MKCoordinateSpan(latitudeDelta: 30, longitudeDelta: 30)
   )
@@ -76,38 +76,40 @@ struct DayView: View {
           .frame(maxWidth: .infinity, alignment: .leading)
 
         NavigationStack {
-          Map(coordinateRegion: $region, annotationItems: displayedLocations) { location in
-            MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(location.latitude), longitude: CLLocationDegrees(location.longitude))) {
-              NavigationLink(destination: LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)) {
-                ZStack {
-                  Circle()
-                    .fill(.blue)
-                    .frame(width: 15, height: 15)
-                  Text(location.name)
-                    .font(.caption)
-                    .foregroundColor(.black)
+            List(displayedLocations, id: \.id) { location in
+                NavigationLink(destination: LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)) {
+                    VStack(alignment: .leading) {
+                        Text(location.name)
+                            .font(.headline)
+//                        Text(location.description)
+//                            .font(.subheadline)
+//                            .foregroundColor(.gray)
+                    }
                 }
-              }
             }
-          }
-          .ignoresSafeArea()
-          .navigationDestination(for: Location.self) { location in
-            LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)
-          }
+            .listStyle(.inset)
         }
         .frame(width: 350, height: 300)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .overlay(
-          RoundedRectangle(cornerRadius: 20)
-            .stroke(.gray, lineWidth: 1)
+            RoundedRectangle(cornerRadius: 20)
+                .stroke(.gray, lineWidth: 1)
         )
       }
 
-      Text("Map")
-        .font(.title2)
-        .fontWeight(.semibold)
-        .padding(.leading, 20)
-        .frame(maxWidth: .infinity, alignment: .leading)
+        Text("Map")
+          .font(.title2)
+          .fontWeight(.semibold)
+          .padding(.leading, 20)
+          .frame(maxWidth: .infinity, alignment: .leading)
+
+      
+        NavigationLink(destination: LargeMapView()) {
+          Text("View Enlarged Map")
+            .font(.subheadline)
+            .foregroundColor(.gray)
+            .frame(alignment: .leading)
+        }
 
       NavigationStack {
         Map(coordinateRegion: $region, annotationItems: day.events) { event in
