@@ -23,6 +23,33 @@ struct DayView: View {
   )
   @State private var selectedEvent: Event? = nil
 
+  
+  // Initializer
+  init(trip: Trip, day: Day, dayNumber: Int, locationRepository: LocationRepository, tripRepository: TripRepository) {
+      self.trip = trip
+      self.day = day
+      self.dayNumber = dayNumber
+      self.locationRepository = locationRepository
+      self.tripRepository = tripRepository
+      
+      // Default region
+      var initialRegion = MKCoordinateRegion(
+          center: CLLocationCoordinate2D(latitude: 39.8283, longitude: -98.5795),
+          span: MKCoordinateSpan(latitudeDelta: 30, longitudeDelta: 30)
+      )
+      
+      // Update region based on the first event, if available
+      if let firstEvent = day.events.first {
+          initialRegion.center = CLLocationCoordinate2D(latitude: firstEvent.latitude, longitude: firstEvent.longitude)
+          initialRegion.span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1) // Adjust for zoom level
+      }
+      
+      _region = State(initialValue: initialRegion)
+  }
+  
+  
+  
+  
   var body: some View {
     @State var selectedLocation: Location?
 
@@ -104,11 +131,12 @@ struct DayView: View {
           .frame(maxWidth: .infinity, alignment: .leading)
 
       
-        NavigationLink(destination: LargeMapView()) {
+      NavigationLink(destination: LargeMapView(day: day, region: region, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)) {
           Text("View Enlarged Map")
             .font(.subheadline)
             .foregroundColor(.gray)
-            .frame(alignment: .leading)
+            .padding(.leading, 20)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
 
       NavigationStack {
@@ -143,7 +171,10 @@ struct DayView: View {
 
       Spacer()
     }
-    .onAppear { loadData() }
+    .onAppear {
+      loadData()
+      setRegion(events: day.events)
+    }
   }
 
   private var popUpView: some View {
@@ -172,6 +203,18 @@ struct DayView: View {
 
   private func loadData() {
     self.displayedLocations = []
+  }
+  
+  func setRegion(events: [Event]) {
+      guard let firstEvent = events.first else {
+          print("No events available to set the region.")
+          return
+      }
+      
+      let center = CLLocationCoordinate2D(latitude: firstEvent.latitude, longitude: firstEvent.longitude)
+      let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05) // Adjust for desired zoom level
+      
+      region = MKCoordinateRegion(center: center, span: span)
   }
 
   private func printLocations(locations: [Location]) -> String {

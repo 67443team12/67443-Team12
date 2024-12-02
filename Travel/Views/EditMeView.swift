@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+//import FirebaseStorage
 
 struct EditMeView: View {
   @ObservedObject var userRepository: UserRepository
@@ -24,10 +25,10 @@ struct EditMeView: View {
     
     Form {
       Section(header: Text("Edit Profile").font(.headline)) {
-        HStack {
-          Text("User ID: ")
-          TextField("User ID", text: $id)
-        }
+//        HStack {
+//          Text("User ID: ")
+//          TextField("User ID", text: $id)
+//        }
         
         HStack {
           Text("Displayed Name: ")
