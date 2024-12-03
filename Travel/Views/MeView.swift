@@ -62,7 +62,7 @@ struct MeView: View {
               Text("My Posts")
             })
           NavigationLink(
-            destination: MyBookmarksView(postRepository: postRepository, userRepository: userRepository),
+            destination: MyPostsView(postRepository: postRepository, userRepository: userRepository),
             label: {
               Text("Bookmarks")
             })
