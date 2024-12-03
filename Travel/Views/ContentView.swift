@@ -27,27 +27,30 @@ struct ContentView: View {
         Text("Loading users...")
     } else {
       
+      NavigationView {
       TabView {
         MyTripsView(userRepository: userRepository)
           .tabItem {
             Label("Trips", systemImage: "calendar")
           }
-
+        
         Text("Posts View") // Placeholder for the Posts view
           .tabItem {
             Label("Posts", systemImage: "square.and.pencil")
           }
-
+        
         Text("Friends View") // Placeholder for the Friends view
           .tabItem {
             Label("Friends", systemImage: "person.2")
           }
-
+        
         MeView(userRepository: userRepository, postRepository: postRepository)
           .tabItem {
             Label("Me", systemImage: "person.circle")
           }
       }
+    }
+//      .navigationViewStyle(.stack)
       
     }
 

@@ -49,4 +49,20 @@ struct User: Codable, Identifiable, Comparable {
       "Requests": Requests
     ]
   }
+  
+  func toSimpleUser() -> SimpleUser {
+          return SimpleUser(
+              id: self.id,
+              name: self.name,
+              photo: self.photo
+          )
+      }
+  
+  
+  
+//  func removeTrip(tripID: String) {
+//    Trips.removeAll { $0 == tripID }
+//  }
+  
+  
 }

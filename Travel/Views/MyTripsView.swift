@@ -74,7 +74,8 @@ struct MyTripsView: View {
 //        ForEach(tripRepository.trips) {
 //          trip in Text(trip.id)
 //        }
-//        Text("\(userRepository.users[0].id)")
+        Text("\(userRepository.users[0].id)")
+        Text("\(userRepository.users[0].Friends.count)")
         
         if !searchText.isEmpty {
           ScrollView {

@@ -20,7 +20,7 @@ class MockUser: ObservableObject {
 //		}
 //	}
 //	
-//	func removeTrip(tripID: String) {
-//		user.Trips.removeAll { $0 == tripID }
-//	}
+	func removeTrip(tripID: String) {
+		user.Trips.removeAll { $0 == tripID }
+	}
 }

@@ -14,6 +14,7 @@ struct EditMeView: View {
   @State var id: String
   @State var newName: String
   @State var newImage: String
+  @State private var selectedPhotoData: Data?
 //  init(currUser: User, userRepository: UserRepository, newId: String, newImage: String) {
 //    self.currUser = currUser
 //    self.userRepository = userRepository

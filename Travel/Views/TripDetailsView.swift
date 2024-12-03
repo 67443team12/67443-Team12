@@ -26,7 +26,7 @@ struct TripDetailsView: View {
           .frame(maxWidth: .infinity, alignment: .center)
       }
       .overlay(
-        NavigationLink(destination: CompanionsView(trip: trip, tripRepository: tripRepository, userRepository: userRepository)) {
+        NavigationLink(destination: CompanionsView(trip: trip)) {
           Image(systemName: "person.3")
             .font(.title)
             .fontWeight(.bold)
