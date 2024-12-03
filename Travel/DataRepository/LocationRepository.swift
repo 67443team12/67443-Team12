@@ -37,7 +37,7 @@ class LocationRepository: ObservableObject {
     db.collection("locations").addSnapshotListener { (querySnapshot, error) in
       // Error handling
       if let error = error {
-        print("Error fetching documents: \(error)")
+        print("Error fetching locations: \(error)")
         return
       }
       

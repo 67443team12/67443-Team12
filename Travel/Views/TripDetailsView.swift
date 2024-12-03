@@ -9,11 +9,10 @@ import SwiftUI
 
 struct TripDetailsView: View {
   var trip: Trip
-  var tripRepository: TripRepository
+  @ObservedObject var tripRepository: TripRepository
   @State private var selectedIndex = 0
-  @ObservedObject var locationRepository = LocationRepository()
-	
-	@EnvironmentObject var aliceVM: MockUser
+  var locationRepository: LocationRepository
+  @ObservedObject var userRepository: UserRepository
 
   var body: some View {
     VStack {
@@ -23,15 +22,6 @@ struct TripDetailsView: View {
           .fontWeight(.bold)
           .frame(maxWidth: .infinity, alignment: .center)
       }
-      .overlay(
-				NavigationLink(destination: CompanionsView(trip: trip, tripRepository: tripRepository).environmentObject(aliceVM)) {
-          Image(systemName: "person.3")
-            .font(.title)
-            .fontWeight(.bold)
-            .padding(.trailing)
-        }
-        .frame(maxWidth: .infinity, alignment: .trailing)
-      )
       
       if !trip.days.isEmpty {
         HStack {
@@ -49,7 +39,7 @@ struct TripDetailsView: View {
           Text("Day \(selectedIndex + 1): \(trip.days[selectedIndex].date)")
             .font(.headline)
             .padding()
-            .background(Color(.systemGray5))
+            .background(Color("LightPurple"))
             .cornerRadius(10)
           
           Spacer()
@@ -66,9 +56,25 @@ struct TripDetailsView: View {
         .padding(.horizontal)
         .padding(.bottom, 10)
         
-        ScrollView {
-          DayView(trip: trip, day: trip.days[selectedIndex], dayNumber: selectedIndex + 1, locationRepository: locationRepository, tripRepository: tripRepository)
+        GeometryReader { geometry in
+          HStack(spacing: 0) {
+            ForEach(0..<trip.days.count, id: \.self) { index in
+              ScrollView {
+                DayView(
+                  trip: trip,
+                  day: trip.days[index],
+                  dayNumber: index + 1,
+                  locationRepository: locationRepository,
+                  tripRepository: tripRepository
+                )
+                .frame(width: geometry.size.width)
+              }
+            }
+          }
+          .offset(x: -CGFloat(selectedIndex) * geometry.size.width)
+          .animation(.easeInOut, value: selectedIndex)
         }
+        .clipped() // Prevents content overflow
       } else {
         Text("Loading days...")
           .font(.subheadline)
@@ -76,12 +82,27 @@ struct TripDetailsView: View {
           .padding()
       }
     }
-//    .toolbar(.hidden, for: .tabBar)
+    .toolbar {
+      ToolbarItem(placement: .navigationBarTrailing) {
+        NavigationLink(
+          destination: CompanionsView(trip: trip, tripRepository: tripRepository, userRepository: userRepository)
+        ) {
+          VStack(spacing: 2) {
+            Image(systemName: "person.3")
+              .font(.headline)
+              .fontWeight(.semibold)
+            Text("Companions")
+              .font(.caption2)
+              .fontWeight(.semibold)
+          }
+        }
+      }
+    }
   }
 }
 
-struct TripDetailsView_Previews: PreviewProvider {
-  static var previews: some View {
-		TripDetailsView(trip: Trip.example, tripRepository: TripRepository()).environmentObject(MockUser(user: User.example))
-  }
-}
+//struct TripDetailsView_Previews: PreviewProvider {
+//  static var previews: some View {
+//    TripDetailsView(trip: Trip.example, tripRepository: TripRepository())
+//  }
+//}
