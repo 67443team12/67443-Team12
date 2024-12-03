@@ -7,14 +7,17 @@
 
 import Combine
 import FirebaseFirestore
+import FirebaseStorage
 
 class TripRepository: ObservableObject {
   // Firestore collection path
   private var path: String = "trips"
   private var store = Firestore.firestore()
+  private var storage = Storage.storage()
   
   // Published variable to store fetched trips
   @Published var trips: [Trip] = []
+  @Published var filteredTrips: [Trip] = []
   private var cancellables: Set<AnyCancellable> = []
   
   init() {
@@ -122,48 +125,161 @@ class TripRepository: ObservableObject {
       }
     }
   }
-	
-	func addTravelers(trip: Trip, travelers: [SimpleUser]) {
-		let tripRef = store.collection(path).document(trip.id)
-		
-		// Combine existing travelers with the new travelers
-		var updatedTravelers = trip.travelers
-		for traveler in travelers {
-			if !updatedTravelers.contains(where: { $0.id == traveler.id }) {
-				updatedTravelers.append(traveler)
-			}
-		}
-		
-		// Update Firestore with the new list of travelers
-		tripRef.updateData(["travelers": updatedTravelers.map { $0.toDictionary() }]) { error in
-			if let error = error {
-				print("Error adding travelers to Firestore: \(error.localizedDescription)")
-			} else {
-				print("Travelers added successfully to Firestore.")
-			}
-		}
-	}
-	
-	func removeTraveler(trip: Trip, traveler: SimpleUser) {
-		// Create a reference to the specific trip document in Firestore
-		let tripRef = store.collection(path).document(trip.id)
-
-		// Remove the traveler from the local list
-		var updatedTravelers = trip.travelers
-		if let index = updatedTravelers.firstIndex(where: { $0.id == traveler.id }) {
-			updatedTravelers.remove(at: index)
-
-			// Update Firestore by setting the updated list of travelers
-			tripRef.updateData(["travelers": updatedTravelers.map { $0.toDictionary() }]) { error in
-				if let error = error {
-					print("Error updating travelers in Firestore: \(error.localizedDescription)")
-				} else {
-					print("Travelers updated successfully in Firestore.")
-				}
-			}
-		} else {
-			print("Traveler not found in the trip.")
-		}
-	}
-	
+  
+  func addTravelers(trip: Trip, travelers: [User]) {
+    let tripRef = store.collection(path).document(trip.id)
+    
+    var simpleTravelers: [SimpleUser] = travelers.map { user in
+      SimpleUser(id: user.id, name: user.name, photo: user.photo)
+    }
+    
+    // Combine existing travelers with the new travelers
+    var updatedTravelers = trip.travelers
+    for traveler in simpleTravelers {
+      if !updatedTravelers.contains(where: { $0.id == traveler.id }) {
+        updatedTravelers.append(traveler)
+      }
+    }
+    
+    // Update Firestore with the new list of travelers
+    tripRef.updateData(["travelers": updatedTravelers.map { $0.toDictionary() }]) { error in
+      if let error = error {
+        print("Error adding travelers to Firestore: \(error.localizedDescription)")
+      } else {
+        print("Travelers added successfully to Firestore.")
+      }
+    }
+    
+    self.get()
+  }
+  
+  func getCompanions(tripId: String) -> [SimpleUser] {
+    // Search for the trip with the matching id
+    if let trip = trips.first(where: { $0.id == tripId }) {
+      // Return the companions list of the found trip
+      return trip.travelers
+    }
+    
+    // If no trip is found, return nil
+    return []
+  }
+  
+  func removeTraveler(trip: Trip, traveler: SimpleUser) {
+    guard let tripIndex = trips.firstIndex(where: { $0.id == trip.id }) else {
+      print("Trip not found")
+      return
+    }
+    
+    // Update the trip locally
+    var updatedTrip = trips[tripIndex]
+    updatedTrip.travelers.removeAll { $0.id == traveler.id }
+    trips[tripIndex] = updatedTrip
+    
+    // Update the trip in Firestore
+    let tripRef = store.collection("trips").document(trip.id)
+    let updatedTravelers = updatedTrip.travelers.map { [
+      "userId": $0.id,
+      "name": $0.name,
+      "photo": $0.photo
+    ]}
+    
+    tripRef.updateData(["travelers": updatedTravelers]) { error in
+      if let error = error {
+        print("Error removing traveler: \(error.localizedDescription)")
+      } else {
+        print("Traveler successfully removed")
+      }
+    }
+  }
+  
+  func uploadPhotoToStorage(imageData: Data, tripId: String, completion: @escaping (String?) -> Void) {
+    let storageRef = storage.reference().child("trip_photos/\(UUID().uuidString).jpg")
+    
+    let metadata = StorageMetadata()
+    metadata.contentType = "image/jpeg"
+    
+    storageRef.putData(imageData, metadata: metadata) { metadata, error in
+      if let error = error {
+        print("Error uploading photo: \(error.localizedDescription)")
+        completion(nil)
+        return
+      }
+      
+      storageRef.downloadURL { url, error in
+        if let error = error {
+          print("Error fetching photo URL: \(error.localizedDescription)")
+          completion(nil)
+          return
+        }
+        
+        if let downloadURL = url {
+          // Once the upload is complete, update the Firestore document
+          self.updateTripPhotoURL(tripId: tripId, photoURL: downloadURL.absoluteString) { success in
+            if success {
+              completion(downloadURL.absoluteString)
+            } else {
+              completion(nil)
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  func updateTripPhotoURL(tripId: String, photoURL: String, completion: @escaping (Bool) -> Void) {
+    let tripRef = store.collection(path).document(tripId)
+    
+    tripRef.updateData(["photo": photoURL]) { error in
+      if let error = error {
+        print("Error updating photo URL: \(error.localizedDescription)")
+        completion(false)
+        return
+      }
+      print("Photo URL updated successfully in Firestore.")
+      completion(true)
+    }
+  }
+  
+  func fetchUpdatedTrip(tripId: String, completion: @escaping (Trip?) -> Void) {
+    let tripRef = store.collection(path).document(tripId)
+    
+    tripRef.getDocument { document, error in
+      if let error = error {
+        print("Error fetching updated trip: \(error.localizedDescription)")
+        completion(nil)
+        return
+      }
+      
+      guard let document = document, document.exists else {
+        print("Trip document not found")
+        completion(nil)
+        return
+      }
+      
+      do {
+        // Map the Firestore document to a Trip model
+        let updatedTrip = try document.data(as: Trip.self)
+        completion(updatedTrip)
+      } catch {
+        print("Error decoding trip data: \(error.localizedDescription)")
+        completion(nil)
+      }
+    }
+  }
+  
+  func filterTrips(by tripIds: [String]) -> [Trip] {
+    return trips.filter { trip in
+      tripIds.contains(trip.id)
+    }
+  }
+  
+  func search(searchText: String) {
+    if searchText == "" {
+      return
+    }
+    self.filteredTrips = self.trips.filter { trip in
+      return trip.name.lowercased().contains(searchText.lowercased())
+    }
+  }
+  
 }

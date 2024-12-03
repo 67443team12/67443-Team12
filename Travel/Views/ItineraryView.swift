@@ -23,7 +23,7 @@ struct ItineraryView: View {
         .frame(maxWidth: .infinity, alignment: .leading)
       
       Rectangle()
-        .fill(Color(.systemGray6))
+        .fill(Color("LightPurple"))
         .frame(height: 300)
         .overlay(
           ScrollView {
