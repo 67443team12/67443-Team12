@@ -7,11 +7,13 @@
 
 import Combine
 import FirebaseFirestore
+import FirebaseStorage
 
 class UserRepository: ObservableObject {
   // Firestore collection path
   private var path: String = "users"
   private var store = Firestore.firestore()
+  private var storage = Storage.storage()
   
   // Published variable to store fetched trips
   @Published var users: [User] = []
@@ -202,6 +204,64 @@ class UserRepository: ObservableObject {
     )
     
     self.editUser(userId: user.id, updatedUser: updatedUser)
+  }
+  
+  
+  
+  func updateUserPhotoURL(userId: String, photoURL: String, completion: @escaping (Bool) -> Void) {
+    let tripRef = store.collection(path).document(userId)
+    
+    tripRef.updateData(["photo": photoURL]) { error in
+      if let error = error {
+        print("Error updating photo URL: \(error.localizedDescription)")
+        completion(false)
+        self.get()
+        return
+      }
+      print("Photo URL updated successfully in Firestore.")
+      completion(true)
+    }
+  }
+  
+  
+  
+  
+  
+  
+  func uploadPhotoToStorage(imageData: Data, userId: String, completion: @escaping (String?) -> Void) {
+    let storageRef = storage.reference().child("user_photos/\(UUID().uuidString).jpg")
+    
+    let metadata = StorageMetadata()
+    metadata.contentType = "image/jpeg"
+    
+    storageRef.putData(imageData, metadata: metadata) { metadata, error in
+      if let error = error {
+        print("Error uploading photo: \(error.localizedDescription)")
+        completion(nil)
+        return
+      }
+      
+      storageRef.downloadURL { url, error in
+        if let error = error {
+          print("Error fetching photo URL: \(error.localizedDescription)")
+          completion(nil)
+          return
+        }
+        
+        if let downloadURL = url {
+          // Once the upload is complete, update the Firestore document
+          self.updateUserPhotoURL(userId: userId, photoURL: downloadURL.absoluteString) { success in
+            if success {
+              completion(downloadURL.absoluteString)
+            } else {
+              completion(nil)
+            }
+          }
+        }
+      }
+    }
+    
+    
   }
   
 }
