@@ -25,10 +25,15 @@ struct MeView: View {
 				}
 				
         HStack {
-					Circle()
-						.fill(.blue)
-						.frame(width: 100, height: 100)
-						.padding(.leading, 20)
+          AsyncImage(url: URL(string: userRepository.users[0].photo)) { image in
+            image.resizable()
+          } placeholder: {
+            Color.gray
+          }
+            .frame(width: 100, height: 100)
+            .clipShape(Circle())
+            .padding(.leading, 20)
+          
 					VStack(alignment: .leading) {
             Text(userRepository.users[0].name)
 							.font(.largeTitle)
