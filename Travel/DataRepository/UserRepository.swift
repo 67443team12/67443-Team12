@@ -186,4 +186,22 @@ class UserRepository: ObservableObject {
 		self.editUser(userId: request.id, updatedUser: updatedUser)
 	}
 	
+	func leaveTrip(tripId: String, userId: String) {
+		var user = users.first { $0.id == userId }!
+		var newTrips = user.Trips.filter { $0 != tripId }
+		
+		let updatedUser = User(
+			id: user.id,
+			name: user.name,
+			photo: user.photo,
+			Posts: user.Posts,
+			Bookmarks: user.Bookmarks,
+			Trips: newTrips,
+			Friends: user.Friends,
+			Requests: user.Requests
+		)
+		
+		self.editUser(userId: user.id, updatedUser: updatedUser)
+	}
+	
 }

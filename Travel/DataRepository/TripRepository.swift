@@ -126,12 +126,16 @@ class TripRepository: ObservableObject {
 		}
 	}
 	
-	func addTravelers(trip: Trip, travelers: [SimpleUser]) {
+	func addTravelers(trip: Trip, travelers: [User]) {
 		let tripRef = store.collection(path).document(trip.id)
+		
+		var simpleTravelers: [SimpleUser] = travelers.map { user in
+			SimpleUser(id: user.id, name: user.name, photo: user.photo)
+		}
 		
 		// Combine existing travelers with the new travelers
 		var updatedTravelers = trip.travelers
-		for traveler in travelers {
+		for traveler in simpleTravelers {
 			if !updatedTravelers.contains(where: { $0.id == traveler.id }) {
 				updatedTravelers.append(traveler)
 			}
@@ -145,27 +149,46 @@ class TripRepository: ObservableObject {
 				print("Travelers added successfully to Firestore.")
 			}
 		}
+		
+		self.get()
+	}
+	
+	func getCompanions(tripId: String) -> [SimpleUser] {
+		// Search for the trip with the matching id
+		if let trip = trips.first(where: { $0.id == tripId }) {
+			// Return the companions list of the found trip
+			return trip.travelers
+		}
+		
+		// If no trip is found, return nil
+		return []
 	}
 	
 	func removeTraveler(trip: Trip, traveler: SimpleUser) {
-		// Create a reference to the specific trip document in Firestore
-		let tripRef = store.collection(path).document(trip.id)
+		guard let tripIndex = trips.firstIndex(where: { $0.id == trip.id }) else {
+			print("Trip not found")
+			return
+		}
 		
-		// Remove the traveler from the local list
-		var updatedTravelers = trip.travelers
-		if let index = updatedTravelers.firstIndex(where: { $0.id == traveler.id }) {
-			updatedTravelers.remove(at: index)
-			
-			// Update Firestore by setting the updated list of travelers
-			tripRef.updateData(["travelers": updatedTravelers.map { $0.toDictionary() }]) { error in
-				if let error = error {
-					print("Error updating travelers in Firestore: \(error.localizedDescription)")
-				} else {
-					print("Travelers updated successfully in Firestore.")
-				}
+		// Update the trip locally
+		var updatedTrip = trips[tripIndex]
+		updatedTrip.travelers.removeAll { $0.id == traveler.id }
+		trips[tripIndex] = updatedTrip
+		
+		// Update the trip in Firestore
+		let tripRef = store.collection("trips").document(trip.id)
+		let updatedTravelers = updatedTrip.travelers.map { [
+			"userId": $0.id,
+			"name": $0.name,
+			"photo": $0.photo
+		]}
+		
+		tripRef.updateData(["travelers": updatedTravelers]) { error in
+			if let error = error {
+				print("Error removing traveler: \(error.localizedDescription)")
+			} else {
+				print("Traveler successfully removed")
 			}
-		} else {
-			print("Traveler not found in the trip.")
 		}
 	}
 	

@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MyTripsView: View {
 //	@EnvironmentObject var aliceVM: MockUser
+	@ObservedObject var userRepository: UserRepository
 	@ObservedObject var tripRepository = TripRepository()
 	@ObservedObject var locationRepository = LocationRepository()
 	@State private var showNewTripView = false
@@ -16,8 +17,6 @@ struct MyTripsView: View {
 	// search stuff
 	@State var searchText: String = ""
 	@State var displayedTrips: [Trip] = [Trip]()
-	
-	let currUser: User
 	
 	var body: some View {
 		let binding = Binding<String>(get: {
@@ -64,18 +63,17 @@ struct MyTripsView: View {
 						.padding(.trailing, 10)
 					}
 				}
-				.background(Color(.systemGray5))
+				.background(Color("LightPurple"))
 				.cornerRadius(15)
 				.padding(.horizontal, 20)
 				.padding(.bottom, 10)
 				
 				if !searchText.isEmpty {
 					ScrollView {
-						ForEach(displayedTrips.filter { currUser.Trips.contains($0.id) }.sorted {
+						ForEach(displayedTrips.filter { userRepository.users[0].Trips.contains($0.id) }.sorted {
 							($0.startDateAsDate ?? .distantPast) > ($1.startDateAsDate ?? .distantPast)
 		 }) { trip in
-							NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository, locationRepository: locationRepository, currUser: currUser)
-														 //                .environmentObject(aliceVM)
+							NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository, locationRepository: locationRepository, userRepository: userRepository)
 							) {
 								TripCardView(trip: trip, tripRepository: tripRepository)
 									.padding(.bottom, 10)
@@ -86,11 +84,10 @@ struct MyTripsView: View {
 					.padding(.horizontal)
 				} else {
 					ScrollView {
-						ForEach(tripRepository.trips.filter { currUser.Trips.contains($0.id) }.sorted {
+						ForEach(tripRepository.trips.filter { userRepository.users[0].Trips.contains($0.id) }.sorted {
 							($0.startDateAsDate ?? .distantPast) > ($1.startDateAsDate ?? .distantPast)
 		 }) { trip in
-							NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository, locationRepository: locationRepository, currUser: currUser)
-														 //                .environmentObject(aliceVM)
+			 NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository, locationRepository: locationRepository, userRepository: userRepository)
 							) {
 								TripCardView(trip: trip, tripRepository: tripRepository)
 									.padding(.bottom, 10)
@@ -102,7 +99,7 @@ struct MyTripsView: View {
 			}
 			.navigationBarHidden(true)
 			.sheet(isPresented: $showNewTripView) {
-				NewTripView(isPresented: $showNewTripView, tripRepository: tripRepository, currUser: currUser)
+				NewTripView(isPresented: $showNewTripView, userRepository: userRepository, tripRepository: tripRepository)
 					.presentationDetents([.fraction(0.97)])
 					.presentationDragIndicator(.visible)
 //					.environmentObject(aliceVM)

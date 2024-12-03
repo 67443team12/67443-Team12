@@ -25,7 +25,7 @@ struct ContentView: View {
 			Text("Loading users...")
 		} else {
 			TabView {
-				MyTripsView(currUser: userRepository.users[0])
+				MyTripsView(userRepository: userRepository)
 					.tabItem {
 						Label("Trips", systemImage: "calendar")
 					}

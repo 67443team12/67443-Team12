@@ -12,9 +12,7 @@ struct TripDetailsView: View {
 	@ObservedObject var tripRepository: TripRepository
   @State private var selectedIndex = 0
 	var locationRepository: LocationRepository
-	
-//	@EnvironmentObject var aliceVM: MockUser
-	var currUser: User
+	@ObservedObject var userRepository: UserRepository
 
   var body: some View {
     VStack {
@@ -41,7 +39,7 @@ struct TripDetailsView: View {
 					Text("Day \(selectedIndex + 1): \(trip.days[selectedIndex].date)")
 						.font(.headline)
 						.padding()
-						.background(Color(.systemGray5))
+						.background(Color("LightPurple"))
 						.cornerRadius(10)
 					
 					Spacer()
@@ -87,7 +85,7 @@ struct TripDetailsView: View {
 		.toolbar {
 			ToolbarItem(placement: .navigationBarTrailing) {
 				NavigationLink(
-					destination: CompanionsView(trip: trip, tripRepository: tripRepository, currUser: currUser)
+					destination: CompanionsView(trip: trip, tripRepository: tripRepository, userRepository: userRepository)
 				) {
 					VStack(spacing: 2) {
 						Image(systemName: "person.3")

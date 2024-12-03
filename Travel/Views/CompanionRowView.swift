@@ -10,15 +10,21 @@ import SwiftUI
 struct CompanionRowView: View {
 	var person: SimpleUser
 	var trip: Trip
-	let tripRepository: TripRepository
+	@ObservedObject var tripRepository: TripRepository
+	@ObservedObject var userRepository: UserRepository
 	@Environment(\.presentationMode) var presentationMode
 	@State private var showAlert = false // To trigger alert confirmation
 	
 	var body: some View {
 		HStack(spacing: 20) {
-			Circle()
-        .fill(.blue)
-				.frame(width: 50, height: 50)
+			AsyncImage(url: URL(string: person.photo)) { image in
+				image.resizable()
+			} placeholder: {
+				Circle()
+					.fill(Color.gray)
+			}
+			.frame(width: 50, height: 50)
+			.clipShape(Circle())
 			Text(person.name)
 //				.font(.title3)
 //				.fontWeight(.semibold)
@@ -39,6 +45,7 @@ struct CompanionRowView: View {
 					primaryButton: .destructive(Text("Remove")) {
 						// remove the traveler
 						tripRepository.removeTraveler(trip: trip, traveler: person)
+						userRepository.leaveTrip(tripId: trip.id, userId: person.id)
 						presentationMode.wrappedValue.dismiss()
 					},
 					secondaryButton: .cancel()
@@ -47,8 +54,4 @@ struct CompanionRowView: View {
 		}
 		.padding(.horizontal, 30)
 	}
-}
-
-#Preview {
-	CompanionRowView(person: SimpleUser.bob, trip: Trip.example, tripRepository: TripRepository())
 }

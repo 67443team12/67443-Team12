@@ -10,36 +10,34 @@ import SwiftUI
 struct CompanionsView: View {
 //	var people: [SimpleUser]
 	var trip: Trip
-	let currUser: User
 	
 	@ObservedObject var tripRepository: TripRepository
+	@ObservedObject var userRepository: UserRepository
 	
 	@State private var showAlert = false
-	@State private var companions: [SimpleUser]
 	
 //	@EnvironmentObject var aliceVM: MockUser
 	@Environment(\.presentationMode) var presentationMode
 	
-	init(trip: Trip, tripRepository: TripRepository, currUser: User) {
+	init(trip: Trip, tripRepository: TripRepository, userRepository: UserRepository) {
 		self.trip = trip
 		self.tripRepository = tripRepository
-		self.currUser = currUser
-		_companions = State(initialValue: trip.travelers)
+		self.userRepository = userRepository
 	}
 	
 	var body: some View {
 		VStack {
 			VStack {
-				ForEach(companions) { person in
+				ForEach(tripRepository.getCompanions(tripId: trip.id)) { person in
 					//	not showing current user in the list
-					if person.id != currUser.id {
-						CompanionRowView(person: person, trip: trip, tripRepository: tripRepository)
+					if person.id != userRepository.users[0].id {
+						CompanionRowView(person: person, trip: trip, tripRepository: tripRepository, userRepository: userRepository)
 					}
 				}
 			}
 			.padding(.vertical)
 			
-			NavigationLink(destination: AddCompanionsView(trip: trip, tripRepository: tripRepository, onCompanionsAdded: refreshCompanions)) {
+			NavigationLink(destination: AddCompanionsView(trip: trip, tripRepository: tripRepository, userRepository: userRepository)) {
 				ZStack {
 					Rectangle()
 						.fill(Color("LightPurple"))
@@ -85,10 +83,10 @@ struct CompanionsView: View {
 		.navigationBarTitleDisplayMode(.inline)
 	}
 	
-	func refreshCompanions(newCompanions: [SimpleUser]) {
-		// Update the companions list after friends are added
-		companions = newCompanions
-	}
+//	func refreshCompanions(newCompanions: [SimpleUser]) {
+//		// Update the companions list after friends are added
+//		companions = newCompanions
+//	}
 	
 //	func leaveTrip() {
 //		// Remove the trip from Alice's trips in the ViewModel

@@ -62,7 +62,7 @@ struct DayView: View {
           .padding(.trailing, 10)
         }
       }
-      .background(Color(.systemGray5))
+      .background(Color("LightPurple"))
       .cornerRadius(10)
       .padding(.horizontal, 20)
       .padding(.bottom, 10)

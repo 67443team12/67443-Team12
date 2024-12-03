@@ -12,9 +12,8 @@ struct NewTripView: View {
   @State private var tripName: String = ""
   @State private var showDatePicker = false
 //	@EnvironmentObject var aliceVM: MockUser
-	@ObservedObject var userRepository: UserRepository = UserRepository()
+	@ObservedObject var userRepository: UserRepository
   @ObservedObject var tripRepository: TripRepository
-	var currUser: User
 
   var body: some View {
     NavigationView {
@@ -62,6 +61,7 @@ struct NewTripView: View {
           tripName: tripName,
           onSave: { startDate, endDate in
             // Create a new Trip object with a random color
+						let currUser = userRepository.users[0]
             let randomColor = getRandomColorName()
             let newTrip = Trip(
               id: UUID().uuidString,
