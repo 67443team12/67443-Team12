@@ -60,11 +60,13 @@ struct MeView: View {
             destination: MyPostsView(postRepository: postRepository, userRepository: userRepository),
             label: {
               Text("My Posts")
+                .padding(.vertical, 10)
             })
           NavigationLink(
             destination: MyBookmarksView(postRepository: postRepository, userRepository: userRepository),
             label: {
               Text("Bookmarks")
+                .padding(.vertical, 10)
             })
         }
         .listStyle(PlainListStyle())

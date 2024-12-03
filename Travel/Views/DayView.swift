@@ -23,7 +23,6 @@ struct DayView: View {
   )
   @State private var selectedEvent: Event? = nil
 
-  
   // Initializer
   init(trip: Trip, day: Day, dayNumber: Int, locationRepository: LocationRepository, tripRepository: TripRepository) {
       self.trip = trip
@@ -46,9 +45,6 @@ struct DayView: View {
       
       _region = State(initialValue: initialRegion)
   }
-  
-  
-  
   
   var body: some View {
     @State var selectedLocation: Location?
@@ -103,24 +99,21 @@ struct DayView: View {
           .frame(maxWidth: .infinity, alignment: .leading)
 
         NavigationStack {
-            List(displayedLocations, id: \.id) { location in
-                NavigationLink(destination: LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)) {
-                    VStack(alignment: .leading) {
-                        Text(location.name)
-                            .font(.headline)
-//                        Text(location.description)
-//                            .font(.subheadline)
-//                            .foregroundColor(.gray)
-                    }
+          List(displayedLocations, id: \.id) { location in
+            NavigationLink(destination: LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)) {
+                VStack(alignment: .leading) {
+                  Text(location.name)
+                    .font(.headline)
                 }
             }
-            .listStyle(.inset)
+          }
+          .listStyle(.inset)
         }
         .frame(width: 350, height: 300)
         .clipShape(RoundedRectangle(cornerRadius: 20))
         .overlay(
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(.gray, lineWidth: 1)
+          RoundedRectangle(cornerRadius: 20)
+            .stroke(.gray, lineWidth: 1)
         )
       }
 

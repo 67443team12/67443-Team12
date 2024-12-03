@@ -60,9 +60,10 @@ struct FriendsListView: View {
           }
         }
         .background(Color("LightPurple"))
-        .cornerRadius(10)
+        .cornerRadius(15)
         .padding(.horizontal, 20)
         .padding(.bottom, 10)
+        
         List {
           ForEach(filteredFriends, id: \.id) { friend in
             ZStack(alignment: .leading) {

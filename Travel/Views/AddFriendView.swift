@@ -12,10 +12,36 @@ struct AddFriendView: View {
   @State private var searchText: String = ""
   @State private var showAlert = false
   
+  // Dismiss environment to handle navigation back
+  @Environment(\.dismiss) var dismiss
+  
   var body: some View {
     VStack(spacing: 15) {
+      // Custom back button and title
       HStack {
-        TextField("Search account id...", text: $searchText)
+        Button(action: {
+          dismiss() // Use dismiss to navigate back
+        }) {
+          Image(systemName: "chevron.left")
+            .font(.title2.bold())
+            .foregroundColor(.accentColor)
+        }
+        .padding(.leading, 10)
+
+        Spacer()
+
+        Text("Add Friend")
+          .font(.title2) // Set font size to large title
+          .fontWeight(.bold) // Make it bold
+          .padding(.trailing, 25)
+
+        Spacer()
+      }
+      .padding(.horizontal, 10)
+      .padding(.top, 10)
+      
+      HStack {
+        TextField("Search account id", text: $searchText)
           .padding(.leading, 10) // Extra padding for text
           .padding(.vertical, 15)
           .onChange(of: searchText) { newValue in
@@ -33,7 +59,7 @@ struct AddFriendView: View {
         }
       }
       .background(Color("LightPurple"))
-      .cornerRadius(10)
+      .cornerRadius(15)
       .padding(.horizontal, 20)
       .padding(.vertical, 10)
       
@@ -44,13 +70,13 @@ struct AddFriendView: View {
             .fontWeight(.semibold)
             .padding(.leading, 20)
             .frame(maxWidth: .infinity, alignment: .leading)
-          ForEach(userRepository.users.filter {userRepository.users[0].Requests.contains($0.id)}) { request in
+          ForEach(userRepository.users.filter { userRepository.users[0].Requests.contains($0.id) }) { request in
             RequestRowView(userRepository: userRepository, request: request, showAlert: $showAlert)
           }
           Spacer()
         }
       } else {
-        // search user by id results
+        // Search user by ID results
         List {
           ForEach(userRepository.filteredUsers) { user in
             NavigationLink(destination: AddFriendDetailView(user: user, userRepository: userRepository)) {
@@ -66,7 +92,7 @@ struct AddFriendView: View {
                   Text(user.name)
                     .fontWeight(.semibold)
                   Text("ID: \(user.id)")
-                    .font(.caption)
+                    .font(.subheadline)
                 }
                 Spacer()
               }
@@ -76,14 +102,6 @@ struct AddFriendView: View {
         .listStyle(PlainListStyle())
       }
     }
-    .navigationTitle("Add Friend")
-    .navigationBarTitleDisplayMode(.inline)
-//    .onAppear() {
-//      userRepository.get()
-//    }
+    .navigationBarHidden(true) // Hide the default navigation bar
   }
 }
-
-//#Preview {
-//  AddFriendView(userRepository: UserRepository())
-//}

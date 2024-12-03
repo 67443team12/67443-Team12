@@ -26,7 +26,7 @@ struct RequestRowView: View {
         Text(request.name)
           .fontWeight(.semibold)
         Text("ID: \(request.id)")
-          .font(.caption)
+          .font(.subheadline)
       }
       Spacer()
       Button(action: {
