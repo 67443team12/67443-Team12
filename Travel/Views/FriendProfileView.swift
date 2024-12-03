@@ -67,10 +67,6 @@ struct FriendProfileView: View {
               }
             }
           }
-          // Do we really need other trips?
-          Section { } header: {
-            Text("Other Trips")
-          }
         }
         .listStyle(PlainListStyle())
       }

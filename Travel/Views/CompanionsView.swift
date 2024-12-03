@@ -73,7 +73,7 @@ struct CompanionsView: View {
           title: Text("Confirm Leaving This Trip"),
           message: Text("This trip will still be available to other companions after you leave."),
           primaryButton: .destructive(Text("Leave")) {
-//            leaveTrip()
+            leaveTrip()
           },
           secondaryButton: .cancel()
         )
@@ -88,14 +88,12 @@ struct CompanionsView: View {
 //    companions = newCompanions
 //  }
   
-//  func leaveTrip() {
-//    // Remove the trip from Alice's trips in the ViewModel
-//    aliceVM.removeTrip(tripID: trip.id)
-//    // Remove Alice from the trip's travelers in Firestore
-//    tripRepository.removeTraveler(trip: trip, traveler: SimpleUser.alice)
-//
-//    presentationMode.wrappedValue.dismiss()
-//  }
+  func leaveTrip() {
+    var currUser = userRepository.users[0]
+    tripRepository.removeTraveler(trip: trip, traveler: SimpleUser(id: currUser.id, name: currUser.name, photo: currUser.photo))
+    userRepository.leaveTrip(tripId: trip.id, userId: currUser.id)
+    presentationMode.wrappedValue.dismiss()
+  }
   
 }
 
