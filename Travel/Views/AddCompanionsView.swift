@@ -12,7 +12,6 @@ struct AddCompanionsView: View {
   
   @ObservedObject var tripRepository: TripRepository
   @ObservedObject var userRepository: UserRepository
-//  var onCompanionsAdded: ([SimpleUser]) -> Void
 
   var availableFriends: [User] {
     userRepository.users.filter { user in
@@ -45,8 +44,12 @@ struct AddCompanionsView: View {
         .onTapGesture {
           toggleSelection(friend)
         }
+        .listRowBackground(Color("Cream"))
       }
-      // Save button appear only after choosing someone
+      .listStyle(PlainListStyle()) // Make the list style plain
+      .background(Color("Cream")) // Apply cream background to the list
+      
+      // Save button appears only after choosing someone
       if !selectedFriends.isEmpty {
         Button(action: {
           saveCompanions()
@@ -64,6 +67,7 @@ struct AddCompanionsView: View {
         }
       }
     }
+    .background(Color("Cream").ignoresSafeArea()) // Apply cream background to the entire view
     .navigationTitle("Add Companions")
     .navigationBarTitleDisplayMode(.inline)
   }
@@ -91,7 +95,3 @@ struct AddCompanionsView: View {
     presentationMode.wrappedValue.dismiss()
   }
 }
-
-//#Preview {
-//  AddCompanionsView(trip: Trip.example, tripRepository: TripRepository(), onCompanionsAdded: { _ in }).environmentObject(MockUser(user: User.example))
-//}

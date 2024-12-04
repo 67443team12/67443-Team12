@@ -37,6 +37,7 @@ struct PostsView: View {
         }
       }
       .navigationBarHidden(true)
+      .background(Color("Cream"))
     }
   }
 }

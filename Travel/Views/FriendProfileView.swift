@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct FriendProfileView: View {
-  // user repo is empty now idk why
   @ObservedObject var userRepository: UserRepository
   @ObservedObject var tripRepository = TripRepository()
   
@@ -18,60 +17,74 @@ struct FriendProfileView: View {
   @State private var showAlert = false
   
   var sharedTrips: [Trip] {
-    tripRepository.trips.filter { user.Trips.contains($0.id) && currUser.Trips.contains($0.id)}
+    tripRepository.trips.filter { user.Trips.contains($0.id) && currUser.Trips.contains($0.id) }
   }
   
   @State private var isSharedTripsExpanded: Bool = true
   
   var body: some View {
     NavigationView {
-      VStack {
-        HStack {
-          AsyncImage(url: URL(string: user.photo)) { image in
-            image.resizable()
-          } placeholder: {
-            Color.gray
+      ZStack {
+        // Background color
+        Color("Cream").ignoresSafeArea()
+        
+        VStack {
+          HStack {
+            AsyncImage(url: URL(string: user.photo)) { image in
+              image.resizable()
+            } placeholder: {
+              Color.gray
+            }
+            .frame(width: 100, height: 100)
+            .clipShape(Circle())
+            .padding(.leading, 20)
+            
+            VStack(alignment: .leading) {
+              Text(user.name)
+                .font(.largeTitle)
+                .fontWeight(.semibold)
+              Text("ID: \(user.id)")
+                .fontWeight(.semibold)
+            }
+            .padding(.leading, 20)
+            Spacer()
           }
-          .frame(width: 100, height: 100)
-          .clipShape(Circle())
-          .padding(.leading, 20)
-          VStack(alignment: .leading) {
-            Text(user.name)
-              .font(.largeTitle)
-              .fontWeight(.semibold)
-            Text("ID: \(user.id)")
-              .fontWeight(.semibold)
-          }
-          .padding(.leading, 20)
-          Spacer()
-        }
-        List {
-          Section(header: HStack {
-                    Text("Shared Trips")
-                      .font(.headline)
-                    Spacer()
-                    Button(action: {
-                      withAnimation {
-                        isSharedTripsExpanded.toggle()
-                      }
-                    }) {
-                      Image(systemName: isSharedTripsExpanded ? "chevron.up" : "chevron.down")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                    }
-          }) {
-            if isSharedTripsExpanded {
-              ForEach(sharedTrips, id: \.id) { trip in
-                FriendProfileTripCardView(trip: trip, tripRepository: tripRepository)
-                // navigation link?
+          
+          List {
+            Section(
+              header: Button(action: {
+                withAnimation {
+                  isSharedTripsExpanded.toggle()
+                }
+              }) {
+                HStack {
+                  Text("Shared Trips")
+                    .font(.headline)
+                  Spacer()
+                  Image(systemName: isSharedTripsExpanded ? "chevron.up" : "chevron.down")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+                }
+                .padding(.vertical, 10) // Increased padding
+                .contentShape(Rectangle()) // Make the entire area tappable
+              }
+            ) {
+              if isSharedTripsExpanded {
+                ForEach(sharedTrips, id: \.id) { trip in
+                  FriendProfileTripCardView(trip: trip, tripRepository: tripRepository)
+                    .padding(.vertical, 5) // Add padding to trip rows
+                }
+                .listRowBackground(Color("Cream"))
               }
             }
           }
+          .listStyle(PlainListStyle())
+          .scrollContentBackground(.hidden) // Hides default list background
+          .background(Color("Cream")) // List background
         }
-        .listStyle(PlainListStyle())
+        .padding(.top)
       }
     }
-    .padding(.top)
     .toolbar {
       ToolbarItem(placement: .navigationBarTrailing) {
         Button(action: {

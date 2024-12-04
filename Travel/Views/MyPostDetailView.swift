@@ -143,6 +143,7 @@ struct MyPostDetailView: View {
       .padding(.top, 3)
     }
     .navigationBarHidden(true)
+    .background(Color("Cream"))
   }
 }
 

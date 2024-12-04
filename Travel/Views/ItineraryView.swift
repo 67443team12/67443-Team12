@@ -26,27 +26,33 @@ struct ItineraryView: View {
         .fill(Color("LightPurple"))
         .frame(height: 300)
         .overlay(
-          ScrollView {
-            VStack(alignment: .leading, spacing: 0) {
-              ForEach(0..<24, id: \.self) { hour in
-                HourRow(hour: hour, hourHeight: hourHeight)
-                  .overlay(
-                    VStack {
-                      ForEach(day.events) { event in
-                        if let startTime = event.startTimeAsDate() {
-                          let startHour = Calendar.current.component(.hour, from: startTime)
-                          if startHour == hour {
-                            EventRow(event: event, trip: trip, tripRepository: tripRepository, dayNumber: dayNumber)
-                              .frame(height: calculateEventHeight(event: event))
-                              .offset(x: 60, y: calculateDiff(event: event) + calculateEventOffset(event: event, hourHeight: hourHeight))
+          ScrollViewReader { proxy in
+            ScrollView {
+              VStack(alignment: .leading, spacing: 0) {
+                ForEach(0..<24, id: \.self) { hour in
+                  HourRow(hour: hour, hourHeight: hourHeight)
+                    .id(hour)
+                    .overlay(
+                      VStack {
+                        ForEach(day.events) { event in
+                          if let startTime = event.startTimeAsDate() {
+                            let startHour = Calendar.current.component(.hour, from: startTime)
+                            if startHour == hour {
+                              EventRow(event: event, trip: trip, tripRepository: tripRepository, dayNumber: dayNumber)
+                                .frame(height: calculateEventHeight(event: event))
+                                .offset(x: 60, y: calculateDiff(event: event) + calculateEventOffset(event: event, hourHeight: hourHeight))
+                            }
                           }
                         }
                       }
-                    }
-                  )
+                    )
+                }
+              }
+              .frame(height: hourHeight * 24)
+              .onAppear {
+                proxy.scrollTo(7, anchor: .top)
               }
             }
-            .frame(height: hourHeight * 24)
           }
         )
         .cornerRadius(10)

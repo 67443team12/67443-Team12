@@ -178,6 +178,7 @@ struct NewPostView: View {
     .navigationBarHidden(true)
     .navigationTitle("Create Post")
     .navigationBarTitleDisplayMode(.inline)
+    .background(Color("Cream"))
   }
 }
 

@@ -17,7 +17,6 @@ struct EditMeView: View {
   @State var newName: String
   @State var newImage: String
   
-  
   @State private var isShowingPicker = false
   @State private var selectedItems: [PhotosPickerItem] = []
   @State private var selectedPhotoData: Data?
@@ -103,8 +102,9 @@ struct EditMeView: View {
             
           }
         }
-        
+
       }
+      .padding(.top)
     }
   }
 }

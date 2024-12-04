@@ -30,57 +30,60 @@ struct EditEventView: View {
   }
 
   var body: some View {
-    Form {
-      Section(header: Text("Location: \(event.location)").font(.headline)) {
-        TextField("Enter event name", text: $eventName)
-
-          .padding(.vertical, 10)
-        
-        HStack {
-          Text("Start Time")
-            .font(.headline)
-          Spacer()
-          DatePicker("", selection: $startTime, displayedComponents: [.hourAndMinute])
-            .labelsHidden()
-        }
-        .padding(.bottom, 10)
-        
-        HStack {
-          Text("End Time")
-            .font(.headline)
-          Spacer()
-          DatePicker("", selection: $endTime, displayedComponents: [.hourAndMinute])
-            .labelsHidden()
-        }
-        .padding(.bottom, 20)
-        
-        Button("Save Event") {
-          let updatedEvent = Event(
-            id: event.id,
-            startTime: formatTime(date: startTime),
-            endTime: formatTime(date: endTime),
-            ratings: event.ratings,
-            latitude: event.latitude,
-            longitude: event.longitude,
-            image: event.image,
-            location: event.location,
-            title: eventName,
-            duration: event.duration,
-            address: event.address,
-            monday: event.monday,
-            tuesday: event.tuesday,
-            wednesday: event.wednesday,
-            thursday: event.thursday,
-            friday: event.friday,
-            saturday: event.saturday,
-            sunday: event.sunday
-          )
+    ZStack {
+      Color("Cream") // Set the background color to cream
+        .ignoresSafeArea()
+      
+      Form {
+        Section(header: Text("Location: \(event.location)").font(.headline)) {
+          TextField("Enter event name", text: $eventName)
+            .padding(.vertical, 10)
           
-          tripRepository.editEventInTrip(trip: trip, dayIndex: dayNumber - 1, eventId: event.id, updatedEvent: updatedEvent)
-//  			Tried to dismiss the view after saving the event, but then the view would not update
-//					presentationMode.wrappedValue.dismiss()
+          HStack {
+            Text("Start Time")
+              .font(.headline)
+            Spacer()
+            DatePicker("", selection: $startTime, displayedComponents: [.hourAndMinute])
+              .labelsHidden()
+          }
+          .padding(.bottom, 10)
+          
+          HStack {
+            Text("End Time")
+              .font(.headline)
+            Spacer()
+            DatePicker("", selection: $endTime, displayedComponents: [.hourAndMinute])
+              .labelsHidden()
+          }
+          .padding(.bottom, 20)
+          
+          Button("Save Event") {
+            let updatedEvent = Event(
+              id: event.id,
+              startTime: formatTime(date: startTime),
+              endTime: formatTime(date: endTime),
+              ratings: event.ratings,
+              latitude: event.latitude,
+              longitude: event.longitude,
+              image: event.image,
+              location: event.location,
+              title: eventName,
+              duration: event.duration,
+              address: event.address,
+              monday: event.monday,
+              tuesday: event.tuesday,
+              wednesday: event.wednesday,
+              thursday: event.thursday,
+              friday: event.friday,
+              saturday: event.saturday,
+              sunday: event.sunday
+            )
+            
+            tripRepository.editEventInTrip(trip: trip, dayIndex: dayNumber - 1, eventId: event.id, updatedEvent: updatedEvent)
+          }
         }
       }
+      .scrollContentBackground(.hidden) // Hide the default white background of the form
     }
   }
   

@@ -21,6 +21,7 @@ struct FriendsListView: View {
   var body: some View {
     NavigationView {
       VStack {
+        // Header with Title and Add Friend Button
         HStack {
           Text("Friends")
             .font(.largeTitle)
@@ -34,7 +35,6 @@ struct FriendsListView: View {
               .padding(.top, 15)
               .padding(.trailing, 20)
           }
-          // if user's request list is not empty show red dot
           .overlay {
             if !userRepository.users[0].Requests.isEmpty {
               Image(systemName: "circle.fill")
@@ -44,11 +44,12 @@ struct FriendsListView: View {
             }
           }
         }
+        
+        // Search Bar
         HStack {
           TextField("Search friend", text: $searchText)
-            .padding(.leading, 10) // Extra padding for text
+            .padding(.leading, 10)
             .padding(.vertical, 15)
-          
           if !searchText.isEmpty {
             Button(action: {
               searchText = ""
@@ -60,22 +61,33 @@ struct FriendsListView: View {
           }
         }
         .background(Color("LightPurple"))
-        .cornerRadius(10)
+        .cornerRadius(15)
         .padding(.horizontal, 20)
         .padding(.bottom, 10)
-        List {
-          ForEach(filteredFriends, id: \.id) { friend in
-            ZStack(alignment: .leading) {
-              FriendsRowView(friend: friend)
-              NavigationLink(destination: FriendProfileView(userRepository: userRepository, user: friend, currUser: userRepository.users[0])) {
-                EmptyView()
+        
+        // Friends List
+        ZStack {
+          Color("Cream") // Ensures the background of the entire view is "Cream"
+            .ignoresSafeArea()
+          
+          List {
+            ForEach(filteredFriends, id: \.id) { friend in
+              ZStack(alignment: .leading) {
+                FriendsRowView(friend: friend)
+                NavigationLink(destination: FriendProfileView(userRepository: userRepository, user: friend, currUser: userRepository.users[0])) {
+                  EmptyView()
+                }
+                .opacity(0)
               }
-              .opacity(0)
             }
+            .listRowBackground(Color("Cream"))
           }
+          .listStyle(PlainListStyle())
+          .background(Color.clear) // Ensure no conflicting backgrounds
+          .scrollContentBackground(.hidden) // Hides default scroll background
         }
-        .listStyle(PlainListStyle())
       }
+      .background(Color("Cream")) // Main view background
       .onAppear {
         userRepository.get()
       }

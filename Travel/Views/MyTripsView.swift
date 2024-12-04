@@ -47,7 +47,7 @@ struct MyTripsView: View {
         }
         
         HStack {
-          TextField("Search trips...", text: binding)
+          TextField("Search trip", text: binding)
             .padding(.leading, 10) // Extra padding for text
             .padding(.vertical, 15)
           
@@ -98,6 +98,7 @@ struct MyTripsView: View {
         }
       }
       .navigationBarHidden(true)
+      .background(Color("Cream"))
       .sheet(isPresented: $showNewTripView) {
         NewTripView(isPresented: $showNewTripView, userRepository: userRepository, tripRepository: tripRepository)
           .presentationDetents([.fraction(0.97)])

@@ -98,6 +98,7 @@ struct TripDetailsView: View {
         }
       }
     }
+    .background(Color("Cream"))
   }
 }
 
