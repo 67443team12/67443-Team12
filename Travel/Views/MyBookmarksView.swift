@@ -48,6 +48,7 @@ struct MyBookmarksView: View {
       }
     }
     .navigationBarHidden(true) // Hide the default navigation bar if needed
+    .background(Color("Cream"))
   }
   
   func getUserBookmarks(bookmarks: [String], posts: [Post]) -> [Post] {

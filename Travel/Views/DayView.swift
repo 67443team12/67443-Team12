@@ -90,7 +90,6 @@ struct DayView: View {
       .padding(.horizontal, 20)
       .padding(.bottom, 10)
 
-      // Map section
       if searchText != "" {
         Text("Search Results")
           .font(.title2)
@@ -117,13 +116,12 @@ struct DayView: View {
         )
       }
 
-        Text("Map")
-          .font(.title2)
-          .fontWeight(.semibold)
-          .padding(.leading, 20)
-          .frame(maxWidth: .infinity, alignment: .leading)
+      Text("Map")
+        .font(.title2)
+        .fontWeight(.semibold)
+        .padding(.leading, 20)
+        .frame(maxWidth: .infinity, alignment: .leading)
 
-      
       NavigationLink(destination: LargeMapView(day: day, region: region, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)) {
           Text("View Enlarged Map")
             .font(.subheadline)

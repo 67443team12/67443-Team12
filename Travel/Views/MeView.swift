@@ -62,16 +62,19 @@ struct MeView: View {
               Text("My Posts")
                 .padding(.vertical, 10)
             })
+          .listRowBackground(Color("Cream"))
           NavigationLink(
             destination: MyBookmarksView(postRepository: postRepository, userRepository: userRepository),
             label: {
               Text("Bookmarks")
                 .padding(.vertical, 10)
             })
+          .listRowBackground(Color("Cream"))
         }
         .listStyle(PlainListStyle())
         .scrollDisabled(true)
       }
+      .background(Color("Cream"))
       .onAppear {
         userRepository.get()
       }

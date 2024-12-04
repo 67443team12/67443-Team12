@@ -60,5 +60,6 @@ struct AddFriendDetailView: View {
       }
       Spacer()
     }
+    .background(Color("Cream"))
   }
 }

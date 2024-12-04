@@ -98,10 +98,12 @@ struct AddFriendView: View {
               }
             }
           }
+          .listRowBackground(Color("Cream"))
         }
         .listStyle(PlainListStyle())
       }
     }
-    .navigationBarHidden(true) // Hide the default navigation bar
+    .navigationBarHidden(true)
+    .background(Color("Cream"))
   }
 }

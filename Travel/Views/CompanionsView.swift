@@ -81,6 +81,7 @@ struct CompanionsView: View {
     }
     .navigationTitle("Companions")
     .navigationBarTitleDisplayMode(.inline)
+    .background(Color("Cream"))
   }
   
 //  func refreshCompanions(newCompanions: [SimpleUser]) {

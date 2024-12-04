@@ -48,6 +48,7 @@ struct MyPostsView: View {
       }
     }
     .navigationBarHidden(true) // Hide the default navigation bar if needed
+    .background(Color("Cream"))
   }
   
   func filterPostsByUserId(posts: [Post], userId: String) -> [Post] {

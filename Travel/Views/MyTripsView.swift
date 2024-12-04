@@ -98,6 +98,7 @@ struct MyTripsView: View {
         }
       }
       .navigationBarHidden(true)
+      .background(Color("Cream"))
       .sheet(isPresented: $showNewTripView) {
         NewTripView(isPresented: $showNewTripView, userRepository: userRepository, tripRepository: tripRepository)
           .presentationDetents([.fraction(0.97)])
