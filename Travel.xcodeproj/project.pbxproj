@@ -138,7 +138,6 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		3715B1002CFF9EDD00013644 /* Font */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Font; sourceTree = "<group>"; };
 		981007E02CFFEA43007D3ACC /* TravelTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = TravelTests; sourceTree = "<group>"; };
-		986E600D2CDD3C6C005B4F6E /* ViewModels */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = ViewModels; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -187,7 +186,6 @@
 				3715B1022CFF9FBD00013644 /* Info.plist */,
 				3715B1002CFF9EDD00013644 /* Font */,
 				3715B0D42CF531C600013644 /* CustomTextEditor.swift */,
-				986E600D2CDD3C6C005B4F6E /* ViewModels */,
 				37B588EC2CDBED2800C44206 /* GoogleService-Info.plist */,
 				37BC41DA2CD19455007AA26B /* Views */,
 				37BC41D72CD192BB007AA26B /* DataRepository */,
@@ -293,7 +291,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				3715B1002CFF9EDD00013644 /* Font */,
-				986E600D2CDD3C6C005B4F6E /* ViewModels */,
 			);
 			name = Travel;
 			packageProductDependencies = (
