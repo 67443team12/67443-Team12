@@ -51,7 +51,6 @@
 		98BD764E2CDD56E30008274E /* AddCompanionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BD764D2CDD56E30008274E /* AddCompanionsView.swift */; };
 		98DF07012CD5EAA400694B97 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07002CD5EAA400694B97 /* Day.swift */; };
 		98DF07032CD5EABE00694B97 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07022CD5EABE00694B97 /* Event.swift */; };
-		98DF07052CD5EB1300694B97 /* SimpleTrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07042CD5EB1300694B97 /* SimpleTrip.swift */; };
 		98DF07072CD5EB1B00694B97 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07062CD5EB1B00694B97 /* User.swift */; };
 		98DF07092CD5EB2C00694B97 /* SimpleUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07082CD5EB2C00694B97 /* SimpleUser.swift */; };
 		98DF070B2CD5EB5600694B97 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF070A2CD5EB5600694B97 /* Post.swift */; };
@@ -120,7 +119,6 @@
 		98BD764D2CDD56E30008274E /* AddCompanionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCompanionsView.swift; sourceTree = "<group>"; };
 		98DF07002CD5EAA400694B97 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
 		98DF07022CD5EABE00694B97 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
-		98DF07042CD5EB1300694B97 /* SimpleTrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleTrip.swift; sourceTree = "<group>"; };
 		98DF07062CD5EB1B00694B97 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		98DF07082CD5EB2C00694B97 /* SimpleUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleUser.swift; sourceTree = "<group>"; };
 		98DF070A2CD5EB5600694B97 /* Post.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Post.swift; sourceTree = "<group>"; };
@@ -212,7 +210,6 @@
 				37BC41D42CD191A1007AA26B /* Trip.swift */,
 				98DF07002CD5EAA400694B97 /* Day.swift */,
 				98DF07022CD5EABE00694B97 /* Event.swift */,
-				98DF07042CD5EB1300694B97 /* SimpleTrip.swift */,
 				98DF07062CD5EB1B00694B97 /* User.swift */,
 				98DF070A2CD5EB5600694B97 /* Post.swift */,
 				98DF07122CD6C8B200694B97 /* SelfPost.swift */,
@@ -396,7 +393,6 @@
 				3715B0F82CFF9D3400013644 /* FriendsRowView.swift in Sources */,
 				3715B10E2CFFA5F900013644 /* MyPostDetailView.swift in Sources */,
 				3715B10A2CFFA5AD00013644 /* MyBookmarksView.swift in Sources */,
-				98DF07052CD5EB1300694B97 /* SimpleTrip.swift in Sources */,
 				3715B10C2CFFA5D900013644 /* MyPostCardView.swift in Sources */,
 				37E8DC832CDC0E0000238FCD /* LocationHoursView.swift in Sources */,
 				98DF070D2CD5EB5E00694B97 /* Location.swift in Sources */,
