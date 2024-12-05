@@ -93,13 +93,13 @@ struct Event: Identifiable, Comparable, Codable {
   }
   
   static func == (lhs: Event, rhs: Event) -> Bool {
-    lhs.id < rhs.id
+    lhs.id == rhs.id
   }
   
   static let example1 = Event(
     id: "1",
-    startTime: "13:00:00",
-    endTime: "14:00:00",
+    startTime: "13:00",
+    endTime: "14:00",
     ratings: 4.8,
     latitude: 25.77542312073535,
     longitude: -80.18616744670095,
@@ -119,8 +119,8 @@ struct Event: Identifiable, Comparable, Codable {
   
   static let example2 = Event(
     id: "2",
-    startTime: "15:00:00",
-    endTime: "17:00:00",
+    startTime: "15:00",
+    endTime: "17:00",
     ratings: 4.8,
     latitude: 25.77542312073535,
     longitude: -80.18616744670095,
@@ -140,8 +140,8 @@ struct Event: Identifiable, Comparable, Codable {
   
   static let example3 = Event(
     id: "3",
-    startTime: "18:00:00",
-    endTime: "21:00:00",
+    startTime: "18:00",
+    endTime: "21:00",
     ratings: 4.8,
     latitude: 25.77542312073535,
     longitude: -80.18616744670095,
