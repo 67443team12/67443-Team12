@@ -127,5 +127,21 @@ final class PostTests: XCTestCase {
 		XCTAssertEqual(post.comments.count, 0)
 		XCTAssertEqual(post.photo, "https://example.com/image.jpg")
 	}
+	
+	func testTimeFormatting() {
+		let post = Post(
+			id: "12345",
+			title: "Sample Post",
+			time: "2024-12-01",
+			content: "",
+			userId: "",
+			userName: "",
+			userPhoto: "",
+			ifBookmarked: false,
+			comments: []
+		)
+		
+		XCTAssertEqual(post.formattedTime, "Dec 1, 2024")
+	}
 
 }

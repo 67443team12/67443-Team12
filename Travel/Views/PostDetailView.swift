@@ -87,7 +87,7 @@ struct PostDetailView: View {
             .cornerRadius(8)
             .padding(.horizontal)
 
-          Text(post.time)
+          Text(post.formattedTime)
             .font(.headline)
             .foregroundColor(.gray)
             .padding(.horizontal)
