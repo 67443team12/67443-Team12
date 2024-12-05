@@ -42,6 +42,24 @@ struct Trip: Identifiable, Codable, Comparable {
     dateFormatter.dateFormat = "yyyy-MM-dd"
     return dateFormatter.date(from: startDate)
   }
+	
+	var endDateAsDate: Date? {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy-MM-dd"
+		return dateFormatter.date(from: endDate)
+	}
+	
+	var formattedStartDate: String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "MMM d, yyyy"
+		return dateFormatter.string(from: startDateAsDate!)
+	}
+	
+	var formattedEndDate: String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "MMM d, yyyy"
+		return dateFormatter.string(from: endDateAsDate!)
+	}
   
   static let example = Trip(
     id: "1",

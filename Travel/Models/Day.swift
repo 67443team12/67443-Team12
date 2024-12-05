@@ -26,6 +26,18 @@ struct Day: Identifiable, Comparable, Codable {
 	static func == (lhs: Day, rhs: Day) -> Bool {
 		lhs.id == rhs.id
 	}
+	
+	var dateAsDateObj: Date? {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy-MM-dd"
+		return dateFormatter.date(from: date)
+	}
+	
+	var formattedDate: String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "MMM d, yyyy"
+		return dateFormatter.string(from: dateAsDateObj!)
+	}
   
   static let example1 = Day(
     id: "1", 

@@ -44,4 +44,18 @@ final class DayTests: XCTestCase {
 		XCTAssertFalse(day1 < day3)
 		
 	}
+	
+	func testDayDateConvert() {
+		let day = Day(
+			id: "1",
+			date: "2024-03-05",
+			events: []
+		)
+		
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy-MM-dd"
+		
+		XCTAssertEqual(day.dateAsDateObj, dateFormatter.date(from: "2024-03-05"))
+		XCTAssertEqual(day.formattedDate, "Mar 5, 2024")
+	}
 }

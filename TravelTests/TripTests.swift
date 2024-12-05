@@ -76,5 +76,8 @@ final class TripTests: XCTestCase {
 		)
 		
 		XCTAssertEqual(trip.startDateAsDate, dateFormatter.date(from: "2024-03-05"))
+		XCTAssertEqual(trip.endDateAsDate, dateFormatter.date(from: "2024-03-08"))
+		XCTAssertEqual(trip.formattedStartDate, "Mar 5, 2024")
+		XCTAssertEqual(trip.formattedEndDate, "Mar 8, 2024")
 	}
 }

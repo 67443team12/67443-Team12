@@ -37,7 +37,7 @@ struct FriendProfileTripCardView: View {
         .padding(.top, 6)
         .foregroundColor(.black)
       
-      Text("\(trip.startDate) - \(trip.endDate)")
+      Text("\(trip.formattedStartDate) - \(trip.formattedEndDate)")
         .font(.subheadline)
         .foregroundColor(.gray)
         .padding([.leading, .bottom])
