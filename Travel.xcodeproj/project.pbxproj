@@ -57,7 +57,6 @@
 		98DF070D2CD5EB5E00694B97 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF070C2CD5EB5E00694B97 /* Location.swift */; };
 		98DF070F2CD5EB9B00694B97 /* PostRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF070E2CD5EB9B00694B97 /* PostRepository.swift */; };
 		98DF07112CD5EBB800694B97 /* LocationRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07102CD5EBB800694B97 /* LocationRepository.swift */; };
-		98DF07132CD6C8B200694B97 /* SelfPost.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07122CD6C8B200694B97 /* SelfPost.swift */; };
 		98DF07172CD6CAC000694B97 /* MeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07162CD6CAC000694B97 /* MeView.swift */; };
 		98DF07192CD6DA1700694B97 /* MyPostsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF07182CD6DA1700694B97 /* MyPostsView.swift */; };
 		98DF071D2CD7159F00694B97 /* CompanionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98DF071C2CD7159F00694B97 /* CompanionsView.swift */; };
@@ -125,7 +124,6 @@
 		98DF070C2CD5EB5E00694B97 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		98DF070E2CD5EB9B00694B97 /* PostRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostRepository.swift; sourceTree = "<group>"; };
 		98DF07102CD5EBB800694B97 /* LocationRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationRepository.swift; sourceTree = "<group>"; };
-		98DF07122CD6C8B200694B97 /* SelfPost.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelfPost.swift; sourceTree = "<group>"; };
 		98DF07162CD6CAC000694B97 /* MeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeView.swift; sourceTree = "<group>"; };
 		98DF07182CD6DA1700694B97 /* MyPostsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostsView.swift; sourceTree = "<group>"; };
 		98DF071C2CD7159F00694B97 /* CompanionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompanionsView.swift; sourceTree = "<group>"; };
@@ -212,7 +210,6 @@
 				98DF07022CD5EABE00694B97 /* Event.swift */,
 				98DF07062CD5EB1B00694B97 /* User.swift */,
 				98DF070A2CD5EB5600694B97 /* Post.swift */,
-				98DF07122CD6C8B200694B97 /* SelfPost.swift */,
 				98DF070C2CD5EB5E00694B97 /* Location.swift */,
 				98DF07082CD5EB2C00694B97 /* SimpleUser.swift */,
 			);
@@ -412,7 +409,6 @@
 				3715B0FA2CFF9DAA00013644 /* RequestRowView.swift in Sources */,
 				37BC41D52CD191A1007AA26B /* Trip.swift in Sources */,
 				37BC41C12CD1911B007AA26B /* ContentView.swift in Sources */,
-				98DF07132CD6C8B200694B97 /* SelfPost.swift in Sources */,
 				379843E92CDB7A62001B5A69 /* EditEventView.swift in Sources */,
 				3715B0EF2CFF9BD500013644 /* AddFriendView.swift in Sources */,
 				98DF07092CD5EB2C00694B97 /* SimpleUser.swift in Sources */,
