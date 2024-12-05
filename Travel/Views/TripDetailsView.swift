@@ -36,7 +36,7 @@ struct TripDetailsView: View {
           
           Spacer()
           
-          Text("Day \(selectedIndex + 1): \(trip.days[selectedIndex].date)")
+          Text("Day \(selectedIndex + 1): \(trip.days[selectedIndex].formattedDate)")
             .font(.headline)
             .padding()
             .background(Color("LightPurple"))

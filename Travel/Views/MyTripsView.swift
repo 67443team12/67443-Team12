@@ -70,9 +70,7 @@ struct MyTripsView: View {
         
         if !searchText.isEmpty {
           ScrollView {
-            ForEach(displayedTrips.filter { userRepository.users[0].Trips.contains($0.id) }.sorted {
-              ($0.startDateAsDate ?? .distantPast) > ($1.startDateAsDate ?? .distantPast)
-     }) { trip in
+            ForEach(displayedTrips.filter { userRepository.users[0].Trips.contains($0.id) }.sorted { $0 > $1 }) { trip in
               NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository, locationRepository: locationRepository, userRepository: userRepository)
               ) {
                 TripCardView(trip: trip, tripRepository: tripRepository)
@@ -84,9 +82,7 @@ struct MyTripsView: View {
           .padding(.horizontal)
         } else {
           ScrollView {
-            ForEach(tripRepository.trips.filter { userRepository.users[0].Trips.contains($0.id) }.sorted {
-              ($0.startDateAsDate ?? .distantPast) > ($1.startDateAsDate ?? .distantPast)
-     }) { trip in
+            ForEach(tripRepository.trips.filter { userRepository.users[0].Trips.contains($0.id) }.sorted { $0 > $1 }) { trip in
        NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository, locationRepository: locationRepository, userRepository: userRepository)
               ) {
                 TripCardView(trip: trip, tripRepository: tripRepository)

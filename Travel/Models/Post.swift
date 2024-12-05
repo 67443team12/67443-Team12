@@ -78,6 +78,14 @@ struct Post: Identifiable, Codable, Comparable {
   static func == (lhs: Post, rhs: Post) -> Bool {
     lhs.id == rhs.id
   }
+	
+	var formattedTime: String {
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "yyyy-MM-dd"
+		let date = dateFormatter.date(from: time)
+		dateFormatter.dateFormat = "MMM d, yyyy"
+		return dateFormatter.string(from: date!)
+	}
 
   static let example1 = Post(
     id: "35FNRV",
