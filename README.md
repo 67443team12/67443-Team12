@@ -1,6 +1,7 @@
 # TogetherTrip
 
 ## Overview
+
 TogetherTrip is a collaborative travel planning mobile app designed to enhance group travel experiences by enabling users to create, plan, organize, and share trips with friends and family. This all-in-one platform allows travelers to explore posts from other users for inspiration, create a trip, search for restaurants and attractions, add them to their itineraries, and visualize planned destinations on an interactive map. With its intuitive interface and real-time updates, TogetherTrip simplifies the travel planning process and revolutionizes group coordination by consolidating features from multiple apps into one cohesive experience.
 
 ## Design Decisions
@@ -18,7 +19,6 @@ TogetherTrip is a collaborative travel planning mobile app designed to enhance g
   - Easy-to-understand icons and clearly labeled text to ensure accessibility and clarity for all users.
 
 ### **3. User Experience**
-
 - **Splash Screen**:  
   - The app opens with a visually appealing splash screen displaying the **TogetherTrip** logo on a **Light Purple (#ECE6F0)** background, setting a welcoming and cohesive tone for the user.
 
@@ -48,12 +48,22 @@ TogetherTrip is a collaborative travel planning mobile app designed to enhance g
   - A streamlined design ensures that profile updates reflect immediately across the app.
   - Users can access their previous posts and bookmarked posts easily on their profile page for reference.
 
-## Technology Decisions
+## Tech Decisions
 
 ### **1. Frontend**
 - **SwiftUI**:
-  - Declarative framework for building UI components.
-  - Ensures compatibility with modern Apple platforms.
+  - A declarative framework was chosen to build the app's user interface due to its seamless integration with modern Apple platforms and its declarative syntax.
+  - Direct binding of UI components to the data layer was implemented using `@State`, `@ObservedObject`, and `@Binding` properties for simplicity and real-time data updates.
+- **No View Models**:
+  - The app architecture avoids the MVVM (Model-View-ViewModel) pattern typically seen in iOS applications. Instead, the views interact directly with the data layer.
+  - **Reasoning**:
+    - Reduced development complexity, allowing the team to focus on implementing core features.
+    - Faster prototyping and iteration cycles without the overhead of creating intermediary view models.
+  - **Implications**:
+    - The direct binding approach can lead to tightly coupled code, making refactoring and scalability more challenging.
+    - Limited testability for UI components, as business logic resides closer to the views.
+  - **Future Considerations**:
+    - As the app grows, adopting view models would improve code modularity, testability, and maintainability.
 
 ### **2. Backend**
 - **Firebase Firestore**:
