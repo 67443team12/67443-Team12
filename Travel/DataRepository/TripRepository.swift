@@ -14,7 +14,6 @@ class TripRepository: ObservableObject {
   private var path: String = "trips"
   private var store = Firestore.firestore()
   private var storage = Storage.storage()
-  
   // Published variable to store fetched trips
   @Published var trips: [Trip] = []
   @Published var filteredTrips: [Trip] = []
