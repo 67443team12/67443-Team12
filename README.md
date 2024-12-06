@@ -135,3 +135,5 @@ These features are valuable additions to the TogetherTrip app, and their impleme
   - Cindy Jiang
   - Kailan Mao
   - Emma Shi
+
+<!-- ChatGPT assists with the README -->
