@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct PostsView: View {
-  @StateObject private var postRepository = PostRepository()
+  @ObservedObject var userRepository: UserRepository
+  @ObservedObject var postRepository: PostRepository
 
   var body: some View {
     NavigationView {
@@ -32,7 +33,7 @@ struct PostsView: View {
 
         ScrollView {
           ForEach($postRepository.posts, id: \.id) { $post in
-            PostCardView(post: $post, postRepository: postRepository)
+            PostCardView(post: $post, postRepository: postRepository, userRepository: userRepository)
           }
         }
       }
@@ -42,8 +43,3 @@ struct PostsView: View {
   }
 }
 
-struct PostsView_Previews: PreviewProvider {
-  static var previews: some View {
-    PostsView()
-  }
-}

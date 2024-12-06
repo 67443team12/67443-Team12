@@ -33,7 +33,7 @@ struct MyPostCardView: View {
 
           HStack {
             HStack(spacing: 8) {
-              AsyncImage(url: URL(string: post.userPhoto)) { image in
+              AsyncImage(url: URL(string: getUserPhoto(userId: post.userId))) { image in
                 image
                   .resizable()
                   .aspectRatio(contentMode: .fill)
@@ -44,7 +44,7 @@ struct MyPostCardView: View {
               .frame(width: 30, height: 30)
               .clipShape(Circle())
 
-              Text(post.userName)
+              Text(getUserName(userId: post.userId))
                 .font(.headline)
                 .foregroundColor(.black)
             }
@@ -69,6 +69,28 @@ struct MyPostCardView: View {
     .cornerRadius(10)
     .padding(.horizontal, 25)
     .padding(.bottom, 10)
+  }
+  
+  
+  
+  
+  
+  func getUserPhoto(userId: String) -> String {
+      // Search for the user with the given ID in userRepository.users
+      if let user = userRepository.users.first(where: { $0.id == userId }) {
+          return user.photo
+      }
+      // Return nil if the user is not found
+      return ""
+  }
+  
+  func getUserName(userId: String) -> String {
+      // Search for the user with the given ID in userRepository.users
+      if let user = userRepository.users.first(where: { $0.id == userId }) {
+          return user.name
+      }
+      // Return nil if the user is not found
+      return ""
   }
 }
 

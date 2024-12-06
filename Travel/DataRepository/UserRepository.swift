@@ -208,6 +208,43 @@ class UserRepository: ObservableObject {
   
   
   
+  func toggleUserBookmark(postId: String, userId: String) {
+      // Find the user with the given userId
+      guard let userIndex = users.firstIndex(where: { $0.id == userId }) else {
+          print("User not found")
+          return
+      }
+
+      // Access the user
+      var user = users[userIndex]
+
+      // Modify the Bookmarks list
+      if user.Bookmarks.contains(postId) {
+          // Remove the postId if it exists
+          user.Bookmarks.removeAll { $0 == postId }
+      } else {
+          // Add the postId if it doesn't exist
+          user.Bookmarks.append(postId)
+      }
+
+      // Create an updated user
+      let updatedUser = User(
+          id: user.id,
+          name: user.name,
+          photo: user.photo,
+          Posts: user.Posts,
+          Bookmarks: user.Bookmarks,
+          Trips: user.Trips,
+          Friends: user.Friends,
+          Requests: user.Requests
+      )
+
+      // Save the updated user using the editUser function
+      self.editUser(userId: user.id, updatedUser: updatedUser)
+  }
+  
+  
+  
   func updateUserPhotoURL(userId: String, photoURL: String, completion: @escaping (Bool) -> Void) {
     let tripRef = store.collection(path).document(userId)
     

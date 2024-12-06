@@ -13,43 +13,77 @@ struct MyBookmarksView: View {
   
   @Environment(\.presentationMode) var presentationMode
   
+  
   var body: some View {
-    VStack(spacing: 16) {
-      // Custom back button and title
-      HStack {
-        Button(action: {
-          presentationMode.wrappedValue.dismiss() // Dismiss the view
-        }) {
-          Image(systemName: "chevron.left")
-            .font(.title2.bold())
-            .foregroundColor(.accentColor)
+    NavigationView {
+      VStack {
+        HStack {
+          Text("My Bookmarks")
+            .font(.largeTitle)
+            .fontWeight(.bold)
+            .padding(.top, 15)
+            .padding(.leading, 20)
+
+          Spacer()
+
         }
-        .padding(.leading, 10)
-        
-        Spacer()
-        
-        Text("My Bookmarks")
-          .font(.title2)
-          .fontWeight(.bold)
-          .padding(.trailing, 25)
-        
-        Spacer()
-      }
-      .frame(maxWidth: .infinity) // Ensure the title centers properly
-      .padding(.top, 10)
-      .padding(.horizontal, 10)
-      .navigationBarBackButtonHidden(true) // Hide default back button
-      
-      // Posts with logged-in userId
-      ScrollView {
-        ForEach(getUserBookmarks(bookmarks: userRepository.users[0].Bookmarks, posts: postRepository.posts), id: \.id) { post in
-          MyPostCardView(post: post, postRepository: postRepository, userRepository: userRepository)
+
+        ScrollView {
+          ForEach($postRepository.posts, id: \.id) { $post in
+            if userRepository.users[0].Bookmarks.contains(post.id) {
+              PostCardView(post: $post, postRepository: postRepository, userRepository: userRepository)
+            }
+          }
         }
       }
+      .navigationBarHidden(true)
+      .background(Color("Cream"))
     }
-    .navigationBarHidden(true) // Hide the default navigation bar if needed
-    .background(Color("Cream"))
+    
+
   }
+  
+  
+  
+  
+  
+//  var body: some View {
+//    VStack(spacing: 16) {
+//      // Custom back button and title
+//      HStack {
+//        Button(action: {
+//          presentationMode.wrappedValue.dismiss() // Dismiss the view
+//        }) {
+//          Image(systemName: "chevron.left")
+//            .font(.title2.bold())
+//            .foregroundColor(.accentColor)
+//        }
+//        .padding(.leading, 10)
+//        
+//        Spacer()
+//        
+//        Text("My Bookmarks")
+//          .font(.title2)
+//          .fontWeight(.bold)
+//          .padding(.trailing, 25)
+//        
+//        Spacer()
+//      }
+//      .frame(maxWidth: .infinity) // Ensure the title centers properly
+//      .padding(.top, 10)
+//      .padding(.horizontal, 10)
+//      .navigationBarBackButtonHidden(true) // Hide default back button
+//      
+//      // Posts with logged-in userId
+//      ScrollView {
+//        ForEach(getUserBookmarks(bookmarks: userRepository.users[0].Bookmarks, posts: postRepository.posts), id: \.id) { post in
+//          MyPostCardView(post: post, postRepository: postRepository, userRepository: userRepository)
+//        }
+//      }
+//    }
+//    .navigationBarHidden(true) // Hide the default navigation bar if needed
+//    .background(Color("Cream"))
+//  }
   
   func getUserBookmarks(bookmarks: [String], posts: [Post]) -> [Post] {
     // Filter the posts array where the post ID matches any in the bookmarks array

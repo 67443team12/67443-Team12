@@ -10,9 +10,10 @@ import SwiftUI
 struct PostCardView: View {
   @Binding var post: Post
   @ObservedObject var postRepository: PostRepository
+  @ObservedObject var userRepository: UserRepository
 
   var body: some View {
-    NavigationLink(destination: PostDetailView(post: $post, postRepository: postRepository)) {
+    NavigationLink(destination: PostDetailView(post: $post, postRepository: postRepository, userRepository: userRepository)) {
       VStack(alignment: .leading, spacing: 0) {
         AsyncImage(url: URL(string: post.photo)) { image in
           image
@@ -32,7 +33,7 @@ struct PostCardView: View {
 
           HStack {
             HStack(spacing: 8) {
-              AsyncImage(url: URL(string: post.userPhoto)) { image in
+              AsyncImage(url: URL(string: getUserPhoto(userId: post.userId))) { image in
                 image
                   .resizable()
                   .aspectRatio(contentMode: .fill)
@@ -43,7 +44,7 @@ struct PostCardView: View {
               .frame(width: 30, height: 30)
               .clipShape(Circle())
 
-              Text(post.userName)
+              Text(getUserName(userId: post.userId))
                 .font(.headline)
                 .foregroundColor(.black)
             }
@@ -52,12 +53,13 @@ struct PostCardView: View {
 
             Button(action: {
               postRepository.toggleBookmark(for: post)
+              userRepository.toggleUserBookmark(postId: post.id, userId: userRepository.users[0].id)
             }) {
-              Image(systemName: post.ifBookmarked ? "bookmark.fill" : "bookmark")
+              Image(systemName: isBookmarked(post: post, user: userRepository.users[0]) ? "bookmark.fill" : "bookmark")
                 .resizable()
                 .aspectRatio(contentMode: .fit)
                 .frame(width: 28, height: 25)
-                .foregroundColor(post.ifBookmarked ? Color("AccentColor") : Color("AccentColor"))
+                .foregroundColor(isBookmarked(post: post, user: userRepository.users[0]) ? Color("AccentColor") : Color("AccentColor"))
             }
           }
         }
@@ -69,12 +71,35 @@ struct PostCardView: View {
     .padding(.horizontal, 25)
     .padding(.bottom, 10)
   }
+  
+  func getUserPhoto(userId: String) -> String {
+      // Search for the user with the given ID in userRepository.users
+      if let user = userRepository.users.first(where: { $0.id == userId }) {
+          return user.photo
+      }
+      // Return nil if the user is not found
+      return ""
+  }
+  
+  func getUserName(userId: String) -> String {
+      // Search for the user with the given ID in userRepository.users
+      if let user = userRepository.users.first(where: { $0.id == userId }) {
+          return user.name
+      }
+      // Return nil if the user is not found
+      return ""
+  }
+  
+  func isBookmarked(post: Post, user: User) -> Bool {
+    if user.Bookmarks.contains(post.id) {
+      return true
+    }
+    return false
+  }
+  
+  
 }
 
-struct PostCardView_Previews: PreviewProvider {
-  static var previews: some View {
-    let postRepository = PostRepository()
-    PostCardView(post: .constant(Post.example1), postRepository: postRepository)
-      .previewLayout(.sizeThatFits)
-  }
-}
+
+
+

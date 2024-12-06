@@ -11,6 +11,7 @@ struct PostDetailView: View {
   @Binding var post: Post
   @Environment(\.presentationMode) var presentationMode
   @ObservedObject var postRepository: PostRepository
+  @ObservedObject var userRepository: UserRepository
 
   @State private var newComment: String = ""
 
@@ -28,7 +29,7 @@ struct PostDetailView: View {
         .padding(.trailing, 5)
 
         HStack {
-          AsyncImage(url: URL(string: post.userPhoto)) { image in
+          AsyncImage(url: URL(string: getUserPhoto(userId: post.userId))) { image in
             image
               .resizable()
               .aspectRatio(contentMode: .fill)
@@ -39,7 +40,7 @@ struct PostDetailView: View {
           .frame(width: 40, height: 40)
           .clipShape(Circle())
           .padding(.trailing, 5)
-          Text(post.userName)
+          Text(getUserName(userId: post.userId))
             .font(.title3.bold())
         }
 
@@ -47,18 +48,20 @@ struct PostDetailView: View {
 
         Button(action: {
           postRepository.toggleBookmark(for: post)
+          userRepository.toggleUserBookmark(postId: post.id, userId: userRepository.users[0].id)
         }) {
-          Image(systemName: post.ifBookmarked ? "bookmark.fill" : "bookmark")
+          Image(systemName: isBookmarked(post: post, user: userRepository.users[0]) ? "bookmark.fill" : "bookmark")
             .resizable()
             .aspectRatio(contentMode: .fit)
             .frame(width: 30, height: 25)
-            .foregroundColor(post.ifBookmarked ? Color("AccentColor") : Color("AccentColor"))
+            .foregroundColor(isBookmarked(post: post, user: userRepository.users[0]) ? Color("AccentColor") : Color("AccentColor"))
         }
         .padding(.trailing)
       }
 
       ScrollView {
         VStack(alignment: .leading, spacing: 16) {
+          // post photo
           AsyncImage(url: URL(string: post.photo)) { image in
             image
               .resizable()
@@ -107,9 +110,9 @@ struct PostDetailView: View {
                 Button(action: {
                   let newCommentObject = Comment(
                     id: UUID().uuidString,
-                    userId: "Alice215",
-                    userName: "Alice",
-                    userPhoto: "https://firebasestorage.googleapis.com/v0/b/cmu443team12.firebasestorage.app/o/alice-icon.png?alt=media&token=1b8e454a-cec1-4433-a441-2f4d7085898d",
+                    userId: userRepository.users[0].id,
+                    userName: userRepository.users[0].name,
+                    userPhoto: userRepository.users[0].photo,
                     content: newComment
                   )
                   postRepository.addComment(to: post, comment: newCommentObject)
@@ -124,7 +127,7 @@ struct PostDetailView: View {
 
             ForEach(post.comments, id: \.id) { comment in
               HStack(alignment: .top) {
-                AsyncImage(url: URL(string: comment.userPhoto)) { image in
+                AsyncImage(url: URL(string: getUserPhoto(userId: comment.userId))) { image in
                   image
                     .resizable()
                     .aspectRatio(contentMode: .fill)
@@ -135,7 +138,7 @@ struct PostDetailView: View {
                 .frame(width: 30, height: 30)
                 .clipShape(Circle())
                 VStack(alignment: .leading, spacing: 4) {
-                  Text(comment.userName)
+                  Text(getUserName(userId: comment.userId))
                     .font(.headline)
                   Text(comment.content)
                     .font(.body)
@@ -154,11 +157,32 @@ struct PostDetailView: View {
     .navigationBarHidden(true)
     .background(Color("Cream"))
   }
+  
+  
+  func getUserPhoto(userId: String) -> String {
+      // Search for the user with the given ID in userRepository.users
+      if let user = userRepository.users.first(where: { $0.id == userId }) {
+          return user.photo
+      }
+      // Return nil if the user is not found
+      return ""
+  }
+  
+  func getUserName(userId: String) -> String {
+      // Search for the user with the given ID in userRepository.users
+      if let user = userRepository.users.first(where: { $0.id == userId }) {
+          return user.name
+      }
+      // Return nil if the user is not found
+      return ""
+  }
+  
+  func isBookmarked(post: Post, user: User) -> Bool {
+    if user.Bookmarks.contains(post.id) {
+      return true
+    }
+    return false
+  }
+
 }
 
-struct PostDetailView_Previews: PreviewProvider {
-  static var previews: some View {
-    let postRepository = PostRepository()
-    PostDetailView(post: .constant(Post.example1), postRepository: postRepository)
-  }
-}

@@ -32,7 +32,7 @@ struct ContentView: View {
             Label("Trips", systemImage: "calendar")
           }
         
-        PostsView()
+        PostsView(userRepository: userRepository, postRepository: postRepository)
           .tabItem {
             Label("Posts", systemImage: "square.and.pencil")
         }
