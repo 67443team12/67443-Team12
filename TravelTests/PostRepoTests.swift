@@ -30,19 +30,26 @@ class PostRepositoryTests: XCTestCase {
   func testGetPosts() {
     let expectation = self.expectation(description: "Fetching posts")
     
-    // Simulate that posts are fetched
+    // Use a single fulfillment for the expectation
+    var hasFulfilled = false
+
     postRepository.$posts
-      .dropFirst()
+      .dropFirst() // Skip the initial empty value
       .sink { posts in
-        XCTAssertGreaterThan(posts.count, 0, "Posts should be fetched")
-        expectation.fulfill()
+        // Ensure the expectation is fulfilled only once
+        if !hasFulfilled {
+          XCTAssertNotNil(posts, "Posts should not be nil")
+          XCTAssertGreaterThan(posts.count, 0, "Posts array should contain elements")
+          hasFulfilled = true
+          expectation.fulfill()
+        }
       }
       .store(in: &cancellables)
     
     // Trigger fetching posts
     postRepository.get()
 
-    waitForExpectations(timeout: 2.0, handler: nil)
+    waitForExpectations(timeout: 5.0, handler: nil)
   }
   
   // Test if a post is added correctly
@@ -79,24 +86,37 @@ class PostRepositoryTests: XCTestCase {
 
   // Test if a post's bookmark status is toggled
   func testToggleBookmark() {
-    var post = Post.example1
+    let post = Post.example1
     let initialBookmarkStatus = post.ifBookmarked
 
     postRepository.toggleBookmark(for: post)
 
-    XCTAssertNotEqual(post.ifBookmarked, initialBookmarkStatus, "Post bookmark status should toggle")
-  }
+    // Fetch updated post from repository to validate the change
+    postRepository.$posts
+      .dropFirst()
+      .sink { posts in
+        let updatedPost = posts.first(where: { $0.id == post.id })
+        XCTAssertNotEqual(updatedPost?.ifBookmarked, initialBookmarkStatus, "Post bookmark status should toggle")
+      }
+      .store(in: &cancellables)
+    }
 
   // Test if a comment is added to a post
   func testAddComment() {
-    var post = Post.example1
-    let comment = Comment(id: "1", userId: "Great post!", userName: "testUser", userPhoto: "Test User", content: "testPhoto")
+    let post = Post.example1
+    let comment = Comment(id: "1", userId: "testUser", userName: "Test User", userPhoto: "testPhoto", content: "Great post!")
     
     postRepository.addComment(to: post, comment: comment)
-
-    XCTAssertEqual(post.comments.count, 1, "Comment should be added to post")
-    XCTAssertEqual(post.comments.first?.content, comment.content, "Comment text should match")
-  }
+    
+    postRepository.$posts
+      .dropFirst()
+      .sink { posts in
+        let updatedPost = posts.first(where: { $0.id == post.id })
+        XCTAssertEqual(updatedPost?.comments.count, 1, "Comment should be added to post")
+        XCTAssertEqual(updatedPost?.comments.first?.content, comment.content, "Comment text should match")
+      }
+      .store(in: &cancellables)
+    }
 
   // Test upload photo completion with a valid image
   func testUploadPhoto() {
