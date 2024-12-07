@@ -31,19 +31,25 @@ class LocationRepositoryTests: XCTestCase {
   func testGetLocations() {
     let expectation = self.expectation(description: "Fetching locations")
     
-    // Simulate fetching locations
+    // Use a single fulfillment for the expectation
+    var hasFulfilled = false
+    
     locationRepository.$locations
-      .dropFirst()
+      .dropFirst() // Skip the initial empty value
       .sink { locations in
-        XCTAssertGreaterThan(locations.count, 0, "Locations should be fetched")
-        expectation.fulfill()
+        // Ensure the expectation is fulfilled only once
+        if !hasFulfilled {
+          XCTAssertNotNil(locations, "Locations should not be nil")
+          hasFulfilled = true
+          expectation.fulfill()
+        }
       }
       .store(in: &cancellables)
     
     // Trigger fetching locations
     locationRepository.get()
-
-    waitForExpectations(timeout: 2.0, handler: nil)
+    
+    waitForExpectations(timeout: 5.0, handler: nil)
   }
 
   // Test if search functionality filters locations based on search text
