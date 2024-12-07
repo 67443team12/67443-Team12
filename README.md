@@ -1,24 +1,18 @@
 # TogetherTrip
 
 ## Overview
-TogetherTrip is a collaborative travel planning mobile app designed to enhance group travel experiences by enabling users to create, plan, organize, and share trips with friends and family. This all-in-one platform allows travelers to explore posts from other users for inspiration, create a trip, search for restaurants and attractions, add them to their itineraries, and visualize planned destinations on an interactive map. With its intuitive interface and real-time updates, TogetherTrip simplifies the travel planning process and revolutionizes group coordination by consolidating features from multiple apps into one cohesive experience.
+
+TogetherTrip is a collaborative travel planning mobile app designed to enhance group travel experiences by enabling users to create, plan, organize, and share trips with friends and family. This mobile application allows travelers to explore posts from other users for inspiration, create a trip, search for locations that they want to visit, add them to their itineraries, and visualize planned destinations on an interactive map. We wanted to develop TogetherTrip as an application that provides an intuitive travel planning process that can be shared among friends and solve problems like having a hard time scheduling all events without a clear visualization of the routes or distances between locations.
 
 ## Design Decisions
 
 ### **1. Color Scheme**
-- A **Cream (#FFFAF2)** color background was chosen for a calming and elegant aesthetic.
-- Consistent use of **Light Purple (#ECE6F0)** for interactive elements ensures brand identity.
-- **Purple (#6A4C93)** was selected as the accent color for highlights, actionable buttons, and navigation elements, ensuring important components stand out.
+There are 3 colors mainly used in our app aside from black and white. **Purple (#6A4C93)** was selected as the accent color for highlights, actionable buttons, and navigation elements, ensuring important components stand out. We also have another **Light Purple (#ECE6F0)** for interactive elements and echo with the Purple color, for example search bar color. **Cream (#FFFAF2)** is a color that is used mainly as the background color to provide some contrast to the accent color and also distinguish the app to an Apple-built application as the general design style is quite similar to the Apple standards.
 
 ### **2. User Interface**
-- Focused on clean and minimalistic design principles:
-  - A carefully planned layout for all pages to ensure consistency and a seamless user experience across the app.
-  - Rounded corners for buttons and cards to enhance the app’s modern aesthetic.
-  - Padding and spacing to improve readability and prevent visual clutter.
-  - Easy-to-understand icons and clearly labeled text to ensure accessibility and clarity for all users.
+We decided to follow the Apple design principles and ensure that the app is consistent on the front-end. We used rounded corners for buttons and cards to enhance the app’s modern aesthetic, added spacing and padding to improve readability and prevent visual clutter, and utilized the Apple-designed SF Pro icons largely to reduce cognitive load and improve readability for the users in the process.
 
 ### **3. User Experience**
-
 - **Splash Screen**:  
   - The app opens with a visually appealing splash screen displaying the **TogetherTrip** logo on a **Light Purple (#ECE6F0)** background, setting a welcoming and cohesive tone for the user.
 
@@ -48,19 +42,22 @@ TogetherTrip is a collaborative travel planning mobile app designed to enhance g
   - A streamlined design ensures that profile updates reflect immediately across the app.
   - Users can access their previous posts and bookmarked posts easily on their profile page for reference.
 
-## Technology Decisions
+## Tech Decisions
 
 ### **1. Frontend**
 - **SwiftUI**:
-  - Declarative framework for building UI components.
-  - Ensures compatibility with modern Apple platforms.
+  - A declarative framework was chosen to build the app's user interface due to its seamless integration with modern Apple platforms and its declarative syntax.
+  - Direct binding of UI components to the data layer was implemented using `@State`, `@ObservedObject`, and `@Binding` properties for simplicity and real-time data updates.
 
 ### **2. Backend**
 - **Firebase Firestore**:
   - Provides a scalable NoSQL database for storing user, trip, and post data.
-  - Real-time updates for seamless synchronization.
+  - Real-time updates for synchronization.
 - **Firebase Storage**:
-  - Handles image uploads for profile photos and posts.
+  - We use Firebase Storage to handle image uploads for profile photos, trip photo, and posts.
+
+**Framework Problems**:
+If you inspect the code, you would find that we actually do not have view models that handle the backend operations for the views. This is something that we are deeply aware of as it would be good coding practice to adopt the structure of MVVM and failing to do that might bring various problems, including difficulty in interpreting the code, difficuly in making changes to existing features and backend functions, and risk of messing up the database with unexpected actions that are made by the views. We started code development without clearly declaring the app’s architecture, so we avoided view models at first to streamline the development process. In addition, the communication during the development phases was not clear enough, that even though some of the team members raised the issue of including view models in the structure, the team did not reached a concensus on the view model issue due to our own personal matter and different pace for development. Therefore, when we tried to refactor the whole application to include view models at the end of version 1 delivery, we realized that it became very time-consuming and somewhat complicated to do so with the increasing number of dependencies and tightly coupled code. With the time constraints at the end, we decided to exclude view models and keep our initial architecture for stability and timely delivery. Similarly, since we included more expected features for version 2 that we want for the MVP of the application, we again did not arrange a time to discuss the matter and started development with the original problematic structure. Although the current architecture is functional and does not lead to major problems for us right now, it definitely reduces the code quality in terms of maintainability and scalability in the future. This is undesirable as it is not a good coding practice. Refactor the whole application to adopt view models would definitely be a better choice, but at the current time point (12/06/2024) we have very limited remaining time to account for the whole app. 
 
 ### **3. APIs**
 - **MapKit**:
@@ -69,7 +66,7 @@ TogetherTrip is a collaborative travel planning mobile app designed to enhance g
 
 ## Testing Instructions
 
-All test files are located in the `TravelTests` folder. Using the shortcut `Command + U` to execute all tests. Below are screenshots of expected coverage (above 90%).
+All test files are located in the `TravelTests` folder. Use the shortcut `Command + U` to execute all tests. Coverage is located in the report navigator in XCode, which when opened the coverage for the backend compoenents should all have expected coverage (above 90%) similar to the following screenshots.
 
 ### **Model Tests**
 - Comment: 
@@ -90,6 +87,12 @@ All test files are located in the `TravelTests` folder. Using the shortcut `Comm
   ![Trip Coverage](./Screenshots/Trip.png)
 - User:
   ![User Coverage](./Screenshots/User.png)
+
+### **Firebase Tests**
+- LocationRepository:
+  ![Location Repository Coverage](./Screenshots/LocationRepository.png)
+- PostRepository:
+  ![Post Repository Coverage](./Screenshots/PostRepository.png) 
 
 ## Extraneous Features
 
@@ -125,3 +128,5 @@ These features are valuable additions to the TogetherTrip app, and their impleme
   - Cindy Jiang
   - Kailan Mao
   - Emma Shi
+
+<!-- ChatGPT assists with the README -->
