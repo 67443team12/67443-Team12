@@ -239,32 +239,7 @@ class TripRepository: ObservableObject {
     }
   }
   
-  func fetchUpdatedTrip(tripId: String, completion: @escaping (Trip?) -> Void) {
-    let tripRef = store.collection(path).document(tripId)
-    
-    tripRef.getDocument { document, error in
-      if let error = error {
-        print("Error fetching updated trip: \(error.localizedDescription)")
-        completion(nil)
-        return
-      }
-      
-      guard let document = document, document.exists else {
-        print("Trip document not found")
-        completion(nil)
-        return
-      }
-      
-      do {
-        // Map the Firestore document to a Trip model
-        let updatedTrip = try document.data(as: Trip.self)
-        completion(updatedTrip)
-      } catch {
-        print("Error decoding trip data: \(error.localizedDescription)")
-        completion(nil)
-      }
-    }
-  }
+
   
   func filterTrips(by tripIds: [String]) -> [Trip] {
     return trips.filter { trip in
@@ -280,5 +255,6 @@ class TripRepository: ObservableObject {
       return trip.name.lowercased().contains(searchText.lowercased())
     }
   }
+  
   
 }

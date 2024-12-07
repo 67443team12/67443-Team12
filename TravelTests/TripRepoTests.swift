@@ -267,4 +267,137 @@ class TripRepositoryTests: XCTestCase {
     XCTAssertEqual(tripRepository.filteredTrips.count, 1, "One trip should match the search.")
     XCTAssertEqual(tripRepository.filteredTrips[0].name, "Beach Vacation", "Filtered trip name should match.")
   }
+  
+  
+  
+  func testEditEventInTrip() {
+      let expectation = XCTestExpectation(description: "Event should be updated successfully")
+      
+      // Mock data
+      let originalEvent = Event(
+          id: "event1",
+          startTime: "10:00 AM",
+          endTime: "12:00 PM",
+          ratings: 4.5,
+          latitude: 37.7749,
+          longitude: -122.4194,
+          image: "original-image-url",
+          location: "Original Location",
+          title: "Original Title",
+          duration: "2 hours",
+          address: "123 Main St",
+          monday: "Closed",
+          tuesday: "9 AM - 5 PM",
+          wednesday: "9 AM - 5 PM",
+          thursday: "9 AM - 5 PM",
+          friday: "9 AM - 5 PM",
+          saturday: "10 AM - 4 PM",
+          sunday: "Closed"
+      )
+      
+      let day = Day(id: "day1", date: "2024-12-06", events: [originalEvent])
+      let trip = Trip(
+          id: "trip1",
+          name: "Sample Trip",
+          startDate: "2024-12-01",
+          endDate: "2024-12-07",
+          photo: "trip-photo-url",
+          color: "blue",
+          days: [day],
+          travelers: []
+      )
+      
+      tripRepository.trips = [trip]
+      
+      let updatedEvent = Event(
+          id: "event1",
+          startTime: "11:00 AM",
+          endTime: "1:00 PM",
+          ratings: 5.0,
+          latitude: 37.7749,
+          longitude: -122.4194,
+          image: "updated-image-url",
+          location: "Updated Location",
+          title: "Updated Title",
+          duration: "2 hours",
+          address: "456 Main St",
+          monday: "9 AM - 5 PM",
+          tuesday: "9 AM - 5 PM",
+          wednesday: "9 AM - 5 PM",
+          thursday: "9 AM - 5 PM",
+          friday: "9 AM - 5 PM",
+          saturday: "10 AM - 4 PM",
+          sunday: "10 AM - 4 PM"
+      )
+      
+      // Perform the edit
+      tripRepository.editEventInTrip(
+          trip: trip,
+          dayIndex: 0,
+          eventId: "event1",
+          updatedEvent: updatedEvent
+      )
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+
+      
+      // Validate event updates
+      XCTAssertEqual(self.tripRepository.trips[0].days[0].events[0].title, "Updated Title")
+      XCTAssertEqual(self.tripRepository.trips[0].days[0].events[0].startTime, "11:00 AM")
+      XCTAssertEqual(self.tripRepository.trips[0].days[0].events[0].location, "Updated Location")
+      XCTAssertEqual(self.tripRepository.trips[0].days[0].events[0].image, "updated-image-url")
+      
+      
+      expectation.fulfill()
+    }
+      
+      
+  }
+  
+  
+  func testUpdateTripPhotoURL() {
+         let expectation = XCTestExpectation(description: "Wait for photo URL update")
+         
+         // Mock trip data
+    let trip = Trip(
+        id: "trip1",
+        name: "Sample Trip",
+        startDate: "2024-12-01",
+        endDate: "2024-12-07",
+        photo: "trip-photo-url",
+        color: "blue",
+        days: [],
+        travelers: []
+    )
+         
+         tripRepository.trips = [trip] // Add the mock user to the repository
+         
+         // Update photo URL
+         let newPhotoURL = "updated-photo-url"
+         tripRepository.updateTripPhotoURL(tripId: "123", photoURL: newPhotoURL) { success in
+             XCTAssertTrue(success, "Photo URL update should succeed")
+             
+             // Verify the photo URL was updated
+             DispatchQueue.main.async {
+                 XCTAssertEqual(self.tripRepository.trips.first(where: { $0.id == "123" })?.photo, newPhotoURL, "Photo URL should match the updated value")
+                 
+                 // Fulfill the expectation once the assertions are done
+                 expectation.fulfill()
+             }
+         }
+         
+     }
+  
+  
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
 }
