@@ -294,6 +294,39 @@ class UserRepositoryTests: XCTestCase {
      }
   
   
+  func testUploadUserPhoto() {
+         let expectation = XCTestExpectation(description: "Wait for photo URL update")
+         
+    // Mock user data
+    let user = User(
+        id: "123",
+        name: "Test User",
+        photo: "original-photo-url",
+        Posts: [],
+        Bookmarks: [],
+        Trips: [],
+        Friends: [],
+        Requests: []
+    )
+         
+         userRepository.users = [user] // Add the mock user to the repository
+         // Update photo URL
+         let newPhotoURL = "updated-photo-url"
+    userRepository.uploadPhotoToStorage(imageData: self.mockImageData, userId: "123") { success in
+             XCTAssertTrue(success != nil, "Photo URL update should succeed")
+             
+             // Verify the photo URL was updated
+             DispatchQueue.main.async {
+                 XCTAssertTrue(self.userRepository.users.first(where: { $0.id == "123" })?.photo != nil, "Photo URL should be nonempty")
+                 
+                 // Fulfill the expectation once the assertions are done
+                 expectation.fulfill()
+             }
+         }
+         
+     }
+  
+  
   func testSearchById() {
     
     // Simulate Firebase data

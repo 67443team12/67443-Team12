@@ -12,12 +12,14 @@ import Combine
 class TripRepositoryTests: XCTestCase {
   var tripRepository: TripRepository!
   var cancellables: Set<AnyCancellable>!
+  var mockImageData: Data!
 
   override func setUp() {
     super.setUp()
     tripRepository = TripRepository()
     tripRepository.trips = [] // Clear trips array before each test
     cancellables = [] // Initialize the cancellables set
+    mockImageData = "MockImageData".data(using: .utf8)
   }
 
   override func tearDown() {
@@ -370,7 +372,6 @@ class TripRepositoryTests: XCTestCase {
     )
          
          tripRepository.trips = [trip] // Add the mock user to the repository
-         
          // Update photo URL
          let newPhotoURL = "updated-photo-url"
          tripRepository.updateTripPhotoURL(tripId: "123", photoURL: newPhotoURL) { success in
@@ -379,6 +380,39 @@ class TripRepositoryTests: XCTestCase {
              // Verify the photo URL was updated
              DispatchQueue.main.async {
                  XCTAssertEqual(self.tripRepository.trips.first(where: { $0.id == "123" })?.photo, newPhotoURL, "Photo URL should match the updated value")
+                 
+                 // Fulfill the expectation once the assertions are done
+                 expectation.fulfill()
+             }
+         }
+         
+     }
+  
+  
+  func testUploadTripPhoto() {
+         let expectation = XCTestExpectation(description: "Wait for photo URL update")
+         
+         // Mock trip data
+    let trip = Trip(
+        id: "trip1",
+        name: "Sample Trip",
+        startDate: "2024-12-01",
+        endDate: "2024-12-07",
+        photo: "trip-photo-url",
+        color: "blue",
+        days: [],
+        travelers: []
+    )
+         
+         tripRepository.trips = [trip] // Add the mock user to the repository
+         // Update photo URL
+         let newPhotoURL = "updated-photo-url"
+    tripRepository.uploadPhotoToStorage(imageData: self.mockImageData, tripId: "123") { success in
+             XCTAssertTrue(success != nil, "Photo URL update should succeed")
+             
+             // Verify the photo URL was updated
+             DispatchQueue.main.async {
+                 XCTAssertTrue(self.tripRepository.trips.first(where: { $0.id == "123" })?.photo != nil, "Photo URL should be nonempty")
                  
                  // Fulfill the expectation once the assertions are done
                  expectation.fulfill()

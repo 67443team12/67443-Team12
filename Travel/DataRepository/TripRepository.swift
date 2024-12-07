@@ -19,6 +19,7 @@ class TripRepository: ObservableObject {
   @Published var filteredTrips: [Trip] = []
   private var cancellables: Set<AnyCancellable> = []
   
+  
   init() {
     self.get()
   }
