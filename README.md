@@ -92,7 +92,13 @@ All test files are located in the `TravelTests` folder. Use the shortcut `Comman
 - LocationRepository:
   ![Location Repository Coverage](./Screenshots/LocationRepository.png)
 - PostRepository:
-  ![Post Repository Coverage](./Screenshots/PostRepository.png) 
+  ![Post Repository Coverage](./Screenshots/PostRepository.png)
+- TripRepository:
+  ![Trip Repository Coverage](./Screenshots/TripRepository.png)
+- UserRepository:
+  ![User Repository Coverage](./Screenshots/UserRepository.png)
+
+As you can see that for TripRepository and UserRepository we only have test coverage of 63.0% and 76.4%. This is because that within the firebase-related functions in there, most of the lines that are not covered are those that handle failures like error when reading from firebase, invalid user id when fetching data, etc. In addition, as for most of the functions in there are async functions, we attempted but failed to cover over 90% of these code.
 
 ## Extraneous Features
 
