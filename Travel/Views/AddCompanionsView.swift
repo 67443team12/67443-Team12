@@ -27,9 +27,14 @@ struct AddCompanionsView: View {
     VStack {
       List(availableFriends) { friend in
         HStack(spacing: 20) {
-          Circle()
-            .fill(.blue)
-            .frame(width: 44, height: 44)
+					AsyncImage(url: URL(string: friend.photo)) { image in
+						image.resizable()
+					} placeholder: {
+						Circle()
+							.fill(Color.gray)
+					}
+					.frame(width: 50, height: 50)
+					.clipShape(Circle())
           Text(friend.name)
           Spacer()
           if selectedFriends.contains(where: { $0.id == friend.id }) {
