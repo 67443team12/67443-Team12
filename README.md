@@ -88,6 +88,12 @@ All test files are located in the `TravelTests` folder. Use the shortcut `Comman
 - User:
   ![User Coverage](./Screenshots/User.png)
 
+### **Firebase Tests**
+- LocationRepository:
+  ![Location Repository Coverage](./Screenshots/LocationRepository.png)
+- PostRepository:
+  ![Post Repository Coverage](./Screenshots/PostRepository.png) 
+
 ## Extraneous Features
 
 While the app incorporates a wide range of features, several planned functionalities were left out due to time constraints. These features are essential for creating a more complete and polished iOS app experience and are listed below for future consideration:
