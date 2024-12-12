@@ -8,6 +8,7 @@
 import SwiftUI
 import PhotosUI
 
+// View for creating a new post with a photo, title, and content
 struct NewPostView: View {
   @ObservedObject var postRepository: PostRepository
   @State private var selectedPhotoItem: PhotosPickerItem?
@@ -20,6 +21,7 @@ struct NewPostView: View {
 
   var body: some View {
     VStack(spacing: 16) {
+      // Header with back button and title
       HStack {
         Button(action: {
           presentationMode.wrappedValue.dismiss()
@@ -41,6 +43,7 @@ struct NewPostView: View {
       }
       .padding(.top)
 
+      // Display selected photo or photo picker
       if let photo = selectedPhoto {
         Image(uiImage: photo)
           .resizable()
@@ -68,6 +71,7 @@ struct NewPostView: View {
         }
         .onChange(of: selectedPhotoItem) { newItem in
           Task {
+            // Load selected photo
             if let data = try? await newItem?.loadTransferable(type: Data.self),
                let image = UIImage(data: data) {
               selectedPhoto = image
@@ -76,6 +80,7 @@ struct NewPostView: View {
         }
       }
 
+      // Title input field
       VStack(alignment: .leading, spacing: 8) {
         Text("Title")
           .font(.title3.bold())
@@ -89,6 +94,7 @@ struct NewPostView: View {
       }
       .padding(.horizontal)
 
+      // Content input field
       VStack(alignment: .leading, spacing: 8) {
         Text("Content")
           .font(.title3.bold())
@@ -112,6 +118,7 @@ struct NewPostView: View {
       }
       .padding(.horizontal)
 
+      // Buttons for canceling or posting
       HStack(spacing: 20) {
         Button(action: {
           presentationMode.wrappedValue.dismiss()
@@ -125,34 +132,7 @@ struct NewPostView: View {
         }
 
         Button(action: {
-          guard let photo = selectedPhoto, !title.isEmpty, !content.isEmpty else { return }
-
-          isUploading = true
-          postRepository.uploadPhoto(photo) { photoURL in
-            if let photoURL = photoURL {
-              let dateFormatter = DateFormatter()
-              dateFormatter.dateFormat = "yyyy-MM-dd"
-              let formattedDate = dateFormatter.string(from: Date())
-
-              let newPost = Post(
-                id: UUID().uuidString,
-                title: title,
-                time: formattedDate,
-                content: content,
-                userId: "Alice215",
-                userName: "Alice",
-                userPhoto: "https://firebasestorage.googleapis.com/v0/b/cmu443team12.firebasestorage.app/o/alice-icon.png?alt=media&token=1b8e454a-cec1-4433-a441-2f4d7085898d",
-                ifBookmarked: false,
-                photo: photoURL
-              )
-              postRepository.addPost(newPost)
-              isUploading = false
-              presentationMode.wrappedValue.dismiss()
-            } else {
-              isUploading = false
-              showErrorAlert = true
-            }
-          }
+          createPost()
         }) {
           if isUploading {
             ProgressView()
@@ -180,11 +160,34 @@ struct NewPostView: View {
     .navigationBarTitleDisplayMode(.inline)
     .background(Color("Cream"))
   }
-}
-
-struct NewPostView_Previews: PreviewProvider {
-  static var previews: some View {
-    let postRepository = PostRepository()
-    NewPostView(postRepository: postRepository)
+  
+  // Creates a new post and uploads the selected photo
+  private func createPost() {
+    guard let photo = selectedPhoto, !title.isEmpty, !content.isEmpty else { return }
+    isUploading = true
+    postRepository.uploadPhoto(photo) { photoURL in
+      if let photoURL = photoURL {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let formattedDate = dateFormatter.string(from: Date())
+        let newPost = Post(
+          id: UUID().uuidString,
+          title: title,
+          time: formattedDate,
+          content: content,
+          userId: "Alice215",
+          userName: "Alice",
+          userPhoto: "https://firebasestorage.googleapis.com/v0/b/cmu443team12.firebasestorage.app/o/alice-icon.png?alt=media&token=1b8e454a-cec1-4433-a441-2f4d7085898d",
+          ifBookmarked: false,
+          photo: photoURL
+        )
+        postRepository.addPost(newPost)
+        isUploading = false
+        presentationMode.wrappedValue.dismiss()
+      } else {
+        isUploading = false
+        showErrorAlert = true
+      }
+    }
   }
 }

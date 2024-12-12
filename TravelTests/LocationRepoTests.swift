@@ -2,7 +2,7 @@
 //  LocationRepoTests.swift
 //  Travel
 //
-//  Created by k mao on 12/6/24.
+//  Created by Kailan Mao on 12/6/24.
 //
 
 import XCTest
@@ -11,7 +11,6 @@ import Combine
 import FirebaseFirestore
 
 class LocationRepositoryTests: XCTestCase {
-  
   var locationRepository: LocationRepository!
   var cancellables: Set<AnyCancellable>!
 
@@ -27,17 +26,13 @@ class LocationRepositoryTests: XCTestCase {
     super.tearDown()
   }
 
-  // Test if locations are fetched correctly
+  // Test if the `get` function successfully fetches locations from Firestore
   func testGetLocations() {
     let expectation = self.expectation(description: "Fetching locations")
-    
-    // Use a single fulfillment for the expectation
     var hasFulfilled = false
-    
     locationRepository.$locations
-      .dropFirst() // Skip the initial empty value
+      .dropFirst()
       .sink { locations in
-        // Ensure the expectation is fulfilled only once
         if !hasFulfilled {
           XCTAssertNotNil(locations, "Locations should not be nil")
           hasFulfilled = true
@@ -45,10 +40,7 @@ class LocationRepositoryTests: XCTestCase {
         }
       }
       .store(in: &cancellables)
-    
-    // Trigger fetching locations
     locationRepository.get()
-    
     waitForExpectations(timeout: 5.0, handler: nil)
   }
 
@@ -56,13 +48,8 @@ class LocationRepositoryTests: XCTestCase {
   func testSearchLocations() {
     let location1 = Location(id: "1", name: "Beach Park", latitude: 0.0, longitude: 0.0, address: "123 Beach St", duration: "2 hours", ratings: 5, sunday: "Yes", monday: "No", tuesday: "Yes", wednesday: "No", thursday: "Yes", friday: "Yes", saturday: "No", image: "beachImage", description: "A nice beach")
     let location2 = Location(id: "2", name: "Mountain View", latitude: 0.0, longitude: 0.0, address: "456 Mountain Rd", duration: "3 hours", ratings: 4, sunday: "Yes", monday: "Yes", tuesday: "No", wednesday: "Yes", thursday: "No", friday: "Yes", saturday: "Yes", image: "mountainImage", description: "A scenic mountain")
-    
-    // Mock the locations array
     locationRepository.locations = [location1, location2]
-    
-    // Simulate search for "Beach"
     locationRepository.search(searchText: "Beach")
-    
     XCTAssertEqual(locationRepository.filteredLocations.count, 1, "There should be 1 location matching the search text")
     XCTAssertEqual(locationRepository.filteredLocations.first?.name, "Beach Park", "The filtered location should be 'Beach Park'")
   }
@@ -70,27 +57,16 @@ class LocationRepositoryTests: XCTestCase {
   // Test if filteredLocations remains empty when no matches are found
   func testSearchLocationsNoMatch() {
     let location1 = Location(id: "1", name: "Beach Park", latitude: 0.0, longitude: 0.0, address: "123 Beach St", duration: "2 hours", ratings: 5, sunday: "Yes", monday: "No", tuesday: "Yes", wednesday: "No", thursday: "Yes", friday: "Yes", saturday: "No", image: "beachImage", description: "A nice beach")
-    
-    // Mock the locations array
     locationRepository.locations = [location1]
-    
-    // Simulate search for a non-matching text
     locationRepository.search(searchText: "Mountain")
-    
     XCTAssertEqual(locationRepository.filteredLocations.count, 0, "There should be no locations matching the search text")
   }
 
   // Test if search functionality handles empty search text correctly
   func testSearchLocationsEmptySearchText() {
     let location1 = Location(id: "1", name: "Beach Park", latitude: 0.0, longitude: 0.0, address: "123 Beach St", duration: "2 hours", ratings: 5, sunday: "Yes", monday: "No", tuesday: "Yes", wednesday: "No", thursday: "Yes", friday: "Yes", saturday: "No", image: "beachImage", description: "A nice beach")
-    
-    // Mock the locations array
     locationRepository.locations = [location1]
-    
-    // Simulate empty search
     locationRepository.search(searchText: "")
-    
     XCTAssertEqual(locationRepository.filteredLocations.count, 0, "Filtered locations should remain empty with an empty search text")
   }
-
 }

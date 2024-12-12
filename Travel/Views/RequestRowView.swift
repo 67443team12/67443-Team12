@@ -7,29 +7,38 @@
 
 import SwiftUI
 
+// View for representing a single friend request row
 struct RequestRowView: View {
   @ObservedObject var userRepository: UserRepository
   var request: User
-  
   @Binding var showAlert: Bool
   
   var body: some View {
     HStack(spacing: 20) {
+      // Profile photo of the requesting user
       AsyncImage(url: URL(string: request.photo)) { image in
-        image.resizable()
+        image
+          .resizable()
       } placeholder: {
         Color.gray
       }
       .frame(width: 50, height: 50)
       .clipShape(Circle())
+
+      // User information
       VStack(alignment: .leading) {
         Text(request.name)
           .fontWeight(.semibold)
         Text("ID: \(request.id)")
           .font(.subheadline)
+          .foregroundColor(.gray)
       }
+
       Spacer()
+
+      // Accept button
       Button(action: {
+        // Accept the friend request and trigger the success alert
         userRepository.acceptRequest(currUser: userRepository.users[0], request: request)
         showAlert = true
       }) {
@@ -50,7 +59,3 @@ struct RequestRowView: View {
     .padding(.horizontal, 20)
   }
 }
-
-//#Preview {
-//    RequestRowView()
-//}

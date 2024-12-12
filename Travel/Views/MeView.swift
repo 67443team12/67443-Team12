@@ -7,14 +7,15 @@
 
 import SwiftUI
 
+// View for displaying the user's profile information
 struct MeView: View {
-//  @EnvironmentObject var aliceVM: MockUser
   @ObservedObject var userRepository: UserRepository
   @ObservedObject var postRepository: PostRepository
   
   var body: some View {
     NavigationView {
       VStack(spacing: 40) {
+        // Header with title and edit button
         HStack {
           Text("Me")
             .font(.largeTitle)
@@ -35,15 +36,17 @@ struct MeView: View {
           }
         }
         
+        // User profile section with image and details
         HStack {
           AsyncImage(url: URL(string: userRepository.users[0].photo)) { image in
             image.resizable()
           } placeholder: {
             Color.gray
           }
-            .frame(width: 100, height: 100)
-            .clipShape(Circle())
-            .padding(.leading, 20)
+          .frame(width: 100, height: 100)
+          .clipShape(Circle())
+          .padding(.leading, 20)
+          
           VStack(alignment: .leading) {
             Text(userRepository.users[0].name)
               .font(.largeTitle)
@@ -51,10 +54,11 @@ struct MeView: View {
             Text("ID: \(userRepository.users[0].id)")
               .fontWeight(.semibold)
           }
-            .padding(.leading, 20)
+          .padding(.leading, 20)
           Spacer()
         }
         
+        // List of navigation links
         List {
           NavigationLink(
             destination: MyPostsView(postRepository: postRepository, userRepository: userRepository),
@@ -63,6 +67,7 @@ struct MeView: View {
                 .padding(.vertical, 10)
             })
           .listRowBackground(Color("Cream"))
+          
           NavigationLink(
             destination: MyBookmarksView(postRepository: postRepository, userRepository: userRepository),
             label: {
@@ -81,7 +86,3 @@ struct MeView: View {
     }
   }
 }
-
-//#Preview {
-//  MeView()
-//}

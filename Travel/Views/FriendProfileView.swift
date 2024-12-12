@@ -7,28 +7,28 @@
 
 import SwiftUI
 
+// View for displaying a friend's profile
 struct FriendProfileView: View {
   @ObservedObject var userRepository: UserRepository
   @ObservedObject var tripRepository = TripRepository()
-  
   let user: User
   let currUser: User
-  
   @State private var showAlert = false
+  @State private var isSharedTripsExpanded: Bool = true
   
+  // Calculates shared trips between the current user and the displayed friend
   var sharedTrips: [Trip] {
     tripRepository.trips.filter { user.Trips.contains($0.id) && currUser.Trips.contains($0.id) }
   }
   
-  @State private var isSharedTripsExpanded: Bool = true
-  
   var body: some View {
     NavigationView {
       ZStack {
-        // Background color
-        Color("Cream").ignoresSafeArea()
+        Color("Cream")
+          .ignoresSafeArea()
         
         VStack {
+          // Header with friend's profile picture and details
           HStack {
             AsyncImage(url: URL(string: user.photo)) { image in
               image.resizable()
@@ -50,9 +50,11 @@ struct FriendProfileView: View {
             Spacer()
           }
           
+          // List showing shared trips
           List {
             Section(
               header: Button(action: {
+                // Toggle shared trips section visibility with animation
                 withAnimation {
                   isSharedTripsExpanded.toggle()
                 }
@@ -65,27 +67,29 @@ struct FriendProfileView: View {
                     .font(.caption)
                     .foregroundColor(.gray)
                 }
-                .padding(.vertical, 10) // Increased padding
-                .contentShape(Rectangle()) // Make the entire area tappable
+                .padding(.vertical, 10)
+                .contentShape(Rectangle())
               }
             ) {
+              // Show shared trips if expanded
               if isSharedTripsExpanded {
                 ForEach(sharedTrips, id: \.id) { trip in
                   FriendProfileTripCardView(trip: trip, tripRepository: tripRepository)
-                    .padding(.vertical, 5) // Add padding to trip rows
+                    .padding(.vertical, 5)
                 }
                 .listRowBackground(Color("Cream"))
               }
             }
           }
           .listStyle(PlainListStyle())
-          .scrollContentBackground(.hidden) // Hides default list background
-          .background(Color("Cream")) // List background
+          .scrollContentBackground(.hidden)
+          .background(Color("Cream"))
         }
         .padding(.top)
       }
     }
     .toolbar {
+      // Toolbar button for deleting the friend
       ToolbarItem(placement: .navigationBarTrailing) {
         Button(action: {
           showAlert = true

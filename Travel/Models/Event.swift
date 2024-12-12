@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct Event: Identifiable, Comparable, Codable {
+  // Properties
   var id: String
   var startTime: String
   var endTime: String
@@ -27,7 +28,8 @@ struct Event: Identifiable, Comparable, Codable {
   var friday: String
   var saturday: String
   var sunday: String
-  
+
+  // Coding Keys
   enum CodingKeys: String, CodingKey {
     case id
     case startTime
@@ -48,7 +50,8 @@ struct Event: Identifiable, Comparable, Codable {
     case saturday
     case sunday
   }
-  
+
+  // Convert Event to a dictionary
   func toDictionary() -> [String: Any] {
     return [
       "id": id,
@@ -71,11 +74,13 @@ struct Event: Identifiable, Comparable, Codable {
       "saturday": saturday
     ]
   }
-  
+
+  // Hashing for Hashable conformance
   func hash(into hasher: inout Hasher) {
     hasher.combine(id)
   }
-  
+
+  // Date Conversion Helpers
   func startTimeAsDate() -> Date? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "HH:mm"
@@ -87,7 +92,8 @@ struct Event: Identifiable, Comparable, Codable {
     dateFormatter.dateFormat = "HH:mm"
     return dateFormatter.date(from: endTime)
   }
-  
+
+  // Comparable Protocol
   static func < (lhs: Event, rhs: Event) -> Bool {
     lhs.startTime < rhs.startTime
   }
@@ -95,7 +101,8 @@ struct Event: Identifiable, Comparable, Codable {
   static func == (lhs: Event, rhs: Event) -> Bool {
     lhs.id == rhs.id
   }
-  
+
+  // Example Events
   static let example1 = Event(
     id: "1",
     startTime: "13:00",

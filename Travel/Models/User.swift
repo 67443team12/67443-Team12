@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct User: Codable, Identifiable, Comparable {
+  // Properties
   var id: String
   var name: String
   var photo: String
@@ -18,6 +19,7 @@ struct User: Codable, Identifiable, Comparable {
   var Friends: [String]
   var Requests: [String]
   
+  // Coding Keys
   enum CodingKeys: String, CodingKey {
     case id
     case name
@@ -29,6 +31,7 @@ struct User: Codable, Identifiable, Comparable {
     case Requests
   }
   
+  // Comparable Protocol
   static func < (lhs: User, rhs: User) -> Bool {
     lhs.name < rhs.name
   }
@@ -37,6 +40,7 @@ struct User: Codable, Identifiable, Comparable {
     lhs.id == rhs.id
   }
   
+  // Convert User to a dictionary
   func toDictionary() -> [String: Any] {
     return [
       "id": id,
@@ -49,5 +53,4 @@ struct User: Codable, Identifiable, Comparable {
       "Requests": Requests
     ]
   }
-  
 }

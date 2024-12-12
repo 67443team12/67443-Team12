@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct Trip: Identifiable, Codable, Comparable {
+  // Properties
   var id: String
   var name: String
   var startDate: String
@@ -18,6 +19,7 @@ struct Trip: Identifiable, Codable, Comparable {
   var days: [Day]
   var travelers: [SimpleUser]
   
+  // Coding Keys
   enum CodingKeys: String, CodingKey {
     case id
     case name
@@ -29,6 +31,7 @@ struct Trip: Identifiable, Codable, Comparable {
     case travelers
   }
   
+  // Comparable Protocol
   static func < (lhs: Trip, rhs: Trip) -> Bool {
     lhs.startDate < rhs.startDate
   }
@@ -37,6 +40,7 @@ struct Trip: Identifiable, Codable, Comparable {
     lhs.id == rhs.id
   }
   
+  // Date Conversion Helpers
   var startDateAsDate: Date? {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -49,6 +53,7 @@ struct Trip: Identifiable, Codable, Comparable {
 		return dateFormatter.date(from: endDate)
 	}
 	
+  // Formatted Dates for Display
 	var formattedStartDate: String {
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "MMM d, yyyy"
@@ -61,6 +66,7 @@ struct Trip: Identifiable, Codable, Comparable {
 		return dateFormatter.string(from: endDateAsDate!)
 	}
   
+  // Example Trip
   static let example = Trip(
     id: "1",
     name: "Miami",

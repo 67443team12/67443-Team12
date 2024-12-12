@@ -7,15 +7,16 @@
 
 import SwiftUI
 
+// View for displaying user details and sending a friend request
 struct AddFriendDetailView: View {
   var user: User
   @ObservedObject var userRepository: UserRepository
   @State private var showAlert: Bool = false
-  
   @Environment(\.presentationMode) var presentationMode
   
   var body: some View {
     VStack {
+      // User details section
       HStack {
         AsyncImage(url: URL(string: user.photo)) { image in
           image.resizable()
@@ -25,6 +26,7 @@ struct AddFriendDetailView: View {
         .frame(width: 100, height: 100)
         .clipShape(Circle())
         .padding(.leading, 20)
+
         VStack(alignment: .leading) {
           Text(user.name)
             .font(.largeTitle)
@@ -33,11 +35,13 @@ struct AddFriendDetailView: View {
             .fontWeight(.semibold)
         }
         .padding(.leading, 20)
+        
         Spacer()
       }
       .padding(.vertical, 30)
+      
+      // Send Friend Request button
       Button(action: {
-        // hard code current user here
         userRepository.sendRequest(currUser: userRepository.users[0], request: user)
         showAlert = true
       }) {
@@ -58,6 +62,7 @@ struct AddFriendDetailView: View {
           }
         )
       }
+      
       Spacer()
     }
     .background(Color("Cream"))

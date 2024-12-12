@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 
 struct Post: Identifiable, Codable, Comparable {
+  // Properties
   var id: String
   var title: String
   var time: String
@@ -20,6 +21,7 @@ struct Post: Identifiable, Codable, Comparable {
   var comments: [Comment]
   var photo: String
 
+  // Coding Keys
   enum CodingKeys: String, CodingKey {
     case id
     case title
@@ -33,6 +35,7 @@ struct Post: Identifiable, Codable, Comparable {
     case photo
   }
   
+  // Decoder-based initializer for decoding JSON data into a Post object
   init(from decoder: Decoder) throws {
     let container = try decoder.container(keyedBy: CodingKeys.self)
     id = try container.decode(String.self, forKey: .id)
@@ -47,6 +50,7 @@ struct Post: Identifiable, Codable, Comparable {
     photo = try container.decode(String.self, forKey: .photo)
   }
 
+  // Custom initializer for creating a Post object
   init(
     id: String,
     title: String,
@@ -71,6 +75,7 @@ struct Post: Identifiable, Codable, Comparable {
     self.photo = photo
   }
 
+  // Comparable Protocol
   static func < (lhs: Post, rhs: Post) -> Bool {
     lhs.time < rhs.time
   }
@@ -79,6 +84,7 @@ struct Post: Identifiable, Codable, Comparable {
     lhs.id == rhs.id
   }
 	
+  // Formatted Dates for Display
 	var formattedTime: String {
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -87,6 +93,7 @@ struct Post: Identifiable, Codable, Comparable {
 		return dateFormatter.string(from: date!)
 	}
 
+  // Example Posts
   static let example1 = Post(
     id: "35FNRV",
     title: "Pittsburgh Adventures",

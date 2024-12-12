@@ -1,6 +1,6 @@
 //
 //  LocationDetailView.swift
-//  kailan-team12
+//  Travel
 //
 //  Created by Kailan Mao on 11/5/24.
 //
@@ -8,12 +8,12 @@
 import Foundation
 import SwiftUI
 
+// View for a specific location
 struct LocationDetailView: View {
   let location: Location
   let trip: Trip
   let dayNumber: Int
   let tripRepository: TripRepository
-  
   @Environment(\.presentationMode) var presentationMode
   
   var body: some View {
@@ -40,6 +40,7 @@ struct LocationDetailView: View {
       
       // Location details section
       VStack(alignment: .leading, spacing: 15) {
+        // Location name and add event button
         HStack {
           Text(location.name)
             .font(.title)
@@ -54,7 +55,7 @@ struct LocationDetailView: View {
           .padding(.trailing, 20)
         }
 
-        // Address
+        // Address section
         HStack {
           Image(systemName: "map")
             .foregroundColor(.gray)
@@ -63,7 +64,7 @@ struct LocationDetailView: View {
         .font(.body)
         .padding(.leading, 20)
         
-        // Rating
+        // Ratings section
         HStack {
           Image(systemName: "star.fill")
             .foregroundColor(.yellow)
@@ -72,7 +73,7 @@ struct LocationDetailView: View {
         }
         .padding(.leading, 20)
         
-        // Duration
+        // Duration section
         HStack {
           Image(systemName: "clock")
             .foregroundColor(.gray)

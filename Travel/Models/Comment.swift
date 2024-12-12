@@ -9,12 +9,14 @@ import Foundation
 import SwiftUI
 
 struct Comment: Identifiable, Codable, Comparable {
+  // Properties
   var id: String
   var userId: String
   var userName: String
   var userPhoto: String
   var content: String
 
+  // Coding Keys
   enum CodingKeys: String, CodingKey {
     case id
     case userId
@@ -23,6 +25,7 @@ struct Comment: Identifiable, Codable, Comparable {
     case content
   }
 
+  // Comparable Protocol
   static func < (lhs: Comment, rhs: Comment) -> Bool {
     lhs.id < rhs.id
   }
@@ -31,6 +34,7 @@ struct Comment: Identifiable, Codable, Comparable {
     lhs.id == rhs.id
   }
 
+  // Example Comments
   static let example1 = Comment(
     id: "23HDI6",
     userId: "Alice215",

@@ -10,6 +10,7 @@ import PhotosUI
 import FirebaseStorage
 import FirebaseFirestore
 
+// View for displaying a card for an individual trip
 struct TripCardView: View {
   @State var trip: Trip
   @ObservedObject var tripRepository: TripRepository
@@ -20,7 +21,7 @@ struct TripCardView: View {
   var body: some View {
     VStack(alignment: .leading) {
       ZStack(alignment: .bottomTrailing) {
-        // Display image or color gradient
+        // Display trip image or fallback to gradient based on trip's color
         AsyncImage(url: URL(string: trip.photo)) { image in
           image.resizable()
         } placeholder: {
@@ -28,13 +29,15 @@ struct TripCardView: View {
         }
         .frame(height: 150)
         .clipShape(
-            .rect(
-                topLeadingRadius: 15,
-                bottomLeadingRadius: 0,
-                bottomTrailingRadius: 0,
-                topTrailingRadius: 15
-            )
+          .rect(
+            topLeadingRadius: 15,
+            bottomLeadingRadius: 0,
+            bottomTrailingRadius: 0,
+            topTrailingRadius: 15
+          )
         )
+
+        // Photo picker button to update the trip's image
         Button(action: {
           isShowingPicker = true
         }) {
@@ -45,12 +48,11 @@ struct TripCardView: View {
             .shadow(color: .black, radius: 2)
         }
         .photosPicker(isPresented: $isShowingPicker, selection: $selectedItems, maxSelectionCount: 1, matching: .images)
-        // trigger to update photo in firebase
         .onChange(of: selectedItems) { newItems in
           guard let selectedItem = newItems.first else { return }
           Task {
+            // Upload selected photo to Firebase Storage
             if let selectedAsset = try? await selectedItem.loadTransferable(type: Data.self) {
-              // Upload to Firebase Storage via TripRepository
               tripRepository.uploadPhotoToStorage(imageData: selectedAsset, tripId: trip.id) { photoURL in
                 if let photoURL = photoURL {
                   print("Photo uploaded and URL updated: \(photoURL)")
@@ -61,13 +63,15 @@ struct TripCardView: View {
           }
         }
       }
-      // Display trip name and dates
+
+      // Display trip name
       Text(trip.name)
         .font(.title3.bold())
         .padding([.leading])
         .padding(.top, 6)
         .foregroundColor(.black)
-      
+
+      // Display trip start and end dates
       Text("\(trip.formattedStartDate) - \(trip.formattedEndDate)")
         .font(.subheadline)
         .foregroundColor(.gray)
@@ -79,6 +83,7 @@ struct TripCardView: View {
     .padding(.horizontal, 20)
   }
   
+  // Converts a color name to a SwiftUI Color
   func getColor(from colorName: String) -> Color {
     switch colorName.lowercased() {
     case "blue": return Color.blue
@@ -88,10 +93,11 @@ struct TripCardView: View {
     case "purple": return Color.purple
     case "orange": return Color.orange
     case "gray": return Color.gray
-    default: return Color.gray // Fallback color
+    default: return Color.gray
     }
   }
   
+  // Creates a gradient using the given color name
   func getGradient(from colorName: String) -> LinearGradient {
     let color = getColor(from: colorName)
     let lighterColor = color.opacity(0.4)
@@ -100,12 +106,5 @@ struct TripCardView: View {
       startPoint: .top,
       endPoint: .bottom
     )
-  }
-}
-
-struct TripCardView_Previews: PreviewProvider {
-  static var previews: some View {
-    TripCardView(trip: Trip.example, tripRepository: TripRepository())
-    .previewLayout(.sizeThatFits)
   }
 }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// View for representing a friend's trip card
 struct FriendProfileTripCardView: View {
   @State var trip: Trip
   @ObservedObject var tripRepository: TripRepository
@@ -14,7 +15,7 @@ struct FriendProfileTripCardView: View {
   var body: some View {
     VStack(alignment: .leading) {
       ZStack(alignment: .bottomTrailing) {
-        // Display image or color gradient
+        // Display the trip photo if available; otherwise, use a gradient
         AsyncImage(url: URL(string: trip.photo)) { image in
           image.resizable()
         } placeholder: {
@@ -22,21 +23,23 @@ struct FriendProfileTripCardView: View {
         }
         .frame(height: 150)
         .clipShape(
-            .rect(
-                topLeadingRadius: 15,
-                bottomLeadingRadius: 0,
-                bottomTrailingRadius: 0,
-                topTrailingRadius: 15
-            )
+          .rect(
+            topLeadingRadius: 15,
+            bottomLeadingRadius: 0,
+            bottomTrailingRadius: 0,
+            topTrailingRadius: 15
+          )
         )
       }
-      // Display trip name and dates
+      
+      // Display the trip name
       Text(trip.name)
         .font(.title3.bold())
         .padding([.leading])
         .padding(.top, 6)
         .foregroundColor(.black)
       
+      // Display the trip dates
       Text("\(trip.formattedStartDate) - \(trip.formattedEndDate)")
         .font(.subheadline)
         .foregroundColor(.gray)
@@ -47,6 +50,7 @@ struct FriendProfileTripCardView: View {
     .shadow(radius: 5)
   }
   
+  // Returns a color based on the provided color name
   func getColor(from colorName: String) -> Color {
     switch colorName.lowercased() {
     case "blue": return Color.blue
@@ -56,10 +60,11 @@ struct FriendProfileTripCardView: View {
     case "purple": return Color.purple
     case "orange": return Color.orange
     case "gray": return Color.gray
-    default: return Color.gray // Fallback color
+    default: return Color.gray
     }
   }
   
+  // Returns a gradient based on the provided color name
   func getGradient(from colorName: String) -> LinearGradient {
     let color = getColor(from: colorName)
     let lighterColor = color.opacity(0.4)
@@ -69,8 +74,4 @@ struct FriendProfileTripCardView: View {
       endPoint: .bottom
     )
   }
-}
-
-#Preview {
-    FriendProfileTripCardView(trip: Trip.example, tripRepository: TripRepository())
 }

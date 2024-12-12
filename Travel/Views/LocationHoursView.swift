@@ -1,12 +1,13 @@
 //
 //  LocationHoursView.swift
-//  kailan-team12
+//  Travel
 //
 //  Created by Kailan Mao on 11/5/24.
 //
 
 import SwiftUI
 
+// View for displaying the opening hours of a specific location
 struct LocationHoursView: View {
   let location: Location
   @Environment(\.presentationMode) var presentationMode
@@ -33,13 +34,13 @@ struct LocationHoursView: View {
       .padding([.leading, .top], 20)
       .padding(.bottom, 2)
 
-      // Title
+      // Title for the page
       Text("Open Hours")
         .font(.title)
         .fontWeight(.bold)
         .padding(.bottom, 8)
 
-      // Hours for each day, centered
+      // Display hours for each day of the week
       VStack(spacing: 6) {
         Text("Monday: ").fontWeight(.bold) + Text(location.monday)
         Text("Tuesday: ").fontWeight(.bold) + Text(location.tuesday)
@@ -49,7 +50,7 @@ struct LocationHoursView: View {
         Text("Saturday: ").fontWeight(.bold) + Text(location.saturday)
         Text("Sunday: ").fontWeight(.bold) + Text(location.sunday)
       }
-      .multilineTextAlignment(.center) // Center-align text
+      .multilineTextAlignment(.center)
       .padding(.horizontal, 20)
 
       Spacer()

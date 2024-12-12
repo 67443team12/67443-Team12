@@ -9,16 +9,19 @@ import Foundation
 import SwiftUI
 
 struct SimpleUser: Codable, Identifiable, Comparable {
-	var id: String
+	// Properties
+  var id: String
 	var name: String
 	var photo: String
 	
+  // Coding Keys
 	enum CodingKeys: String, CodingKey {
 		case id = "userId"
 		case name
 		case photo
 	}
 	
+  // Comparable Protocol
 	static func < (lhs: SimpleUser, rhs: SimpleUser) -> Bool {
 		lhs.name < rhs.name
 	}
@@ -27,6 +30,7 @@ struct SimpleUser: Codable, Identifiable, Comparable {
 		lhs.id == rhs.id
 	}
 	
+  // Convert SimpleUser to a dictionary
 	func toDictionary() -> [String: Any] {
 		return [
 			"userId": id,
@@ -35,6 +39,7 @@ struct SimpleUser: Codable, Identifiable, Comparable {
 		]
 	}
 	
+  // Example SimpleUsers
 	static let alice = SimpleUser(
 		id: "Alice215",
 		name: "Alice",

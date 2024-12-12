@@ -26,8 +26,6 @@
 		3715B0FE2CFF9DC900013644 /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3715B0FD2CFF9DC500013644 /* SplashView.swift */; };
 		3715B1082CFFA3FA00013644 /* LargeMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3715B1072CFFA3F800013644 /* LargeMapView.swift */; };
 		3715B10A2CFFA5AD00013644 /* MyBookmarksView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3715B1092CFFA5A800013644 /* MyBookmarksView.swift */; };
-		3715B10C2CFFA5D900013644 /* MyPostCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3715B10B2CFFA5D500013644 /* MyPostCardView.swift */; };
-		3715B10E2CFFA5F900013644 /* MyPostDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3715B10D2CFFA5F300013644 /* MyPostDetailView.swift */; };
 		379843E32CDB3C11001B5A69 /* ItineraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379843E22CDB3C11001B5A69 /* ItineraryView.swift */; };
 		379843E92CDB7A62001B5A69 /* EditEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 379843E82CDB7A62001B5A69 /* EditEventView.swift */; };
 		37B588ED2CDBED2800C44206 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 37B588EC2CDBED2800C44206 /* GoogleService-Info.plist */; };
@@ -93,8 +91,6 @@
 		3715B1022CFF9FBD00013644 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		3715B1072CFFA3F800013644 /* LargeMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeMapView.swift; sourceTree = "<group>"; };
 		3715B1092CFFA5A800013644 /* MyBookmarksView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyBookmarksView.swift; sourceTree = "<group>"; };
-		3715B10B2CFFA5D500013644 /* MyPostCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostCardView.swift; sourceTree = "<group>"; };
-		3715B10D2CFFA5F300013644 /* MyPostDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyPostDetailView.swift; sourceTree = "<group>"; };
 		379843E22CDB3C11001B5A69 /* ItineraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItineraryView.swift; sourceTree = "<group>"; };
 		379843E82CDB7A62001B5A69 /* EditEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditEventView.swift; sourceTree = "<group>"; };
 		37B588EC2CDBED2800C44206 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -249,10 +245,8 @@
 				3715B1072CFFA3F800013644 /* LargeMapView.swift */,
 				37E8DC802CDC0DDC00238FCD /* LocationDetailView.swift */,
 				37E8DC822CDC0E0000238FCD /* LocationHoursView.swift */,
-				3715B10B2CFFA5D500013644 /* MyPostCardView.swift */,
 				98DF07162CD6CAC000694B97 /* MeView.swift */,
 				3715B1092CFFA5A800013644 /* MyBookmarksView.swift */,
-				3715B10D2CFFA5F300013644 /* MyPostDetailView.swift */,
 				98DF07182CD6DA1700694B97 /* MyPostsView.swift */,
 				37BC41E02CD19501007AA26B /* MyTripsView.swift */,
 				3715B0D22CF510B900013644 /* NewPostView.swift */,
@@ -388,9 +382,7 @@
 			files = (
 				98DF07072CD5EB1B00694B97 /* User.swift in Sources */,
 				3715B0F82CFF9D3400013644 /* FriendsRowView.swift in Sources */,
-				3715B10E2CFFA5F900013644 /* MyPostDetailView.swift in Sources */,
 				3715B10A2CFFA5AD00013644 /* MyBookmarksView.swift in Sources */,
-				3715B10C2CFFA5D900013644 /* MyPostCardView.swift in Sources */,
 				37E8DC832CDC0E0000238FCD /* LocationHoursView.swift in Sources */,
 				98DF070D2CD5EB5E00694B97 /* Location.swift in Sources */,
 				37BC41E12CD19501007AA26B /* MyTripsView.swift in Sources */,
