@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 
 struct Location: Identifiable, Codable, Comparable, Hashable {
-	var id: String
+	// Properties
+  var id: String
 	var name: String
 	var latitude: Double
 	var longitude: Double
@@ -26,6 +27,7 @@ struct Location: Identifiable, Codable, Comparable, Hashable {
 	var image: String
 	var description: String
 	
+  // Coding Keys
 	enum CodingKeys: String, CodingKey {
 		case id
 		case name
@@ -45,6 +47,7 @@ struct Location: Identifiable, Codable, Comparable, Hashable {
 		case description
 	}
 	
+  // Comparable Protocol
 	static func < (lhs: Location, rhs: Location) -> Bool {
 		lhs.name < rhs.name
 	}

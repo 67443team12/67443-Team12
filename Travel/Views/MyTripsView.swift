@@ -7,17 +7,16 @@
 
 import SwiftUI
 
+// View for displaying the user's trips
 struct MyTripsView: View {
-//  @EnvironmentObject var aliceVM: MockUser
   @ObservedObject var userRepository: UserRepository
   @ObservedObject var tripRepository = TripRepository()
   @ObservedObject var locationRepository = LocationRepository()
   @State private var showNewTripView = false
-  
-  // search stuff
   @State var searchText: String = ""
   @State var displayedTrips: [Trip] = [Trip]()
   
+  // Binding for two-way updates between searchText and tripRepository search functionality
   var body: some View {
     let binding = Binding<String>(get: {
       self.searchText
@@ -29,6 +28,7 @@ struct MyTripsView: View {
     
     NavigationView {
       VStack {
+        // Header with title and "Add Trip" button
         HStack {
           Text("My Trips")
             .font(.largeTitle)
@@ -46,16 +46,15 @@ struct MyTripsView: View {
           }
         }
         
+        // Search bar
         HStack {
           TextField("Search trip", text: binding)
-            .padding(.leading, 10) // Extra padding for text
+            .padding(.leading, 10)
             .padding(.vertical, 15)
-          
-          
           if !searchText.isEmpty {
             Button(action: {
               searchText = ""
-              displayTrips() // Update displayedLocations after clearing
+              displayTrips()
             }) {
               Image(systemName: "xmark.circle.fill")
                 .foregroundColor(.gray)
@@ -68,14 +67,14 @@ struct MyTripsView: View {
         .padding(.horizontal, 20)
         .padding(.bottom, 10)
         
+        // Display trips based on search or show all trips
         if !searchText.isEmpty {
           ScrollView {
             ForEach(displayedTrips.filter { userRepository.users[0].Trips.contains($0.id) }.sorted { $0 > $1 }) { trip in
               NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository, locationRepository: locationRepository, userRepository: userRepository)
               ) {
                 TripCardView(trip: trip, tripRepository: tripRepository)
-                  .padding(.bottom, 10)
-                  .padding(.top, 10)
+                  .padding(.vertical, 10)
               }
             }
           }
@@ -86,8 +85,7 @@ struct MyTripsView: View {
        NavigationLink(destination: TripDetailsView(trip: trip, tripRepository: tripRepository, locationRepository: locationRepository, userRepository: userRepository)
               ) {
                 TripCardView(trip: trip, tripRepository: tripRepository)
-                  .padding(.bottom, 10)
-                  .padding(.top, 10)
+                  .padding(.vertical, 10)
               }
             }
           }
@@ -99,15 +97,15 @@ struct MyTripsView: View {
         NewTripView(isPresented: $showNewTripView, userRepository: userRepository, tripRepository: tripRepository)
           .presentationDetents([.fraction(0.97)])
           .presentationDragIndicator(.visible)
-//          .environmentObject(aliceVM)
       }
       .onAppear {
         tripRepository.get()
-        self.displayTrips() // Initialize displayedTrips with all trips
+        self.displayTrips()
       }
     }
   }
   
+  // Updates the displayedTrips based on the searchText
   private func displayTrips() {
     if searchText == "" {
       displayedTrips = tripRepository.trips
@@ -117,9 +115,3 @@ struct MyTripsView: View {
     }
   }
 }
-
-//struct MyTripsView_Previews: PreviewProvider {
-//  static var previews: some View {
-//    MyTripsView()
-//  }
-//}

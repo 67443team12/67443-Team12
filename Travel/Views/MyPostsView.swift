@@ -7,26 +7,26 @@
 
 import SwiftUI
 
+// View for displaying the posts created by the current user
 struct MyPostsView: View {
   @ObservedObject var postRepository: PostRepository
   @ObservedObject var userRepository: UserRepository
-  
   @Environment(\.presentationMode) var presentationMode
   
   var body: some View {
     NavigationView {
       VStack {
+        // Header section with title
         HStack {
           Text("My Posts")
             .font(.largeTitle)
             .fontWeight(.bold)
             .padding(.top, 15)
             .padding(.leading, 20)
-
           Spacer()
-
         }
 
+        // Scroll view displaying the user's posts
         ScrollView {
           ForEach($postRepository.posts, id: \.id) { $post in
             if post.userId == userRepository.users[0].id {
@@ -38,12 +38,5 @@ struct MyPostsView: View {
       .navigationBarHidden(true)
       .background(Color("Cream"))
     }
-    
-
-  }
-  
-  func filterPostsByUserId(posts: [Post], userId: String) -> [Post] {
-    // Filter the posts array where userId matches the given userId string
-    return posts.filter { $0.userId == userId }
   }
 }

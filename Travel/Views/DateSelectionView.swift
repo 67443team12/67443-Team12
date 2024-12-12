@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// View for picking start and end date of a new trip
 struct DateSelectionView: View {
   let tripName: String
   @State private var startDate = Date()
@@ -14,13 +15,14 @@ struct DateSelectionView: View {
   @State private var showStartDatePicker = false
   @State private var showEndDatePicker = false
   @Environment(\.presentationMode) var presentationMode
-  
+  // Closures for save and cancel actions
   var onSave: ((Date, Date) -> Void)?
-  var onCancel: (() -> Void)? // Closure for handling cancel action
-
+  var onCancel: (() -> Void)?
+  
   var body: some View {
     NavigationView {
       VStack {
+        // Title
         HStack {
           Text("When will you go?")
             .font(.title)
@@ -30,7 +32,8 @@ struct DateSelectionView: View {
           Spacer()
         }
         .padding(.bottom)
-
+        
+        // Date Selection Section
         VStack(alignment: .leading) {
           Text("Start Date")
             .font(.title3)
@@ -82,11 +85,14 @@ struct DateSelectionView: View {
         }
         
         Spacer().frame(height: 20)
-
+        
+        // Action Buttons
         HStack {
           Spacer().frame(width: 60)
+          
+          // Back Button: Go back to NewTripView
           Button(action: {
-            presentationMode.wrappedValue.dismiss() // Goes back to NewTripView
+            presentationMode.wrappedValue.dismiss()
           }) {
             Text("Back")
               .font(.headline)
@@ -95,7 +101,10 @@ struct DateSelectionView: View {
               .foregroundColor(Color("AccentColor"))
               .cornerRadius(20)
           }
+          
           Spacer()
+          
+          // Done Button
           Button(action: {
             onSave?(startDate, endDate)
             presentationMode.wrappedValue.dismiss()
@@ -107,22 +116,17 @@ struct DateSelectionView: View {
               .foregroundColor(.white)
               .cornerRadius(20)
           }
+          
           Spacer().frame(width: 60)
         }
         
         Spacer()
       }
       .navigationBarItems(trailing: Button("Cancel") {
-        onCancel?() // Trigger the cancel action to go back to MyTripsView
+        onCancel?()
       })
       .presentationDetents([.fraction(0.9)])
       .presentationDragIndicator(.visible)
     }
-  }
-}
-
-struct DateSelectionView_Previews: PreviewProvider {
-  static var previews: some View {
-    DateSelectionView(tripName: "Sample Trip")
   }
 }

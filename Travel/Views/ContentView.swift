@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ContentView: View {
-  //  var aliceVM = MockUser(user: User.example)
   @ObservedObject var userRepository = UserRepository()
   @ObservedObject var tripRepository = TripRepository()
   @ObservedObject var postRepository = PostRepository()
@@ -24,24 +23,29 @@ struct ContentView: View {
   
   var body: some View {
     if userRepository.users.isEmpty {
+      // Loading state for users
       Text("Loading users...")
     } else {
       TabView {
+        // Trips tab
         MyTripsView(userRepository: userRepository)
           .tabItem {
             Label("Trips", systemImage: "calendar")
           }
         
+        // Posts tab
         PostsView(userRepository: userRepository, postRepository: postRepository)
           .tabItem {
             Label("Posts", systemImage: "square.and.pencil")
-        }
+          }
         
+        // Friends tab
         FriendsListView(userRepository: userRepository)
           .tabItem {
             Label("Friends", systemImage: "person.2")
           }
         
+        // Me tab
         MeView(userRepository: userRepository, postRepository: postRepository)
           .tabItem {
             Label("Me", systemImage: "person.circle")

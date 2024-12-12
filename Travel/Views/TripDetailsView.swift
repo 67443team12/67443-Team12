@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// View for displaying the detail of a trip
 struct TripDetailsView: View {
   var trip: Trip
   @ObservedObject var tripRepository: TripRepository
@@ -16,15 +17,18 @@ struct TripDetailsView: View {
 
   var body: some View {
     VStack {
+      // Trip name displayed as a centered header
       HStack {
         Text(trip.name)
           .font(.largeTitle)
           .fontWeight(.bold)
           .frame(maxWidth: .infinity, alignment: .center)
       }
-      
+
+      // Navigation for days
       if !trip.days.isEmpty {
         HStack {
+          // Backward navigation button
           Button(action: {
             if selectedIndex > 0 {
               selectedIndex -= 1
@@ -35,15 +39,17 @@ struct TripDetailsView: View {
           .disabled(selectedIndex == 0)
           
           Spacer()
-          
+
+          // Current day label
           Text("Day \(selectedIndex + 1): \(trip.days[selectedIndex].formattedDate)")
             .font(.headline)
             .padding()
             .background(Color("LightPurple"))
             .cornerRadius(10)
-          
+
           Spacer()
-          
+
+          // Forward navigation button
           Button(action: {
             if selectedIndex < trip.days.count - 1 {
               selectedIndex += 1
@@ -55,11 +61,13 @@ struct TripDetailsView: View {
         }
         .padding(.horizontal)
         .padding(.bottom, 10)
-        
+
+        // Day content view with horizontal swipe navigation
         GeometryReader { geometry in
           HStack(spacing: 0) {
             ForEach(0..<trip.days.count, id: \.self) { index in
               ScrollView {
+                // DayView displays details for a specific day
                 DayView(
                   trip: trip,
                   day: trip.days[index],
@@ -74,7 +82,7 @@ struct TripDetailsView: View {
           .offset(x: -CGFloat(selectedIndex) * geometry.size.width)
           .animation(.easeInOut, value: selectedIndex)
         }
-        .clipped() // Prevents content overflow
+        .clipped()
       } else {
         Text("Loading days...")
           .font(.subheadline)
@@ -82,6 +90,7 @@ struct TripDetailsView: View {
           .padding()
       }
     }
+    // Toolbar with navigation to CompanionsView
     .toolbar {
       ToolbarItem(placement: .navigationBarTrailing) {
         NavigationLink(
@@ -101,9 +110,3 @@ struct TripDetailsView: View {
     .background(Color("Cream"))
   }
 }
-
-//struct TripDetailsView_Previews: PreviewProvider {
-//  static var previews: some View {
-//    TripDetailsView(trip: Trip.example, tripRepository: TripRepository())
-//  }
-//}

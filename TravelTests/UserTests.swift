@@ -12,6 +12,7 @@ import XCTest
 
 final class UserTests: XCTestCase {
 	func testUser() {
+    // Create instances of the User model
 		let user: User = User(
 			id: "123",
 			name: "Emma",
@@ -45,7 +46,10 @@ final class UserTests: XCTestCase {
 			Requests: []
 		)
 		
+    // Ensure the User instance is successfully created
 		XCTAssertNotNil(user)
+    
+    // Verify all properties of the User instance
 		XCTAssertEqual(user.id, "123")
 		XCTAssertEqual(user.name, "Emma")
 		XCTAssertEqual(user.photo, "test")
@@ -54,11 +58,16 @@ final class UserTests: XCTestCase {
 		XCTAssertEqual(user.Trips, [])
 		XCTAssertEqual(user.Friends, [])
 		XCTAssertEqual(user.Requests, [])
+    
+    // Test equality between identical User instances
 		XCTAssertTrue(user == user1)
+    
+    // Test comparison between User instances
 		XCTAssertTrue(user > user2)
 	}
 	
 	func testToDictionary() {
+    // Create a sample User instance with data
 		let user = User(
 			id: "Alice215",
 			name: "Alice",
@@ -70,8 +79,10 @@ final class UserTests: XCTestCase {
 			Requests: ["request1"]
 		)
 		
+    // Convert the User instance to a dictionary
 		let dictionary = user.toDictionary()
 		
+    // Verify the dictionary contains all expected data
 		XCTAssertEqual(dictionary["id"] as? String, "Alice215")
 		XCTAssertEqual(dictionary["name"] as? String, "Alice")
 		XCTAssertEqual(dictionary["photo"] as? String, "https://example.com/alice.png")

@@ -7,12 +7,15 @@
 
 import SwiftUI
 
+// View for adding companions to a trip
 struct AddCompanionsView: View {
   var trip: Trip
-  
   @ObservedObject var tripRepository: TripRepository
   @ObservedObject var userRepository: UserRepository
+  @Environment(\.presentationMode) var presentationMode
+  @State private var selectedFriends: [User] = []
 
+  // Only show those who are friends of the user and not already in the trip
   var availableFriends: [User] {
     userRepository.users.filter { user in
       userRepository.users[0].Friends.contains(user.id) &&
@@ -20,13 +23,12 @@ struct AddCompanionsView: View {
     }
   }
   
-  @Environment(\.presentationMode) var presentationMode
-  @State private var selectedFriends: [User] = []
-  
   var body: some View {
     VStack {
+      // List available friends to add as companions
       List(availableFriends) { friend in
         HStack(spacing: 20) {
+          // Load friend profile photo
 					AsyncImage(url: URL(string: friend.photo)) { image in
 						image.resizable()
 					} placeholder: {
@@ -35,8 +37,12 @@ struct AddCompanionsView: View {
 					}
 					.frame(width: 50, height: 50)
 					.clipShape(Circle())
+          
           Text(friend.name)
+          
           Spacer()
+          
+          // Show a checkmark if the friend is selected
           if selectedFriends.contains(where: { $0.id == friend.id }) {
             Image(systemName: "checkmark.circle.fill")
               .foregroundColor(.green)
@@ -45,20 +51,18 @@ struct AddCompanionsView: View {
               .foregroundColor(.gray)
           }
         }
-        .contentShape(Rectangle())  // Make the whole row tappable
+        .contentShape(Rectangle())
         .onTapGesture {
           toggleSelection(friend)
         }
         .listRowBackground(Color("Cream"))
       }
-      .listStyle(PlainListStyle()) // Make the list style plain
-      .background(Color("Cream")) // Apply cream background to the list
+      .listStyle(PlainListStyle())
+      .background(Color("Cream"))
       
       // Save button appears only after choosing someone
       if !selectedFriends.isEmpty {
-        Button(action: {
-          saveCompanions()
-        }) {
+        Button(action: saveCompanions) {
           ZStack {
             Rectangle()
               .fill(Color("AccentColor"))
@@ -72,11 +76,12 @@ struct AddCompanionsView: View {
         }
       }
     }
-    .background(Color("Cream").ignoresSafeArea()) // Apply cream background to the entire view
+    .background(Color("Cream").ignoresSafeArea())
     .navigationTitle("Add Companions")
     .navigationBarTitleDisplayMode(.inline)
   }
   
+  // Toggles selection of a friend
   private func toggleSelection(_ friend: User) {
     if let index = selectedFriends.firstIndex(where: { $0.id == friend.id }) {
       selectedFriends.remove(at: index)
@@ -85,8 +90,8 @@ struct AddCompanionsView: View {
     }
   }
   
+  // Saves selected companions to the trip and updates repositories
   private func saveCompanions() {
-    // Add selected friends to the trip
     tripRepository.addTravelers(trip: trip, travelers: selectedFriends)
     for friend in selectedFriends {
       userRepository.addTripToUser(currUser: friend, newTripId: trip.id)
@@ -94,9 +99,7 @@ struct AddCompanionsView: View {
     let newTravelers = selectedFriends.map { user in
       SimpleUser(id: user.id, name: user.name, photo: user.photo)
     }
-    
     selectedFriends.removeAll()
-    
     presentationMode.wrappedValue.dismiss()
   }
 }

@@ -2,7 +2,7 @@
 //  PostRepoTests.swift
 //  Travel
 //
-//  Created by k mao on 12/6/24.
+//  Created by Kailan Mao on 12/6/24.
 //
 
 import XCTest
@@ -10,7 +10,6 @@ import XCTest
 import Combine
 
 class PostRepositoryTests: XCTestCase {
-  
   var postRepository: PostRepository!
   var cancellables: Set<AnyCancellable>!
 
@@ -29,14 +28,10 @@ class PostRepositoryTests: XCTestCase {
   // Test if posts are fetched correctly
   func testGetPosts() {
     let expectation = self.expectation(description: "Fetching posts")
-    
-    // Use a single fulfillment for the expectation
     var hasFulfilled = false
-
     postRepository.$posts
-      .dropFirst() // Skip the initial empty value
+      .dropFirst()
       .sink { posts in
-        // Ensure the expectation is fulfilled only once
         if !hasFulfilled {
           XCTAssertNotNil(posts, "Posts should not be nil")
           XCTAssertGreaterThan(posts.count, 0, "Posts array should contain elements")
@@ -45,10 +40,7 @@ class PostRepositoryTests: XCTestCase {
         }
       }
       .store(in: &cancellables)
-    
-    // Trigger fetching posts
     postRepository.get()
-
     waitForExpectations(timeout: 5.0, handler: nil)
   }
   
@@ -66,10 +58,7 @@ class PostRepositoryTests: XCTestCase {
       comments: [],
       photo: "testPhotoURL"
     )
-    
     let expectation = self.expectation(description: "Adding post")
-    
-    // Simulate adding the post
     postRepository.$posts
       .dropFirst()
       .sink { posts in
@@ -77,10 +66,7 @@ class PostRepositoryTests: XCTestCase {
         expectation.fulfill()
       }
       .store(in: &cancellables)
-    
-    // Add the post
     postRepository.addPost(newPost)
-
     waitForExpectations(timeout: 2.0, handler: nil)
   }
 
@@ -88,10 +74,7 @@ class PostRepositoryTests: XCTestCase {
   func testToggleBookmark() {
     let post = Post.example1
     let initialBookmarkStatus = post.ifBookmarked
-
     postRepository.toggleBookmark(for: post)
-
-    // Fetch updated post from repository to validate the change
     postRepository.$posts
       .dropFirst()
       .sink { posts in
@@ -105,9 +88,7 @@ class PostRepositoryTests: XCTestCase {
   func testAddComment() {
     let post = Post.example1
     let comment = Comment(id: "1", userId: "testUser", userName: "Test User", userPhoto: "testPhoto", content: "Great post!")
-    
     postRepository.addComment(to: post, comment: comment)
-    
     postRepository.$posts
       .dropFirst()
       .sink { posts in
@@ -121,15 +102,11 @@ class PostRepositoryTests: XCTestCase {
   // Test upload photo completion with a valid image
   func testUploadPhoto() {
     let image = UIImage(systemName: "star")!  // Placeholder image
-    
     let expectation = self.expectation(description: "Uploading photo")
-    
     postRepository.uploadPhoto(image) { url in
       XCTAssertNotNil(url, "URL should be returned after uploading image")
       expectation.fulfill()
     }
-    
     waitForExpectations(timeout: 5.0, handler: nil)
   }
-
 }

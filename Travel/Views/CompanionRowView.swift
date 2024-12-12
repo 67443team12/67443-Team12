@@ -7,16 +7,18 @@
 
 import SwiftUI
 
+// Row view for displaying a travel companion with an option to remove them
 struct CompanionRowView: View {
   var person: SimpleUser
   var trip: Trip
   @ObservedObject var tripRepository: TripRepository
   @ObservedObject var userRepository: UserRepository
   @Environment(\.presentationMode) var presentationMode
-  @State private var showAlert = false // To trigger alert confirmation
+  @State private var showAlert = false
   
   var body: some View {
     HStack(spacing: 20) {
+      // Profile image
       AsyncImage(url: URL(string: person.photo)) { image in
         image.resizable()
       } placeholder: {
@@ -25,10 +27,15 @@ struct CompanionRowView: View {
       }
       .frame(width: 50, height: 50)
       .clipShape(Circle())
+      
+      // Companion name
       Text(person.name)
-//        .font(.title3)
-//        .fontWeight(.semibold)
+        .font(.title3)
+        .fontWeight(.semibold)
+      
       Spacer()
+      
+      // Remove button
       Button(action: {
         showAlert = true
       }) {
@@ -43,7 +50,7 @@ struct CompanionRowView: View {
           title: Text("Remove Traveler"),
           message: Text("Are you sure you want to remove \(person.name)?"),
           primaryButton: .destructive(Text("Remove")) {
-            // remove the traveler
+            // Remove traveler from the trip and user repositories
             tripRepository.removeTraveler(trip: trip, traveler: person)
             userRepository.leaveTrip(tripId: trip.id, userId: person.id)
             presentationMode.wrappedValue.dismiss()

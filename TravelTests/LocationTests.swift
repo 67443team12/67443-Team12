@@ -11,8 +11,8 @@ import Foundation
 @testable import Travel
 
 final class LocationTests: XCTestCase {
-	
 	func testLocation() {
+    // Create a sample Location instance
 		let location = Location(
 			id: "111111",
 			name: "Golden Gate Bridge",
@@ -51,7 +51,7 @@ final class LocationTests: XCTestCase {
 		XCTAssertEqual(location.image, "golden_gate_bridge")
 		XCTAssertEqual(location.description, "The Golden Gate Bridge is a suspension bridge spanning the Golden Gate, the one-mile-wide strait connecting San Francisco Bay and the Pacific Ocean.")
 		
-		// Equal
+    // Test equality with another Location instance with the same data
 		let location1 = Location(
 			id: "111111",
 			name: "Golden Gate Bridge",
@@ -74,7 +74,7 @@ final class LocationTests: XCTestCase {
 		XCTAssertNotNil(location1)
 		XCTAssertTrue(location == location1)
 		
-		// Comparison
+    // Test comparison with another Location instance with different data
 		let location2 = Location(
 			id: "102935",
 			name: "American Museum of Natural History",

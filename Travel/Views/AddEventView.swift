@@ -1,12 +1,13 @@
 //
 //  AddEventView.swift
-//  kailan-team12
+//  Travel
 //
 //  Created by Kailan Mao on 11/5/24.
 //
 
 import SwiftUI
 
+// View for adding an event to a trip schedule
 struct AddEventView: View {
   let location: Location
   let trip: Trip
@@ -21,6 +22,7 @@ struct AddEventView: View {
     VStack(alignment: .leading) {
       // Back and Save buttons in a single line
       HStack(alignment: .center) {
+        // Back to LocationDetailView
         Button(action: {
           presentationMode.wrappedValue.dismiss()
         }) {
@@ -34,9 +36,10 @@ struct AddEventView: View {
           }
           .foregroundColor(.accentColor)
         }
-
+        
         Spacer()
-
+        
+        // Save new event
         Button(action: {
           let newEvent = Event(
             id: UUID().uuidString,
@@ -58,9 +61,9 @@ struct AddEventView: View {
             saturday: location.saturday,
             sunday: location.sunday
           )
-          
+          // Add event to trip and dismiss view
           tripRepository.addEventToTrip(trip: trip, dayIndex: dayNumber - 1, event: newEvent)
-          presentationMode.wrappedValue.dismiss() // Dismiss view after saving
+          presentationMode.wrappedValue.dismiss()
         }) {
           Text("Save")
             .font(.title3)
@@ -113,9 +116,10 @@ struct AddEventView: View {
     .navigationBarBackButtonHidden(true)
   }
   
+  // Formats a Date object to a string in HH:mm format
   private func formatTime(date: Date) -> String {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "HH:mm" // 24-hour format
+    dateFormatter.dateFormat = "HH:mm"
     return dateFormatter.string(from: date)
   }
 }

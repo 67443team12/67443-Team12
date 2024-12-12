@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// View for displaying the itinerary of a single day in a trip
 struct ItineraryView: View {
   var day: Day
   let hourHeight: CGFloat = 50
@@ -16,12 +17,14 @@ struct ItineraryView: View {
   
   var body: some View {
     VStack(alignment: .leading) {
+      // Section Title
       Text("Itinerary")
         .font(.title2)
         .fontWeight(.semibold)
         .padding(.leading, 20)
         .frame(maxWidth: .infinity, alignment: .leading)
       
+      // Scrollable hourly schedule
       Rectangle()
         .fill(Color("LightPurple"))
         .frame(height: 300)
@@ -29,11 +32,13 @@ struct ItineraryView: View {
           ScrollViewReader { proxy in
             ScrollView {
               VStack(alignment: .leading, spacing: 0) {
+                // Iterate through each hour to create hourly rows
                 ForEach(0..<24, id: \.self) { hour in
                   HourRow(hour: hour, hourHeight: hourHeight)
                     .id(hour)
                     .overlay(
                       VStack {
+                        // Add events to the correct hour row
                         ForEach(day.events) { event in
                           if let startTime = event.startTimeAsDate() {
                             let startHour = Calendar.current.component(.hour, from: startTime)
@@ -62,18 +67,21 @@ struct ItineraryView: View {
     .padding(.bottom, 10)
   }
   
+  // Calculate the difference in vertical alignment for an event based on its duration
   private func calculateDiff(event: Event) -> CGFloat {
     guard let start = event.startTimeAsDate(), let end = event.endTimeAsDate() else { return hourHeight }
     let duration = end.timeIntervalSince(start)
     return CGFloat(duration / 3600) * hourHeight / 2
   }
 
+  // Calculate the height of an event block based on its duration
   private func calculateEventHeight(event: Event) -> CGFloat {
     guard let start = event.startTimeAsDate(), let end = event.endTimeAsDate() else { return hourHeight }
     let duration = end.timeIntervalSince(start)
     return CGFloat(duration / 3600) * hourHeight
   }
 
+  // Calculate the vertical offset for an event based on its start time
   private func calculateEventOffset(event: Event, hourHeight: CGFloat) -> CGFloat {
     guard let start = event.startTimeAsDate() else { return 0 }
     let minutes = Calendar.current.component(.minute, from: start)
@@ -81,7 +89,7 @@ struct ItineraryView: View {
   }
 }
 
-// Hourly Row with a line and label for each hour
+// A row representing a single hour in the itinerary
 struct HourRow: View {
   var hour: Int
   let hourHeight: CGFloat
@@ -111,28 +119,29 @@ struct EventRow: View {
   let dayNumber: Int
   
   var body: some View {
-      ZStack(alignment: .leading) {
-        // Background rectangle filling the entire row
-        Rectangle()
-          .fill(Color.blue.opacity(0.1))
-          .cornerRadius(8)
-        
-        NavigationLink(destination: EditEventView(event: event, trip: trip, tripRepository: tripRepository, dayNumber: dayNumber)) {
-          // Event details on top of the background rectangle
-          VStack(alignment: .leading, spacing: 2) { // Align text to the left
-            Text(event.title)
-              .font(.body)
-              .fontWeight(.medium)
-              .frame(maxWidth: .infinity, alignment: .leading) // Ensure alignment is left
-            
-            Text("\(event.startTime) - \(event.endTime)")
-              .font(.caption)
-              .foregroundColor(.gray)
-              .frame(maxWidth: .infinity, alignment: .leading) // Ensure alignment is left
-          }
-          .padding(7)
+    ZStack(alignment: .leading) {
+      // Background rectangle for the event
+      Rectangle()
+        .fill(Color.blue.opacity(0.1))
+        .cornerRadius(8)
+      
+      // Navigation link to edit the event
+      NavigationLink(destination: EditEventView(event: event, trip: trip, tripRepository: tripRepository, dayNumber: dayNumber)) {
+        // Event details
+        VStack(alignment: .leading, spacing: 2) {
+          Text(event.title)
+            .font(.body)
+            .fontWeight(.medium)
+            .frame(maxWidth: .infinity, alignment: .leading)
+          
+          Text("\(event.startTime) - \(event.endTime)")
+            .font(.caption)
+            .foregroundColor(.gray)
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
-        .frame(maxWidth: .infinity, alignment: .leading) // Align the entire link to the left
+        .padding(7)
       }
+      .frame(maxWidth: .infinity, alignment: .leading)
+    }
   }
 }

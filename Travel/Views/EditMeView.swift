@@ -10,26 +10,24 @@ import PhotosUI
 import FirebaseStorage
 import FirebaseFirestore
 
+// View for editing the user's profile, including name and profile photo
 struct EditMeView: View {
   @ObservedObject var userRepository: UserRepository
-  
   @State var id: String
   @State var newName: String
   @State var newImage: String
-  
   @State private var isShowingPicker = false
   @State private var selectedItems: [PhotosPickerItem] = []
   @State private var selectedPhotoData: Data?
   
   var body: some View {
     ZStack {
-      Color("Cream") // Set the background color to Cream
-        .edgesIgnoringSafeArea(.all) // Extend the background to cover the screen edges
+      Color("Cream")
+        .edgesIgnoringSafeArea(.all)
 
       Form {
-        Section(
-          header: Text("Edit Profile").font(.headline)
-        ) {
+        Section(header: Text("Edit Profile").font(.headline)) {
+          // Button to upload a new profile photo
           Button(action: {
             isShowingPicker = true
           }) {
@@ -42,11 +40,16 @@ struct EditMeView: View {
                 .shadow(color: .black, radius: 2)
             }
           }
-          .photosPicker(isPresented: $isShowingPicker, selection: $selectedItems, maxSelectionCount: 1, matching: .images)
+          .photosPicker(
+            isPresented: $isShowingPicker,
+            selection: $selectedItems,
+            maxSelectionCount: 1,
+            matching: .images
+          )
           .onChange(of: selectedItems) { newItems in
+            // Handle photo selection
             guard let selectedItem = newItems.first else { return }
             Task {
-              // Load the selected photo data and store it temporarily
               if let selectedAsset = try? await selectedItem.loadTransferable(type: Data.self) {
                 selectedPhotoData = selectedAsset
                 print("Photo selected and stored temporarily.")
@@ -54,6 +57,7 @@ struct EditMeView: View {
             }
           }
 
+          // Text field for updating the user's name
           HStack {
             Text("User Name: ")
               .fontWeight(.bold)
@@ -61,7 +65,9 @@ struct EditMeView: View {
           }
           .padding(.vertical, 10)
 
+          // Button to save changes to profile
           Button("Save Changes") {
+            // Create an updated user object
             let updatedUser = User(
               id: id,
               name: newName,
@@ -73,13 +79,16 @@ struct EditMeView: View {
               Requests: userRepository.users[0].Requests
             )
             
+            // Update the user's data in the repository
             userRepository.editUser(userId: userRepository.users[0].id, updatedUser: updatedUser)
 
+            // Check if a photo is selected for upload
             guard let photoData = selectedPhotoData else {
               print("No photo selected to upload.")
               return
             }
-            // Upload photo to Firebase Storage
+
+            // Upload the photo to Firebase Storage and update the user's profile photo URL
             userRepository.uploadPhotoToStorage(imageData: photoData, userId: userRepository.users[0].id) { photoURL in
               if let photoURL = photoURL {
                 print("Photo uploaded and URL updated: \(photoURL)")
@@ -88,8 +97,8 @@ struct EditMeView: View {
           }
         }
       }
-      .scrollContentBackground(.hidden) // Remove the white background of the Form
-      .background(Color("Cream")) // Set the Form's background to Cream
+      .scrollContentBackground(.hidden)
+      .background(Color("Cream"))
     }
   }
 }

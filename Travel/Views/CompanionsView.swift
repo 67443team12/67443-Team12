@@ -7,16 +7,12 @@
 
 import SwiftUI
 
+// View for displaying companions for a specific trip
 struct CompanionsView: View {
-//  var people: [SimpleUser]
   var trip: Trip
-  
   @ObservedObject var tripRepository: TripRepository
   @ObservedObject var userRepository: UserRepository
-  
   @State private var showAlert = false
-  
-//  @EnvironmentObject var aliceVM: MockUser
   @Environment(\.presentationMode) var presentationMode
   
   init(trip: Trip, tripRepository: TripRepository, userRepository: UserRepository) {
@@ -27,22 +23,28 @@ struct CompanionsView: View {
   
   var body: some View {
     VStack {
+      // List of current companions (excluding the current user)
       VStack {
         ForEach(tripRepository.getCompanions(tripId: trip.id)) { person in
-          //  not showing current user in the list
-          if person.id != userRepository.users[0].id {
-            CompanionRowView(person: person, trip: trip, tripRepository: tripRepository, userRepository: userRepository)
+          if person.id != userRepository.users[0].id { // Exclude current user
+            CompanionRowView(
+              person: person,
+              trip: trip,
+              tripRepository: tripRepository,
+              userRepository: userRepository
+            )
           }
         }
       }
       .padding(.vertical)
       
+      // Navigation link to invite more companions
       NavigationLink(destination: AddCompanionsView(trip: trip, tripRepository: tripRepository, userRepository: userRepository)) {
         ZStack {
           Rectangle()
             .fill(Color("LightPurple"))
             .frame(height: 70)
-          HStack() {
+          HStack {
             Text("Invite More Friends")
               .padding(.leading, 30)
               .fontWeight(.semibold)
@@ -51,12 +53,13 @@ struct CompanionsView: View {
               .fontWeight(.semibold)
               .padding(.trailing, 30)
           }
-          .foregroundStyle(.black)
+          .foregroundColor(.black)
         }
       }
       
       Spacer()
       
+      // Button to leave the trip
       Button(action: {
         showAlert = true
       }) {
@@ -68,7 +71,8 @@ struct CompanionsView: View {
             .foregroundColor(.red)
             .fontWeight(.bold)
         }
-      }.alert(isPresented: $showAlert) {
+      }
+      .alert(isPresented: $showAlert) {
         Alert(
           title: Text("Confirm Leaving This Trip"),
           message: Text("This trip will still be available to other companions after you leave."),
@@ -84,18 +88,14 @@ struct CompanionsView: View {
     .background(Color("Cream"))
   }
   
-//  func refreshCompanions(newCompanions: [SimpleUser]) {
-//    // Update the companions list after friends are added
-//    companions = newCompanions
-//  }
-  
+  // Handles the action of leaving the trip for the current user
   func leaveTrip() {
-    var currUser = userRepository.users[0]
-    tripRepository.removeTraveler(trip: trip, traveler: SimpleUser(id: currUser.id, name: currUser.name, photo: currUser.photo))
+    let currUser = userRepository.users[0]
+    tripRepository.removeTraveler(
+      trip: trip,
+      traveler: SimpleUser(id: currUser.id, name: currUser.name, photo: currUser.photo)
+    )
     userRepository.leaveTrip(tripId: trip.id, userId: currUser.id)
     presentationMode.wrappedValue.dismiss()
   }
-  
 }
-
-

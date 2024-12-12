@@ -11,8 +11,8 @@ import Foundation
 @testable import Travel
 
 final class PostTests: XCTestCase {
-
 	func testPostInitalization() {
+    // Create an instance of the Post model
 		let post = Post(
 			id: "12345",
 			title: "Sample Post",
@@ -26,7 +26,10 @@ final class PostTests: XCTestCase {
 			photo: "https://example.com/image.jpg"
 		)
 		
+    // Ensure the instance is not nil
 		XCTAssertNotNil(post)
+    
+    // Validate the individual properties of the Post object
 		XCTAssertEqual(post.id, "12345")
 		XCTAssertEqual(post.title, "Sample Post")
 		XCTAssertEqual(post.time, "2024-12-01")
@@ -40,6 +43,7 @@ final class PostTests: XCTestCase {
 	}
 	
 	func testPostEquality() {
+    // Create two Post objects with the same data
 		let post1 = Post(
 			id: "12345",
 			title: "Sample Post",
@@ -64,10 +68,12 @@ final class PostTests: XCTestCase {
 			comments: []
 		)
 		
+    // Validate that the two posts are considered equal
 		XCTAssertEqual(post1, post2)
 	}
 	
 	func testPostComparison() {
+    // Create two posts with different times
 		let smaller = Post(
 			id: "12345",
 			title: "Earlier Post",
@@ -92,11 +98,13 @@ final class PostTests: XCTestCase {
 			comments: []
 		)
 		
+    // Validate that posts are ordered correctly by time
 		XCTAssertTrue(smaller < bigger)
 		XCTAssertFalse(bigger < smaller)
 	}
 	
 	func testDecodableInitializer() throws {
+    // JSON representation of a Post
 		let json = """
 		{
 			"id": "12345",
@@ -113,9 +121,11 @@ final class PostTests: XCTestCase {
 		"""
 		let data = json.data(using: .utf8)!
 		let decoder = JSONDecoder()
-
+    
+    // Decode the JSON into a Post object
 		let post = try decoder.decode(Post.self, from: data)
 
+    // Validate the decoded Post properties
 		XCTAssertEqual(post.id, "12345")
 		XCTAssertEqual(post.title, "Test Title")
 		XCTAssertEqual(post.time, "2024-12-01")
@@ -129,6 +139,7 @@ final class PostTests: XCTestCase {
 	}
 	
 	func testTimeFormatting() {
+    // Create a Post object with a specific time
 		let post = Post(
 			id: "12345",
 			title: "Sample Post",
@@ -141,7 +152,7 @@ final class PostTests: XCTestCase {
 			comments: []
 		)
 		
+    // Validate that the formatted time matches the expected format
 		XCTAssertEqual(post.formattedTime, "Dec 1, 2024")
 	}
-
 }

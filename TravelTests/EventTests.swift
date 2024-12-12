@@ -11,6 +11,7 @@ import XCTest
 
 final class EventTests: XCTestCase {
 	func testEvent() {
+    // Create an instance of the Event model
 		let event = Event(
 			id: "1",
 			startTime: "13:00",
@@ -32,8 +33,11 @@ final class EventTests: XCTestCase {
 			sunday: "9AM - 9PM"
 		)
 		
+    // Ensure that the Event instance is not nil
 		XCTAssertNotNil(event)
-		XCTAssertEqual(event.id, "1")
+		
+    // Validate individual properties of the Event object
+    XCTAssertEqual(event.id, "1")
 		XCTAssertEqual(event.startTime, "13:00")
 		XCTAssertEqual(event.endTime, "14:00")
 		XCTAssertEqual(event.ratings, 4.8)
@@ -52,6 +56,7 @@ final class EventTests: XCTestCase {
 		XCTAssertEqual(event.saturday, "9AM - 9PM")
 		XCTAssertEqual(event.sunday, "9AM - 9PM")
 		
+    // Create a duplicate Event instance for equality testing
 		let event1 = Event(
 			id: "1",
 			startTime: "13:00",
@@ -73,9 +78,11 @@ final class EventTests: XCTestCase {
 			sunday: "9AM - 9PM"
 		)
 		
+    // Ensure that duplicate instances are considered equal
 		XCTAssertNotNil(event1)
 		XCTAssertTrue(event == event1)
 		
+    // Create another Event instance with different properties
 		let event2 = Event(
 			id: "1",
 			startTime: "16:00",
@@ -97,11 +104,13 @@ final class EventTests: XCTestCase {
 			sunday: "9AM - 9PM"
 		)
 		
+    // Validate ordering based on event times
 		XCTAssertNotNil(event2)
 		XCTAssertTrue(event < event2)
 	}
 	
 	func testToDictionary() {
+    // Create an Event instance
 		let event = Event(
 			id: "1",
 			startTime: "13:00",
@@ -123,8 +132,10 @@ final class EventTests: XCTestCase {
 			sunday: "9AM - 9PM"
 		)
 		
+    // Convert the Event object to a dictionary
 		let dictionary = event.toDictionary()
 		
+    // Validate the dictionary structure and contents
 		XCTAssertNotNil(dictionary)
 		XCTAssertEqual(dictionary["id"] as? String, "1")
 		XCTAssertEqual(dictionary["startTime"] as? String, "13:00")
@@ -147,6 +158,7 @@ final class EventTests: XCTestCase {
 	}
 	
 	func testDateConvert() {
+    // Create an Event instance with sample start and end times
 		let event = Event(
 			id: "1",
 			startTime: "13:00",
@@ -168,13 +180,14 @@ final class EventTests: XCTestCase {
 			sunday: "9AM - 9PM"
 		)
 		
+    // Ensure the conversion functions return non-nil Date objects
 		XCTAssertNotNil(event.startTimeAsDate())
 		XCTAssertNotNil(event.endTimeAsDate())
 		
+    // Verify that the times match the expected Date objects
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "HH:mm"
 		XCTAssertEqual(event.startTimeAsDate(), dateFormatter.date(from: "13:00"))
 		XCTAssertEqual(event.endTimeAsDate(), dateFormatter.date(from: "14:00"))
 	}
-	
 }

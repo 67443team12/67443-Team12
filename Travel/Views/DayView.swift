@@ -1,6 +1,6 @@
 //
 //  DayView.swift
-//  kailan-team12
+//  Travel
 //
 //  Created by Kailan Mao on 11/4/24.
 //
@@ -9,6 +9,7 @@ import SwiftUI
 import CoreLocation
 import MapKit
 
+// View for displaying a specific day's itinerary, search functionality, and map
 struct DayView: View {
   let trip: Trip
   let day: Day
@@ -23,32 +24,27 @@ struct DayView: View {
   )
   @State private var selectedEvent: Event? = nil
 
-  // Initializer
+  // Initializer to set the default region based on the first event of the day
   init(trip: Trip, day: Day, dayNumber: Int, locationRepository: LocationRepository, tripRepository: TripRepository) {
-      self.trip = trip
-      self.day = day
-      self.dayNumber = dayNumber
-      self.locationRepository = locationRepository
-      self.tripRepository = tripRepository
-      
-      // Default region
-      var initialRegion = MKCoordinateRegion(
-          center: CLLocationCoordinate2D(latitude: 39.8283, longitude: -98.5795),
-          span: MKCoordinateSpan(latitudeDelta: 30, longitudeDelta: 30)
-      )
-      
-      // Update region based on the first event, if available
-      if let firstEvent = day.events.first {
-          initialRegion.center = CLLocationCoordinate2D(latitude: firstEvent.latitude, longitude: firstEvent.longitude)
-          initialRegion.span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1) // Adjust for zoom level
-      }
-      
-      _region = State(initialValue: initialRegion)
+    self.trip = trip
+    self.day = day
+    self.dayNumber = dayNumber
+    self.locationRepository = locationRepository
+    self.tripRepository = tripRepository
+    
+    // Adjust region based on the first event if available
+    var initialRegion = MKCoordinateRegion(
+      center: CLLocationCoordinate2D(latitude: 39.8283, longitude: -98.5795),
+      span: MKCoordinateSpan(latitudeDelta: 30, longitudeDelta: 30)
+    )
+    if let firstEvent = day.events.first {
+      initialRegion.center = CLLocationCoordinate2D(latitude: firstEvent.latitude, longitude: firstEvent.longitude)
+      initialRegion.span = MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1)
+    }
+    _region = State(initialValue: initialRegion)
   }
   
   var body: some View {
-    @State var selectedLocation: Location?
-
     let binding = Binding<String>(get: {
       self.searchText
     }, set: {
@@ -58,7 +54,7 @@ struct DayView: View {
     })
 
     VStack {
-      // Itinerary section
+      // Itinerary section for the day's events
       ItineraryView(day: day, trip: trip, tripRepository: tripRepository, dayNumber: dayNumber)
 
       // Add to Itinerary section
@@ -68,16 +64,17 @@ struct DayView: View {
         .padding(.leading, 20)
         .frame(maxWidth: .infinity, alignment: .leading)
 
-      // Search bar with clear button inside the gray rectangle
+      // Search bar for locations
       HStack {
         TextField("Search for a place", text: binding)
-          .padding(.leading, 10) // Extra padding for text
+          .padding(.leading, 10)
           .padding(.vertical, 15)
         
+        // Clear button for the search bar
         if !searchText.isEmpty {
           Button(action: {
             searchText = ""
-            displayLocations() // Update displayedLocations after clearing
+            displayLocations()
           }) {
             Image(systemName: "xmark.circle.fill")
               .foregroundColor(.gray)
@@ -90,7 +87,8 @@ struct DayView: View {
       .padding(.horizontal, 20)
       .padding(.bottom, 10)
 
-      if searchText != "" {
+      // Display search results if searchText is not empty
+      if !searchText.isEmpty {
         Text("Search Results")
           .font(.title2)
           .fontWeight(.semibold)
@@ -100,10 +98,10 @@ struct DayView: View {
         NavigationStack {
           List(displayedLocations, id: \.id) { location in
             NavigationLink(destination: LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)) {
-                VStack(alignment: .leading) {
-                  Text(location.name)
-                    .font(.headline)
-                }
+              VStack(alignment: .leading) {
+                Text(location.name)
+                  .font(.headline)
+              }
             }
           }
           .listStyle(.inset)
@@ -116,31 +114,33 @@ struct DayView: View {
         )
       }
 
+      // Map section header
       Text("Map")
         .font(.title2)
         .fontWeight(.semibold)
         .padding(.leading, 20)
         .frame(maxWidth: .infinity, alignment: .leading)
 
+      // Link to enlarged map view
       NavigationLink(destination: LargeMapView(day: day, region: region, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)) {
-          Text("View Enlarged Map")
-            .font(.subheadline)
-            .foregroundColor(.gray)
-            .padding(.leading, 20)
-            .frame(maxWidth: .infinity, alignment: .leading)
-        }
+        Text("View Enlarged Map")
+          .font(.subheadline)
+          .foregroundColor(.gray)
+          .padding(.leading, 20)
+          .frame(maxWidth: .infinity, alignment: .leading)
+      }
 
+      // Map displaying the day's events
       NavigationStack {
         Map(coordinateRegion: $region, annotationItems: day.events) { event in
-          MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: CLLocationDegrees(event.latitude), longitude: CLLocationDegrees(event.longitude))) {
+          MapAnnotation(coordinate: CLLocationCoordinate2D(latitude: event.latitude, longitude: event.longitude)) {
             Button(action: {
               selectedEvent = event
             }) {
               ZStack {
                 Image(systemName: "mappin.circle.fill")
                   .foregroundColor(.red)
-                  .font(.title3) // Make the red pin smaller
-                  .frame(width: 10, height: 10)
+                  .font(.title3)
                 Text(event.title)
                   .font(.caption.bold())
                   .foregroundColor(.black)
@@ -149,9 +149,6 @@ struct DayView: View {
           }
         }
         .ignoresSafeArea()
-        .navigationDestination(for: Location.self) { location in
-          LocationDetailView(location: location, trip: trip, dayNumber: dayNumber, tripRepository: tripRepository)
-        }
       }
       .frame(width: 350, height: 450)
       .clipShape(RoundedRectangle(cornerRadius: 20))
@@ -163,14 +160,15 @@ struct DayView: View {
       Spacer()
     }
     .onAppear {
-      loadData()
+      displayLocations()
       setRegion(events: day.events)
     }
   }
 
+  // Pop-up view for a selected event
   private var popUpView: some View {
     VStack(spacing: 5) {
-      Text(selectedEvent?.title ?? "") // Display event title
+      Text(selectedEvent?.title ?? "")
         .font(.headline)
         .foregroundColor(.primary)
       Text(selectedEvent?.location ?? "")
@@ -179,7 +177,7 @@ struct DayView: View {
       Text(selectedEvent?.address ?? "")
         .font(.footnote)
       Button(action: {
-        selectedEvent = nil // Close pop-up
+        selectedEvent = nil
       }) {
         Text("Close")
           .font(.footnote.bold())
@@ -192,62 +190,15 @@ struct DayView: View {
     .shadow(radius: 5)
   }
 
-  private func loadData() {
-    self.displayedLocations = []
-  }
-  
-  func setRegion(events: [Event]) {
-      guard let firstEvent = events.first else {
-          print("No events available to set the region.")
-          return
-      }
-      
-      let center = CLLocationCoordinate2D(latitude: firstEvent.latitude, longitude: firstEvent.longitude)
-      let span = MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05) // Adjust for desired zoom level
-      
-      region = MKCoordinateRegion(center: center, span: span)
+  // Update the map region based on the first event
+  private func setRegion(events: [Event]) {
+    guard let firstEvent = events.first else { return }
+    let center = CLLocationCoordinate2D(latitude: firstEvent.latitude, longitude: firstEvent.longitude)
+    region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.05, longitudeDelta: 0.05))
   }
 
-  private func printLocations(locations: [Location]) -> String {
-    let locationNames = locations.map { $0.name }
-    return locationNames.joined(separator: "\n")
-  }
-
-  private func generateLocations(events: [Event]) -> [CLLocationCoordinate2D] {
-    return events.map { event in
-      CLLocationCoordinate2D(latitude: CLLocationDegrees(event.latitude),
-                             longitude: CLLocationDegrees(event.longitude))
-    }
-  }
-
+  // Update displayed locations based on the search results
   private func displayLocations() {
-    if searchText == "" {
-      displayedLocations = []
-      locationRepository.filteredLocations = []
-    } else {
-      displayedLocations = locationRepository.filteredLocations
-    }
-  }
-
-  private func getEventCoords(events: [Event]) -> [Event] {
-    return events
-  }
-
-  private func printEvents(events: [Event]) -> String {
-    let eventNames = events.map { $0.title }
-    return eventNames.joined(separator: "\n")
-  }
-
-  private func eventToString(event: Event) -> String {
-    return "\(event.title): \(event.startTime) -- \(event.endTime)"
-  }
-
-  func sortEventsByStartTime(events: [Event]) -> [Event] {
-    return events.sorted { (event1, event2) -> Bool in
-      guard let date1 = event1.startTimeAsDate(), let date2 = event2.startTimeAsDate() else {
-        return false
-      }
-      return date1 < date2
-    }
+    displayedLocations = searchText.isEmpty ? [] : locationRepository.filteredLocations
   }
 }

@@ -7,10 +7,12 @@
 
 import SwiftUI
 
+// View for displaying a list of friends for the current user
 struct FriendsListView: View {
   @ObservedObject var userRepository: UserRepository
   @State private var searchText: String = ""
   
+  // Filters the friends of the current user based on the search text
   var filteredFriends: [User] {
     let currentUser = userRepository.users[0]
     let friendIDs = currentUser.Friends
@@ -21,7 +23,7 @@ struct FriendsListView: View {
   var body: some View {
     NavigationView {
       VStack {
-        // Header with Title and Add Friend Button
+        // Header with title and "Add Friend" button
         HStack {
           Text("Friends")
             .font(.largeTitle)
@@ -35,6 +37,7 @@ struct FriendsListView: View {
               .padding(.top, 15)
               .padding(.trailing, 20)
           }
+          // Red dot indicator for pending friend requests
           .overlay {
             if !userRepository.users[0].Requests.isEmpty {
               Image(systemName: "circle.fill")
@@ -45,7 +48,7 @@ struct FriendsListView: View {
           }
         }
         
-        // Search Bar
+        // Search bar for filtering friends
         HStack {
           TextField("Search friend", text: $searchText)
             .padding(.leading, 10)
@@ -65,9 +68,9 @@ struct FriendsListView: View {
         .padding(.horizontal, 20)
         .padding(.bottom, 10)
         
-        // Friends List
+        // Friends list section
         ZStack {
-          Color("Cream") // Ensures the background of the entire view is "Cream"
+          Color("Cream")
             .ignoresSafeArea()
           
           List {
@@ -83,11 +86,11 @@ struct FriendsListView: View {
             .listRowBackground(Color("Cream"))
           }
           .listStyle(PlainListStyle())
-          .background(Color.clear) // Ensure no conflicting backgrounds
-          .scrollContentBackground(.hidden) // Hides default scroll background
+          .background(Color.clear)
+          .scrollContentBackground(.hidden)
         }
       }
-      .background(Color("Cream")) // Main view background
+      .background(Color("Cream"))
       .onAppear {
         userRepository.get()
       }

@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+// View for displaying a list of posts with an option to create a new post
 struct PostsView: View {
   @ObservedObject var userRepository: UserRepository
   @ObservedObject var postRepository: PostRepository
@@ -14,6 +15,7 @@ struct PostsView: View {
   var body: some View {
     NavigationView {
       VStack {
+        // Header with title and "New Post" button
         HStack {
           Text("Posts")
             .font(.largeTitle)
@@ -31,6 +33,7 @@ struct PostsView: View {
           }
         }
 
+        // List of posts
         ScrollView {
           ForEach($postRepository.posts, id: \.id) { $post in
             PostCardView(post: $post, postRepository: postRepository, userRepository: userRepository)
@@ -42,4 +45,3 @@ struct PostsView: View {
     }
   }
 }
-

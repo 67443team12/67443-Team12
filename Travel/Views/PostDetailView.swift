@@ -7,16 +7,17 @@
 
 import SwiftUI
 
+// View displaying detailed information about a post
 struct PostDetailView: View {
   @Binding var post: Post
   @Environment(\.presentationMode) var presentationMode
   @ObservedObject var postRepository: PostRepository
   @ObservedObject var userRepository: UserRepository
-
   @State private var newComment: String = ""
 
   var body: some View {
     VStack(spacing: 0) {
+      // Navigation bar with back button, author info, and bookmark button
       HStack {
         Button(action: {
           presentationMode.wrappedValue.dismiss()
@@ -40,6 +41,7 @@ struct PostDetailView: View {
           .frame(width: 40, height: 40)
           .clipShape(Circle())
           .padding(.trailing, 5)
+
           Text(getUserName(userId: post.userId))
             .font(.title3.bold())
         }
@@ -59,9 +61,10 @@ struct PostDetailView: View {
         .padding(.trailing)
       }
 
+      // Post content
       ScrollView {
         VStack(alignment: .leading, spacing: 16) {
-          // post photo
+          // Post photo
           AsyncImage(url: URL(string: post.photo)) { image in
             image
               .resizable()
@@ -74,6 +77,7 @@ struct PostDetailView: View {
           .frame(maxWidth: .infinity)
           .clipped()
 
+          // Post title
           Text(post.title)
             .font(.title2.bold())
             .padding()
@@ -82,6 +86,7 @@ struct PostDetailView: View {
             .cornerRadius(8)
             .padding(.horizontal)
 
+          // Post content
           Text(post.content)
             .font(.title3)
             .padding()
@@ -90,16 +95,19 @@ struct PostDetailView: View {
             .cornerRadius(8)
             .padding(.horizontal)
 
+          // Post time
           Text(post.formattedTime)
             .font(.headline)
             .foregroundColor(.gray)
             .padding(.horizontal)
 
+          // Comments section
           VStack(alignment: .leading, spacing: 16) {
             Text("Comments")
               .font(.title3.bold())
               .padding(.horizontal)
-            
+
+            // Add new comment
             HStack {
               TextField("Leave a comment", text: $newComment)
                 .padding()
@@ -125,6 +133,7 @@ struct PostDetailView: View {
             }
             .padding(.horizontal)
 
+            // Display existing comments
             ForEach(post.comments, id: \.id) { comment in
               HStack(alignment: .top) {
                 AsyncImage(url: URL(string: getUserPhoto(userId: comment.userId))) { image in
@@ -137,6 +146,7 @@ struct PostDetailView: View {
                 }
                 .frame(width: 30, height: 30)
                 .clipShape(Circle())
+
                 VStack(alignment: .leading, spacing: 4) {
                   Text(getUserName(userId: comment.userId))
                     .font(.headline)
@@ -146,7 +156,7 @@ struct PostDetailView: View {
                 }
                 Spacer()
               }
-            .padding(.horizontal)
+              .padding(.horizontal)
             }
           }
         }
@@ -157,32 +167,19 @@ struct PostDetailView: View {
     .navigationBarHidden(true)
     .background(Color("Cream"))
   }
-  
-  
+
+  // Returns the photo URL of the specified user
   func getUserPhoto(userId: String) -> String {
-      // Search for the user with the given ID in userRepository.users
-      if let user = userRepository.users.first(where: { $0.id == userId }) {
-          return user.photo
-      }
-      // Return nil if the user is not found
-      return ""
+    userRepository.users.first(where: { $0.id == userId })?.photo ?? ""
   }
-  
+
+  // Returns the name of the specified user
   func getUserName(userId: String) -> String {
-      // Search for the user with the given ID in userRepository.users
-      if let user = userRepository.users.first(where: { $0.id == userId }) {
-          return user.name
-      }
-      // Return nil if the user is not found
-      return ""
+    userRepository.users.first(where: { $0.id == userId })?.name ?? ""
   }
-  
+
+  // Checks if the specified post is bookmarked by the given user
   func isBookmarked(post: Post, user: User) -> Bool {
-    if user.Bookmarks.contains(post.id) {
-      return true
-    }
-    return false
+    user.Bookmarks.contains(post.id)
   }
-
 }
-
